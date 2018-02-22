@@ -1,12 +1,18 @@
-const { MongoClient } = require('mongodb').MongoClient;
-const { ObjectId } = require('mongodb').ObjectId;
+const MongoClient = require('mongodb').MongoClient;
 const {
-  user, password, port, dbName, host,
+  ObjectId
+} = require('mongodb').ObjectId;
+const {
+  user,
+  password,
+  port,
+  dbName,
+  host,
 } = require('../configs/config.json');
 
 class DB {
   constructor() {
-    this.URI = `mongodb://${user}:${password}@${host}:${port}/${dbName}`;
+    this.URI = 'mongodb://${user}:${password}@${host}:${port}/${dbName}';
     this.db = null;
     this.dbClient = null;
   }
@@ -14,7 +20,7 @@ class DB {
   connect() {
     return MongoClient.connect(this.URI)
       .then((client) => {
-        this.db = client.db(dbName);
+        this.db = client.db('charity_project');
         this.dbClient = client;
       })
       .catch((err) => {
@@ -31,7 +37,16 @@ class DB {
   addOneNews(news) {
     return this.db.collection('news').insertOne(news);
   }
-
+  getOneNews(id) {
+    return this.db
+      .collection('news')
+      .findOne({
+        _id: new ObjectId(id),
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }
   getAllNews() {
     return this.db
       .collection('news')
@@ -45,19 +60,16 @@ class DB {
   updateNews(id, updatedNews) {
     return this.db
       .collection('news')
-      .findOneAndUpdate(
-        {
-          _id: new ObjectId(id), // eslint-disable-line no-underscore-dangle
+      .findOneAndUpdate({
+        _id: new ObjectId(id), // eslint-disable-line no-underscore-dangle
+      }, {
+        $set: {
+          title: updatedNews.title,
+          shortDescription: updatedNews.shortDescription,
+          url: updatedNews.url,
+          date: updatedNews.date,
         },
-        {
-          $set: {
-            title: updatedNews.title,
-            shortDescription: updatedNews.shortDescription,
-            url: updatedNews.url,
-            date: updatedNews.date,
-          },
-        },
-      )
+      }, )
       .catch((err) => {
         throw err;
       });
