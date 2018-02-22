@@ -12,7 +12,7 @@ const {
 
 class DB {
   constructor() {
-    this.URI = 'mongodb://${user}:${password}@${host}:${port}/${dbName}';
+    this.URI = `mongodb://${user}:${password}@${host}:${port}/${dbName}`;
     this.db = null;
     this.dbClient = null;
   }
@@ -37,6 +37,7 @@ class DB {
   addOneNews(news) {
     return this.db.collection('news').insertOne(news);
   }
+
   getOneNews(id) {
     return this.db
       .collection('news')
