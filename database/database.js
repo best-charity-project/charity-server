@@ -20,7 +20,7 @@ class DB {
   connect() {
     return MongoClient.connect(this.URI)
       .then((client) => {
-        this.db = client.db('charity_project');
+        this.db = client.db(dbName);
         this.dbClient = client;
       })
       .catch((err) => {
