@@ -1,7 +1,13 @@
-const { MongoClient } = require('mongodb').MongoClient;
-const { ObjectId } = require('mongodb').ObjectId;
+const MongoClient = require('mongodb').MongoClient;
 const {
-  user, password, port, dbName, host,
+  ObjectId
+} = require('mongodb').ObjectId;
+const {
+  user,
+  password,
+  port,
+  dbName,
+  host,
 } = require('../configs/config.json');
 
 class DB {
@@ -32,6 +38,16 @@ class DB {
     return this.db.collection('news').insertOne(news);
   }
 
+  getOneNews(id) {
+    return this.db
+      .collection('news')
+      .findOne({
+        _id: new ObjectId(id),
+      })
+      .catch((err) => {
+        throw err;
+      });
+  }
   getAllNews() {
     return this.db
       .collection('news')
@@ -45,19 +61,16 @@ class DB {
   updateNews(id, updatedNews) {
     return this.db
       .collection('news')
-      .findOneAndUpdate(
-        {
-          _id: new ObjectId(id), // eslint-disable-line no-underscore-dangle
+      .findOneAndUpdate({
+        _id: new ObjectId(id), // eslint-disable-line no-underscore-dangle
+      }, {
+        $set: {
+          title: updatedNews.title,
+          shortDescription: updatedNews.shortDescription,
+          url: updatedNews.url,
+          date: updatedNews.date,
         },
-        {
-          $set: {
-            title: updatedNews.title,
-            shortDescription: updatedNews.shortDescription,
-            url: updatedNews.url,
-            date: updatedNews.date,
-          },
-        },
-      )
+      }, )
       .catch((err) => {
         throw err;
       });

@@ -27,7 +27,9 @@ router
         return database.addOneNews(news);
       })
       .then(() => {
-        res.json({ message: 'News was created successfully!' });
+        res.json({
+          message: 'News was created successfully!'
+        });
         database.close();
       })
       .catch((err) => {
@@ -45,7 +47,24 @@ router
         return database.updateNews(id, updatedNews);
       })
       .then(() => {
-        res.json({ message: 'News was updated successfully!' });
+        res.json({
+          message: 'News was updated successfully!'
+        });
+        database.close();
+      })
+      .catch((err) => {
+        throw err;
+      });
+  })
+  .get((req, res) => {
+    database
+      .connect(database.URI)
+      .then(() => {
+        const id = req.params._id;
+        return database.getOneNews(id);
+      })
+      .then((result) => {
+        res.json(result);
         database.close();
       })
       .catch((err) => {
@@ -60,7 +79,9 @@ router
         return database.deleteNews(id);
       })
       .then(() => {
-        res.json({ message: 'News was deleted!' });
+        res.json({
+          message: 'News was deleted!'
+        });
         database.close();
       })
       .catch((err) => {
