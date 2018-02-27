@@ -1,7 +1,5 @@
 const MongoClient = require('mongodb').MongoClient;
-const {
-  ObjectId
-} = require('mongodb').ObjectId;
+const { ObjectId } = require('mongodb').ObjectId;
 const {
   user,
   password,
@@ -12,18 +10,20 @@ const {
 
 class DB {
   constructor() {
-    this.URI = `mongodb://${user}:${password}@${host}:${port}/${dbName}`;
+    this.URI = `mongodb://${user || process.env.USER}:${password ||
+      process.env.PASSWORD}@${host || process.env.HOST}:${port ||
+      process.env.DB_PORT}/${dbName || process.env.DB_NAME}`;
     this.db = null;
     this.dbClient = null;
   }
 
   connect() {
     return MongoClient.connect(this.URI)
-      .then((client) => {
-        this.db = client.db(dbName);
+      .then(client => {
+        this.db = client.db(dbName || process.env.DB_NAME);
         this.dbClient = client;
       })
-      .catch((err) => {
+      .catch(err => {
         throw err;
       });
   }
@@ -44,7 +44,7 @@ class DB {
       .findOne({
         _id: new ObjectId(id),
       })
-      .catch((err) => {
+      .catch(err => {
         throw err;
       });
   }
@@ -54,24 +54,27 @@ class DB {
       .find()
       .toArray()
       .then(result => result)
-      .catch((err) => {
+      .catch(err => {
         throw err;
       });
   }
   updateNews(id, updatedNews) {
     return this.db
       .collection('news')
-      .findOneAndUpdate({
-        _id: new ObjectId(id), // eslint-disable-line no-underscore-dangle
-      }, {
-        $set: {
-          title: updatedNews.title,
-          shortDescription: updatedNews.shortDescription,
-          url: updatedNews.url,
-          date: updatedNews.date,
+      .findOneAndUpdate(
+        {
+          _id: new ObjectId(id), // eslint-disable-line no-underscore-dangle
         },
-      }, )
-      .catch((err) => {
+        {
+          $set: {
+            title: updatedNews.title,
+            shortDescription: updatedNews.shortDescription,
+            url: updatedNews.url,
+            date: updatedNews.date,
+          },
+        }
+      )
+      .catch(err => {
         throw err;
       });
   }
@@ -81,7 +84,7 @@ class DB {
       .deleteOne({
         _id: new ObjectId(id),
       })
-      .catch((err) => {
+      .catch(err => {
         throw err;
       });
   }
