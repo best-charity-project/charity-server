@@ -1,9 +1,21 @@
 const express = require('express');
+const mongoose = require('mongoose');
 
 const router = express.Router();
-const DB = require('../database/database');
-
-const database = new DB();
+// const DB = require('../database/database');
+const {
+  user,
+  password,
+  port,
+  dbName,
+  host,
+} = require('../configs/config.json');
+mongoose.connect(
+  `mongodb://${user || process.env.USER}:${password ||
+    process.env.PASSWORD}@${host || process.env.HOST}:${port ||
+    process.env.DB_PORT}/${dbName || process.env.DB_NAME}`
+);
+mongoose.connection.on('open', () => console.log('Connected via mongoose'));
 
 router
   .route('/news')
@@ -11,11 +23,11 @@ router
     database
       .connect(database.URI)
       .then(() => database.getAllNews())
-      .then((result) => {
+      .then(result => {
         res.json(result);
         database.close();
       })
-      .catch((err) => {
+      .catch(err => {
         throw err;
       });
   })
@@ -28,11 +40,11 @@ router
       })
       .then(() => {
         res.json({
-          message: 'News was created successfully!'
+          message: 'News was created successfully!',
         });
         database.close();
       })
-      .catch((err) => {
+      .catch(err => {
         throw err;
       });
   });
@@ -48,11 +60,11 @@ router
       })
       .then(() => {
         res.json({
-          message: 'News was updated successfully!'
+          message: 'News was updated successfully!',
         });
         database.close();
       })
-      .catch((err) => {
+      .catch(err => {
         throw err;
       });
   })
@@ -63,11 +75,11 @@ router
         const id = req.params._id;
         return database.getOneNews(id);
       })
-      .then((result) => {
+      .then(result => {
         res.json(result);
         database.close();
       })
-      .catch((err) => {
+      .catch(err => {
         throw err;
       });
   })
@@ -80,11 +92,11 @@ router
       })
       .then(() => {
         res.json({
-          message: 'News was deleted!'
+          message: 'News was deleted!',
         });
         database.close();
       })
-      .catch((err) => {
+      .catch(err => {
         throw err;
       });
   });
