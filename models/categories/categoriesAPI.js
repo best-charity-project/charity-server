@@ -7,4 +7,6 @@ const addOneCategory = category => {
 
 const getAllCategories = () => Categories.find({});
 
-module.exports = { addOneCategory, getAllCategories };
+const getCategoryByTag = tag => Categories.find({ category_tag: tag });
+
+module.exports = { addOneCategory, getAllCategories, getCategoryByTag };
