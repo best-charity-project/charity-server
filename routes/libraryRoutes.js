@@ -6,24 +6,26 @@ const {
   getAllItems,
   searchByType
 } = require('../models/libraryItemAPI');
-
-router
-  .route('/libraryItems')
-  .get((req, res) => {
-    getAllItems().then(item => {
-      res.json(item);
-    });
-  })
-  .post((req, res) => {
-    addOneItem(req.body).then(() => {
-      res.json({
-        message: 'Document was created successfully!'
+const libraryRoutes = router => {
+  router
+    .route('/libraryItems')
+    .get((req, res) => {
+      getAllItems().then(item => {
+        res.json(item);
+      });
+    })
+    .post((req, res) => {
+      addOneItem(req.body).then(() => {
+        res.json({
+          message: 'Document was created successfully!'
+        });
       });
     });
+  router.route('/libraryItems/:type').get((req, res) => {
+    searchByType(req.params.type).then(item => {
+      res.json(item);
+    });
   });
-router.route('/libraryItems/:type').get((req, res) => {
-  searchByType(req.params.type).then(item => {
-    res.json(item);
-  });
-});
-module.exports = router;
+  return router;
+};
+module.exports = libraryRoutes;
