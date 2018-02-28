@@ -2,7 +2,7 @@ const express = require('express');
 
 const app = express();
 const bodyParser = require('body-parser');
-const router = require('./routes/newsRoutes');
+const router = require('./routes/Routes');
 const connectToDatabase = require('./database/database');
 connectToDatabase();
 
