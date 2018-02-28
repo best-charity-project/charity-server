@@ -4,7 +4,7 @@ const router = express.Router();
 const {
   addOneItem,
   getAllItems,
-  searchByType
+  searchByType,
 } = require('../models/libraryItemAPI');
 const libraryRoutes = router => {
   router
@@ -17,7 +17,7 @@ const libraryRoutes = router => {
     .post((req, res) => {
       addOneItem(req.body).then(() => {
         res.json({
-          message: 'Document was created successfully!'
+          message: 'Document was created successfully!',
         });
       });
     });

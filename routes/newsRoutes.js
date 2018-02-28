@@ -3,7 +3,7 @@ const {
   addOneNews,
   updateNews,
   getOneNews,
-  deleteNews
+  deleteNews,
 } = require('../models/news/newsAPI');
 
 const newsRoutes = router => {
@@ -17,7 +17,7 @@ const newsRoutes = router => {
     .post((req, res) => {
       addOneNews(req.body).then(() => {
         res.json({
-          message: 'News was created successfully!'
+          message: 'News was created successfully!',
         });
       });
     });
@@ -26,7 +26,7 @@ const newsRoutes = router => {
     .put((req, res) => {
       updateNews(req.params._id, req.body).then(() => {
         res.json({
-          message: 'News was updated successfully!'
+          message: 'News was updated successfully!',
         });
       });
     })
@@ -38,7 +38,7 @@ const newsRoutes = router => {
     .delete((req, res) => {
       deleteNews(req.params._id).then(() => {
         res.json({
-          message: 'News was deleted!'
+          message: 'News was deleted!',
         });
       });
     });
