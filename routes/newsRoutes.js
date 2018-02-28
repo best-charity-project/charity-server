@@ -1,92 +1,48 @@
 const express = require('express');
 
 const router = express.Router();
-const DB = require('../database/database');
-
-const database = new DB();
+const {
+  getAllNews,
+  addOneNews,
+  updateNews,
+  getOneNews,
+  deleteNews,
+} = require('../models/newsAPI');
 
 router
   .route('/news')
   .get((req, res) => {
-    database
-      .connect(database.URI)
-      .then(() => database.getAllNews())
-      .then((result) => {
-        res.json(result);
-        database.close();
-      })
-      .catch((err) => {
-        throw err;
-      });
+    getAllNews().then(news => {
+      res.json(news);
+    });
   })
   .post((req, res) => {
-    database
-      .connect(database.URI)
-      .then(() => {
-        const news = req.body;
-        return database.addOneNews(news);
-      })
-      .then(() => {
-        res.json({
-          message: 'News was created successfully!'
-        });
-        database.close();
-      })
-      .catch((err) => {
-        throw err;
+    addOneNews(req.body).then(() => {
+      res.json({
+        message: 'News was created successfully!',
       });
+    });
   });
 router
   .route('/news/:_id')
   .put((req, res) => {
-    database
-      .connect(database.URI)
-      .then(() => {
-        const id = req.params._id; // eslint-disable-line no-underscore-dangle
-        const updatedNews = req.body;
-        return database.updateNews(id, updatedNews);
-      })
-      .then(() => {
-        res.json({
-          message: 'News was updated successfully!'
-        });
-        database.close();
-      })
-      .catch((err) => {
-        throw err;
+    updateNews(req.params._id, req.body).then(() => {
+      res.json({
+        message: 'News was updated successfully!',
       });
+    });
   })
   .get((req, res) => {
-    database
-      .connect(database.URI)
-      .then(() => {
-        const id = req.params._id;
-        return database.getOneNews(id);
-      })
-      .then((result) => {
-        res.json(result);
-        database.close();
-      })
-      .catch((err) => {
-        throw err;
-      });
+    getOneNews(req.params._id).then(news => {
+      res.json(news);
+    });
   })
   .delete((req, res) => {
-    database
-      .connect(database.URI)
-      .then(() => {
-        const id = req.params._id; // eslint-disable-line no-underscore-dangle
-        return database.deleteNews(id);
-      })
-      .then(() => {
-        res.json({
-          message: 'News was deleted!'
-        });
-        database.close();
-      })
-      .catch((err) => {
-        throw err;
+    deleteNews(req.params._id).then(() => {
+      res.json({
+        message: 'News was deleted!',
       });
+    });
   });
 
 module.exports = router;
