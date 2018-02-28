@@ -6,6 +6,7 @@ const {
   dbName,
   host
 } = require('../configs/config.json');
+
 const connectToDatabase = () => {
   mongoose.connect(
     `mongodb://${user || process.env.USER}:${password ||
