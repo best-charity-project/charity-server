@@ -5,25 +5,16 @@ const addOneNews = news => {
   return newsToAdd.save();
 };
 
-const getOneNews = id => {
-  return News.findById(id);
-};
+const getOneNews = id => News.findById(id);
 
-const getAllNews = () => {
-  return News.find({});
-};
+const getAllNews = () => News.find({});
 
-const updateNews = (id, updatedNews) => {
-  return News.findById(id).then(news => {
+const updateNews = (id, updatedNews) =>
+  News.findById(id).then(news => {
     news.set(updatedNews);
     return news.save();
   });
-};
 
-const deleteNews = id => {
-  return News.findById(id).then(news => {
-    return news.remove();
-  });
-};
+const deleteNews = id => News.findById(id).then(news => news.remove());
 
 module.exports = { addOneNews, getOneNews, getAllNews, updateNews, deleteNews };
