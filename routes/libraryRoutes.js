@@ -5,7 +5,7 @@ const {
   addOneItem,
   getAllItems,
   searchByType,
-} = require('../models/libraryItemAPI');
+} = require('../models/libraryItems/libraryItemAPI');
 const libraryRoutes = router => {
   router
     .route('/libraryItems')
