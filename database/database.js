@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const {
   user,
   password,
@@ -12,7 +11,7 @@ const connectToDatabase = () => {
   mongoose.connect(
     `mongodb://${user || process.env.USER}:${password ||
       process.env.PASSWORD}@${host || process.env.HOST}:${port ||
-      process.env.DB_PORT}/${dbName || process.env.DB_NAME}`
+      process.env.DB_PORT}/${dbName || process.env.DB_NAME}`,
   );
 };
 
