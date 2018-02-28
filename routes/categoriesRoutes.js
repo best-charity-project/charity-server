@@ -1,4 +1,7 @@
-const { addOneCategory, getAllCategories } = require('../models/categoriesAPI');
+const {
+  addOneCategory,
+  getAllCategories,
+} = require('../models/categories/categoriesAPI');
 const categoriesRoutes = router => {
   router
     .route('/Library/categories')

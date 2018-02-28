@@ -4,7 +4,7 @@ const {
   updateNews,
   getOneNews,
   deleteNews,
-} = require('../models/newsAPI');
+} = require('../models/news/newsAPI');
 
 const newsRoutes = router => {
   router
