@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const LibraryItemSchema = new Schema({
-  category_tag: {
+  categoryTag: {
     type: String,
     required: true,
   },
