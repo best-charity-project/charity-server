@@ -5,7 +5,7 @@ const {
 } = require('../models/categories/categoriesAPI');
 const categoriesRoutes = router => {
   router
-    .route('/Library/categories')
+    .route('/categories')
     .get((req, res) => {
       getAllCategories().then(category => {
         res.json(category);
@@ -18,7 +18,7 @@ const categoriesRoutes = router => {
         });
       });
     });
-  router.route('/Library/categories/:title').get((req, res) => {
+  router.route('/categories/:title').get((req, res) => {
     getCategoryByTag(req.params.title).then(category => {
       res.json(category);
     });
