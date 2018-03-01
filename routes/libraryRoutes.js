@@ -26,6 +26,10 @@ const libraryRoutes = router => {
       res.json(item);
     });
   });
+
+  router.route('/:category/libraryItems/:type').get((req, res) => {
+    searchItemsInCategory();
+  });
   return router;
 };
 module.exports = libraryRoutes;
