@@ -27,7 +27,6 @@ const libraryRoutes = router => {
       res.json(item);
     });
   });
-
   router
     .route('/categories/:categoryTag/libraryItems/:type')
     .get((req, res) => {
@@ -37,4 +36,5 @@ const libraryRoutes = router => {
     });
   return router;
 };
+
 module.exports = libraryRoutes;
