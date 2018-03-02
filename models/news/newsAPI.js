@@ -7,7 +7,7 @@ const addOneNews = news => {
 
 const getOneNews = id => News.findById(id);
 
-const getAllNews = () => News.find({});
+const getAllNews = () => News.find({}, {}, { sort: { date: -1 } });
 
 const updateNews = (id, updatedNews) =>
   News.findById(id).then(news => {
