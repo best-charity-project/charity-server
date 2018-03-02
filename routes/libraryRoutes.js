@@ -5,6 +5,7 @@ const {
   addOneItem,
   getAllItems,
   searchByType,
+  searchItemsInCategory,
 } = require('../models/libraryItems/libraryItemAPI');
 const libraryRoutes = router => {
   router
@@ -26,6 +27,14 @@ const libraryRoutes = router => {
       res.json(item);
     });
   });
+  router
+    .route('/categories/:categoryTag/libraryItems/:type')
+    .get((req, res) => {
+      searchItemsInCategory(req.params).then(items => {
+        res.json(items);
+      });
+    });
   return router;
 };
+
 module.exports = libraryRoutes;

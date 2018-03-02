@@ -8,4 +8,11 @@ const getAllItems = () => libraryItem.find({});
 
 const searchByType = typeName => libraryItem.find({ type: typeName });
 
-module.exports = { addOneItem, getAllItems, searchByType };
+const searchItemsInCategory = searchQuiery => libraryItem.find(searchQuiery);
+
+module.exports = {
+  addOneItem,
+  getAllItems,
+  searchByType,
+  searchItemsInCategory,
+};
