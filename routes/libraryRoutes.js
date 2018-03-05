@@ -27,13 +27,11 @@ const libraryRoutes = router => {
       res.json(item);
     });
   });
-  router
-    .route('/categories/:categoryTag/libraryItems/:type')
-    .get((req, res) => {
-      searchItemsInCategory(req.params).then(items => {
-        res.json(items);
-      });
+  router.route('/categories/:categoryTag/:type').get((req, res) => {
+    searchItemsInCategory(req.params).then(items => {
+      res.json(items);
     });
+  });
   return router;
 };
 
