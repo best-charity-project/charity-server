@@ -7,13 +7,20 @@ const {
   searchByType,
   searchItemsInCategory,
 } = require('../models/libraryItems/libraryItemAPI');
+
 const libraryRoutes = router => {
   router
-    .route('/libraryItems')
+    .route('/library')
     .get((req, res) => {
-      getAllItems().then(item => {
-        res.json(item);
-      });
+      if (req.query) {
+        searchItemsInCategory(req.query).then(items => {
+          res.json(items);
+        });
+      } else {
+        getAllItems().then(item => {
+          res.json(item);
+        });
+      }
     })
     .post((req, res) => {
       addOneItem(req.body).then(() => {
@@ -22,16 +29,6 @@ const libraryRoutes = router => {
         });
       });
     });
-  router.route('/libraryItems/:type').get((req, res) => {
-    searchByType(req.params.type).then(item => {
-      res.json(item);
-    });
-  });
-  router.route('/categories/:categoryTag/:type').get((req, res) => {
-    searchItemsInCategory(req.params).then(items => {
-      res.json(items);
-    });
-  });
   return router;
 };
 
