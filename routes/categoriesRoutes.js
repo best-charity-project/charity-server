@@ -1,28 +1,22 @@
 const {
-  addOneCategory,
-  getAllCategories,
-  getCategoryByTag,
+  addCategory,
+  getCategories,
 } = require('../models/categories/categoriesAPI');
 const categoriesRoutes = router => {
   router
     .route('/categories')
     .get((req, res) => {
-      getAllCategories().then(category => {
-        res.json(category);
+      getCategories(req.query).then(categories => {
+        res.json(categories);
       });
     })
     .post((req, res) => {
-      addOneCategory(req.body).then(() => {
+      addCategory(req.body).then(() => {
         res.json({
           message: 'Category was created successfully!',
         });
       });
     });
-  router.route('/categories/:title').get((req, res) => {
-    getCategoryByTag(req.params.title).then(category => {
-      res.json(category);
-    });
-  });
   return router;
 };
 
