@@ -6,7 +6,7 @@ const categoriesRoutes = router => {
   router
     .route('/categories')
     .get((req, res) => {
-      getCategories(req.query).then(categories => {
+      getCategories().then(categories => {
         res.json(categories);
       });
     })
