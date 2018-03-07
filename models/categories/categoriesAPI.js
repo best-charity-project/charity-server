@@ -5,6 +5,6 @@ const addCategory = category => {
   return categoryToAdd.save();
 };
 
-const getCategories = query => Categories.find(query);
+const getCategories = () => Categories.find({});
 
 module.exports = { addCategory, getCategories };
