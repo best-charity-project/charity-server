@@ -1,18 +1,27 @@
 const News = require('./news');
+const ObjectIdCheck = require('./ObjectIdCheck');
 
 const addOneNews = news => {
   const newsToAdd = new News(news);
   return newsToAdd.save();
 };
 
-const getNews = query => News.find(query, {}, { sort: { date: -1 } });
+const getNews = () => News.find({}, {}, { sort: { date: -1 } });
+
+const getNewsById = id => {
+  if (ObjectIdCheck(id)) {
+    return News.findById(id);
+  } else {
+    return Promise.reject(new Error('Invalid news id'));
+  }
+};
 
 const updateNews = (id, updatedNews) =>
-  News.findById(id).then(news => {
+  getNewsById(id).then(news => {
     news.set(updatedNews);
     return news.save();
   });
 
 const deleteNews = id => News.findById(id).then(news => news.remove());
 
-module.exports = { addOneNews, getNews, updateNews, deleteNews };
+module.exports = { addOneNews, getNews, getNewsById, updateNews, deleteNews };
