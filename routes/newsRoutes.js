@@ -3,13 +3,14 @@ const {
   addOneNews,
   updateNews,
   deleteNews,
+  getNewsById,
 } = require('../models/news/newsAPI');
 
 const newsRoutes = router => {
   router
     .route('/news')
     .get((req, res) => {
-      getNews(req.query).then(news => {
+      getNews().then(news => {
         res.json(news);
       });
     })
@@ -22,6 +23,15 @@ const newsRoutes = router => {
     });
   router
     .route('/news/:_id')
+    .get((req, res) => {
+      getNewsById(req.params._id)
+        .then(news => {
+          res.json(news);
+        })
+        .catch(err => {
+          res.json(err.message);
+        });
+    })
     .put((req, res) => {
       updateNews(req.params._id, req.body).then(() => {
         res.json({
