@@ -1,3 +1,3 @@
-const validate = value => /^[A-z]+$/.test(value);
+const validate = value => !/[^A-Za-z]/.test(value);
 
 module.exports = validate;
