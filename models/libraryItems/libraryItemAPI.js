@@ -6,7 +6,7 @@ const addItem = item => {
   return itemToAdd.save();
 };
 
-const getItems = searchQuiery => {
+const getItems = searchQuery => {
   const { categoryTag, type } = searchQuery;
   if (categoryTag && isValidQuery(categoryTag) && type && isValidQuery(type)) {
     return libraryItem.find({ categoryTag, type });
