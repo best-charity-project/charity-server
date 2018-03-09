@@ -29,7 +29,7 @@ const newsRoutes = router => {
           res.json(news);
         })
         .catch(err => {
-          res.json(err.message);
+          res.status(400).json(err.message);
         });
     })
     .put((req, res) => {

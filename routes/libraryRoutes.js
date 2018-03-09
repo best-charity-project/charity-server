@@ -12,7 +12,7 @@ const libraryRoutes = router => {
           res.json(items);
         })
         .catch(err => {
-          res.json(err.message);
+          res.status(400).json(err.message);
         });
     })
     .post((req, res) => {
