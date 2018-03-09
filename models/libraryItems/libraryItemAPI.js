@@ -1,18 +1,21 @@
 const libraryItem = require('./libraryItem');
+const isValidQuery = require('./isValidLibraryQuery');
 
-const addOneItem = item => {
+const addItem = item => {
   const itemToAdd = new libraryItem(item);
   return itemToAdd.save();
 };
-const getAllItems = () => libraryItem.find({});
 
-const searchByType = typeName => libraryItem.find({ type: typeName });
-
-const searchItemsInCategory = searchQuiery => libraryItem.find(searchQuiery);
+const getItems = searchQuery => {
+  const { categoryTag, type } = searchQuery;
+  if (categoryTag && isValidQuery(categoryTag) && type && isValidQuery(type)) {
+    return libraryItem.find({ categoryTag, type });
+  } else {
+    return Promise.reject(new Error('Invalid queries'));
+  }
+};
 
 module.exports = {
-  addOneItem,
-  getAllItems,
-  searchByType,
-  searchItemsInCategory,
+  addItem,
+  getItems,
 };
