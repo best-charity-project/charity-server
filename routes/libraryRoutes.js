@@ -6,6 +6,7 @@ const {
   getAllItems,
   searchByType,
   searchItemsInCategory,
+  fullTextSearch,
 } = require('../models/libraryItems/libraryItemAPI');
 const libraryRoutes = router => {
   router
@@ -29,6 +30,11 @@ const libraryRoutes = router => {
   });
   router.route('/categories/:categoryTag/:type').get((req, res) => {
     searchItemsInCategory(req.params).then(items => {
+      res.json(items);
+    });
+  });
+  router.route('/search/:textSearch').get((req, res) => {
+    fullTextSearch(req.params.textSearch).then(items => {
       res.json(items);
     });
   });

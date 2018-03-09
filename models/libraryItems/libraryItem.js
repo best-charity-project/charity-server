@@ -22,6 +22,14 @@ const LibraryItemSchema = new Schema({
     type: String,
     required: true,
   },
+  autoIndex: false,
 });
+
+LibraryItemSchema.index(
+  { title: 'text', description: 'text' },
+  { default_language: 'russian' },
+);
+
 const LibraryItem = mongoose.model('libraryItem', LibraryItemSchema);
+
 module.exports = LibraryItem;
