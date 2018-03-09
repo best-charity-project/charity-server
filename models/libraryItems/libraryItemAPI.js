@@ -7,7 +7,7 @@ const addItem = item => {
 };
 
 const getItems = searchQuiery => {
-  const { categoryTag, type } = searchQuiery;
+  const { categoryTag, type } = searchQuery;
   if (categoryTag && isValidQuery(categoryTag) && type && isValidQuery(type)) {
     return libraryItem.find({ categoryTag, type });
   } else {
