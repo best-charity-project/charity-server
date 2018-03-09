@@ -1,5 +1,5 @@
 const News = require('./news');
-const checkObjectId = require('./checkObjectId');
+const isValidObjectId = require('./isValidObjectId');
 
 const addOneNews = news => {
   const newsToAdd = new News(news);
@@ -9,7 +9,7 @@ const addOneNews = news => {
 const getNews = () => News.find({}, {}, { sort: { date: -1 } });
 
 const getNewsById = id => {
-  if (checkObjectId(id)) {
+  if (isValidObjectId(id)) {
     return News.findById(id);
   } else {
     return Promise.reject(new Error('Invalid news id'));

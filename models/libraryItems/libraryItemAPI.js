@@ -1,5 +1,5 @@
 const libraryItem = require('./libraryItem');
-const validateAsString = require('./validateLibraryQuery');
+const isValidQuery = require('./isValidLibraryQuery');
 
 const addItem = item => {
   const itemToAdd = new libraryItem(item);
@@ -8,12 +8,7 @@ const addItem = item => {
 
 const getItems = searchQuiery => {
   const { categoryTag, type } = searchQuiery;
-  if (
-    categoryTag &&
-    validateAsString(categoryTag) &&
-    type &&
-    validateAsString(type)
-  ) {
+  if (categoryTag && isValidQuery(categoryTag) && type && isValidQuery(type)) {
     return libraryItem.find({ categoryTag, type });
   } else {
     return Promise.reject(new Error('Invalid queries'));
