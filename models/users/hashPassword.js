@@ -24,7 +24,7 @@ function hashPassword(password, salt) {
     } else {
       crypto.randomBytes(SALT_LEN, (err, salt) => {
         if (err) {
-          return Promise.reject(err);
+          return reject(err);
         }
 
         salt = salt.toString('hex');
