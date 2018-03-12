@@ -7,15 +7,29 @@ const addItem = item => {
 };
 
 const getItems = searchQuery => {
-  const { categoryTag, type } = searchQuery;
-  if (categoryTag && isValidQuery(categoryTag) && type && isValidQuery(type)) {
-    return libraryItem.find({ categoryTag, type });
+  const { categoryTag, type, approved } = searchQuery;
+  const onlyApproved = searchQuery.approved;
+  if (
+    categoryTag &&
+    isValidQuery(categoryTag) &&
+    type &&
+    isValidQuery(type) &&
+    onlyApproved
+  ) {
+    return libraryItem.find({
+      categoryTag,
+      type,
+      approved: onlyApproved,
+    });
   } else {
     return Promise.reject(new Error('Invalid queries'));
   }
 };
 
+const getPendingItems = () => libraryItem.find({ approved: false });
+
 module.exports = {
   addItem,
   getItems,
+  getPendingItems,
 };

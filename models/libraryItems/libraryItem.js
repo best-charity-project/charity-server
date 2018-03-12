@@ -22,6 +22,11 @@ const LibraryItemSchema = new Schema({
     type: String,
     required: true,
   },
+  approved: {
+    type: Boolean,
+    default: false,
+  },
 });
 const LibraryItem = mongoose.model('libraryItem', LibraryItemSchema);
+
 module.exports = LibraryItem;
