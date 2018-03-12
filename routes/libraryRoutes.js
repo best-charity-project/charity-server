@@ -33,8 +33,9 @@ const libraryRoutes = router => {
       res.json(items);
     });
   });
-  router.route('/search/:textSearch/:type').get((req, res) => {
-    fullTextSearch(req.params).then(items => {
+  router.route('/library').get((req, res) => {
+    console.log(req.query);
+    fullTextSearch(req.query).then(items => {
       res.json(items);
     });
   });

@@ -14,7 +14,7 @@ const fullTextSearch = search =>
   libraryItem
     .find(
       {
-        type: { $in: search.type.split('&') },
+        type: { $in: JSON.parse(search.types) },
         $text: { $search: search.textSearch },
       },
       { score: { $meta: 'textScore' } },
