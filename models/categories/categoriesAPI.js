@@ -1,12 +1,10 @@
 const Categories = require('./categories');
 
-const addOneCategory = category => {
+const addCategory = category => {
   const categoryToAdd = new Categories(category);
   return categoryToAdd.save();
 };
 
-const getAllCategories = () => Categories.find({});
+const getCategories = () => Categories.find({});
 
-const getCategoryByTag = tag => Categories.find({ category_tag: tag });
-
-module.exports = { addOneCategory, getAllCategories, getCategoryByTag };
+module.exports = { addCategory, getCategories };

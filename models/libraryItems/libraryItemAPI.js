@@ -1,31 +1,44 @@
 const libraryItem = require('./libraryItem');
+const isValidQuery = require('./isValidLibraryQuery');
 
-const addOneItem = item => {
+const addItem = item => {
   const itemToAdd = new libraryItem(item);
   return itemToAdd.save();
 };
-const getAllItems = () => libraryItem.find({});
 
-const searchByType = typeName => libraryItem.find({ type: typeName });
+const getItems = searchQuery => {
+  const { categoryTag, type } = searchQuery;
+  if (categoryTag && isValidQuery(categoryTag) && type && isValidQuery(type)) {
+    return libraryItem.find({ categoryTag, type });
+  } else {
+    return Promise.reject(new Error('Invalid queries'));
+  }
+};
 
-const searchItemsInCategory = searchQuery => libraryItem.find(searchQuery);
-
-const fullTextSearch = search =>
-  libraryItem
-    .find(
-      {
-        type: { $in: JSON.parse(search.types) },
-        $text: { $search: search.textSearch },
-      },
-      { score: { $meta: 'textScore' } },
-    )
-    .sort({ score: { $meta: 'textScore' } })
-    .exec();
-
+const fullTextSearch = searchParams => {
+  let types = JSON.parse(searchParams.types);
+  if (
+    searchParams.types &&
+    searchParams.textSearch &&
+    types.every(isValidQuery)
+  ) {
+    console.log(searchParams);
+    return libraryItem
+      .find(
+        {
+          type: { $in: types },
+          $text: { $search: searchParams.textSearch },
+        },
+        { score: { $meta: 'textScore' } },
+      )
+      .sort({ score: { $meta: 'textScore' } })
+      .exec();
+  } else {
+    return Promise.reject(new Error('Invalid queries'));
+  }
+};
 module.exports = {
-  addOneItem,
-  getAllItems,
-  searchByType,
-  searchItemsInCategory,
   fullTextSearch,
+  addItem,
+  getItems,
 };
