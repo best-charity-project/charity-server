@@ -19,14 +19,14 @@ const authenticate = (email, password) => {
             return user._id;
           } else {
             throw Error('Wrong password');
+            return null;
           }
-          return user._id;
         });
     });
 };
 
 const register = data => {
-  const { email } = data;
+  const { password } = data;
   return passwordHelper
     .hashPassword(password)
     .then(({ hash, salt }) => {
@@ -34,13 +34,13 @@ const register = data => {
       data.passwordSalt = salt;
       const user = new User(data);
       return user
-        .save(data)
+        .save()
         .then(user => {
           return user._id;
         })
         .catch(err => {
           if (err && (11000 === err.code || 11001 === err.code)) {
-            reject(new Error('Your email is already taken'));
+            throw new Error('Your email is already taken');
           }
         });
     })
