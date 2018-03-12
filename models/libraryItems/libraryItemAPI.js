@@ -10,9 +10,15 @@ const searchByType = typeName => libraryItem.find({ type: typeName });
 
 const searchItemsInCategory = searchQuery => libraryItem.find(searchQuery);
 
-const fullTextSearch = textSearch =>
+const fullTextSearch = search =>
   libraryItem
-    .find({ $text: { $search: textSearch } }, { score: { $meta: 'textScore' } })
+    .find(
+      {
+        type: { $in: search.type.split('&') },
+        $text: { $search: search.textSearch },
+      },
+      { score: { $meta: 'textScore' } },
+    )
     .sort({ score: { $meta: 'textScore' } })
     .exec();
 

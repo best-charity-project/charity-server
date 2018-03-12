@@ -33,8 +33,8 @@ const libraryRoutes = router => {
       res.json(items);
     });
   });
-  router.route('/search/:textSearch').get((req, res) => {
-    fullTextSearch(req.params.textSearch).then(items => {
+  router.route('/search/:textSearch/:type').get((req, res) => {
+    fullTextSearch(req.params).then(items => {
       res.json(items);
     });
   });
