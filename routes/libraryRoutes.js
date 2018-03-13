@@ -13,7 +13,6 @@ const libraryRoutes = router => {
     .get((req, res) => {
       getItems(req.query)
         .then(items => {
-          console.log(items);
           res.json(items);
         })
         .catch(err => {

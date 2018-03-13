@@ -8,18 +8,17 @@ const addItem = item => {
 
 const getItems = searchQuery => {
   const { categoryTag, type, approved } = searchQuery;
-  const onlyApproved = searchQuery.approved;
   if (
     categoryTag &&
     isValidQuery(categoryTag) &&
     type &&
     isValidQuery(type) &&
-    onlyApproved
+    approved
   ) {
     return libraryItem.find({
-      categoryTag,
-      type,
-      approved: onlyApproved,
+      categoryTag: searchQuery.categoryTag,
+      type: searchQuery.type,
+      approved: searchQuery.approved,
     });
   } else {
     return Promise.reject(new Error('Invalid queries'));
