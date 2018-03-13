@@ -17,7 +17,7 @@ const EducationSchema = new Schema({
     type: String,
     required: true,
   },
-  district: {
+  regionDistrict: {
     type: String,
     required: true,
   },
@@ -25,7 +25,7 @@ const EducationSchema = new Schema({
     type: String,
     required: true,
   },
-  township: {
+  cityDistrict: {
     type: String,
   },
   typeOfUO: {
