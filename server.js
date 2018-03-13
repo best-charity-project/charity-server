@@ -1,5 +1,5 @@
 const express = require('express');
-const { URLSearchParams } = require('url');
+
 const app = express();
 const bodyParser = require('body-parser');
 const router = require('./routes/Routes');
@@ -21,7 +21,6 @@ app.use((req, res, next) => {
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept',
   );
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   next();
 });
 
