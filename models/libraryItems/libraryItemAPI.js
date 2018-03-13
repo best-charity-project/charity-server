@@ -30,8 +30,7 @@ const fullTextSearch = searchParams => {
         },
         { score: { $meta: 'textScore' } },
       )
-      .sort({ score: { $meta: 'textScore' } })
-      .exec();
+      .sort({ score: { $meta: 'textScore' } });
   } else {
     return Promise.reject(new Error('Invalid queries'));
   }
