@@ -16,13 +16,12 @@ const getItems = searchQuery => {
 };
 
 const fullTextSearch = searchParams => {
-  let types = JSON.parse(searchParams.types);
+  const types = JSON.parse(searchParams.types);
   if (
     searchParams.types &&
     searchParams.textSearch &&
     types.every(isValidQuery)
   ) {
-    console.log(searchParams);
     return libraryItem
       .find(
         {
