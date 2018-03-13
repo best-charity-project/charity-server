@@ -35,6 +35,7 @@ const fullTextSearch = searchParams => {
     return Promise.reject(new Error('Invalid queries'));
   }
 };
+
 module.exports = {
   fullTextSearch,
   addItem,
