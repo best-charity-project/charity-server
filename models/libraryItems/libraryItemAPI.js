@@ -16,9 +16,9 @@ const getItems = searchQuery => {
     approved
   ) {
     return libraryItem.find({
-      categoryTag: searchQuery.categoryTag,
-      type: searchQuery.type,
-      approved: searchQuery.approved,
+      categoryTag,
+      type,
+      approved,
     });
   } else {
     return Promise.reject(new Error('Invalid queries'));
