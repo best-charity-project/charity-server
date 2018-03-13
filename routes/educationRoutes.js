@@ -1,6 +1,7 @@
 const {
   addEducation,
 } = require('../models/education/educationAPI');
+
 const educationRoutes = router => {
   router
     .route('/education')

@@ -28,7 +28,7 @@ const EducationSchema = new Schema({
   cityDistrict: {
     type: String,
   },
-  typeOfUO: {
+  educationalInstitiution: {
     type: String,
     required: true,
   },
@@ -40,5 +40,6 @@ const EducationSchema = new Schema({
     type: String,
   },
 });
+
 const Education = mongoose.model('education', EducationSchema);
 module.exports = Education;
