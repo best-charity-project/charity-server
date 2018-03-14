@@ -14,9 +14,12 @@ const authenticate = (email, password) => {
       }
       return passwordHelper
         .verify(password, user.password, user.passwordSalt)
-        .then(result => {
-          if (result) {
-            return user._id;
+        .then(isMatch => {
+          if (isMatch) {
+            return {
+              userId: user._id,
+              admin: user.admin,
+            };
           } else {
             throw Error('Wrong password');
             return null;
@@ -36,7 +39,10 @@ const register = data => {
       return user
         .save()
         .then(user => {
-          return user._id;
+          return {
+            userId: user._id,
+            admin: user.admin,
+          };
         })
         .catch(err => {
           if (err && (11000 === err.code || 11001 === err.code)) {
