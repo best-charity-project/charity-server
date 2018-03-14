@@ -38,6 +38,7 @@ const fullTextSearch = searchParams => {
     return Promise.reject(new Error('Invalid queries'));
   }
 };
+
 const getPendingItems = () => libraryItem.find({ approved: false });
 
 module.exports = {
