@@ -18,7 +18,6 @@ const getItems = searchQuery => {
   return Promise.reject(new Error('Invalid queries'));
 };
 
-<<<<<<< HEAD
 const fullTextSearch = searchParams => {
   const types = JSON.parse(searchParams.types);
   if (
@@ -39,9 +38,7 @@ const fullTextSearch = searchParams => {
     return Promise.reject(new Error('Invalid queries'));
   }
 };
-=======
 const getPendingItems = () => libraryItem.find({ approved: false });
->>>>>>> 9a31bd3ba0169085ea3ae01599d3b74b974dc831
 
 module.exports = {
   fullTextSearch,
