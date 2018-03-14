@@ -28,6 +28,8 @@ const LibraryItemSchema = new Schema({
   },
 });
 
+LibraryItemSchema.index({ title: 'text', description: 'text' });
+
 const LibraryItem = mongoose.model('libraryItem', LibraryItemSchema);
 
 module.exports = LibraryItem;

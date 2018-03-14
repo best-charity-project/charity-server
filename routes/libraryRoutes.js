@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   addItem,
   getItems,
+  fullTextSearch,
   getPendingItems,
   acceptPendingItem,
 } = require('../models/libraryItems/libraryItemAPI');
@@ -27,6 +28,11 @@ const libraryRoutes = router => {
         });
       });
     });
+  router.route('/library/search').get((req, res) => {
+    fullTextSearch(req.query).then(items => {
+      res.json(items);
+    });
+  });
   router.route('/library/pending').get((req, res) => {
     getPendingItems(req.query)
       .then(items => {
