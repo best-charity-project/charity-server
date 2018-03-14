@@ -27,6 +27,7 @@ const LibraryItemSchema = new Schema({
     default: false,
   },
 });
+
 const LibraryItem = mongoose.model('libraryItem', LibraryItemSchema);
 
 module.exports = LibraryItem;
