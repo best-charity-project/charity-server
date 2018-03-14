@@ -41,9 +41,20 @@ const fullTextSearch = searchParams => {
 
 const getPendingItems = () => libraryItem.find({ approved: false });
 
+const acceptPendingItem = id =>
+  libraryItem.findById(id).then(item => {
+    item.set({ approved: true });
+    item.save();
+  });
+
+const deleteLibraryItem = id =>
+  libraryItem.findById(id).then(item => item.remove());
+
 module.exports = {
   fullTextSearch,
   addItem,
   getItems,
   getPendingItems,
+  acceptPendingItem,
+  deleteLibraryItem,
 };
