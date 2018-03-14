@@ -20,8 +20,15 @@ const getItems = searchQuery => {
 
 const getPendingItems = () => libraryItem.find({ approved: false });
 
+const acceptPendingItem = id =>
+  libraryItem.findById(id).then(item => {
+    item.set({ approved: true });
+    item.save();
+  });
+
 module.exports = {
   addItem,
   getItems,
   getPendingItems,
+  acceptPendingItem,
 };

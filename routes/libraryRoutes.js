@@ -5,6 +5,7 @@ const {
   addItem,
   getItems,
   getPendingItems,
+  acceptPendingItem,
 } = require('../models/libraryItems/libraryItemAPI');
 
 const libraryRoutes = router => {
@@ -34,6 +35,13 @@ const libraryRoutes = router => {
       .catch(err => {
         res.status(400).json(err.message);
       });
+  });
+  router.route('/library/:_id').put((req, res) => {
+    acceptPendingItem(req.params._id).then(() => {
+      res.json({
+        message: 'Pending item was accepted by admin!',
+      });
+    });
   });
   return router;
 };
