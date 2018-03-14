@@ -18,9 +18,31 @@ const getItems = searchQuery => {
   return Promise.reject(new Error('Invalid queries'));
 };
 
+const fullTextSearch = searchParams => {
+  const types = JSON.parse(searchParams.types);
+  if (
+    searchParams.types &&
+    searchParams.textSearch &&
+    types.every(isValidQuery)
+  ) {
+    return libraryItem
+      .find(
+        {
+          type: { $in: types },
+          $text: { $search: searchParams.textSearch },
+        },
+        { score: { $meta: 'textScore' } },
+      )
+      .sort({ score: { $meta: 'textScore' } });
+  } else {
+    return Promise.reject(new Error('Invalid queries'));
+  }
+};
+
 const getPendingItems = () => libraryItem.find({ approved: false });
 
 module.exports = {
+  fullTextSearch,
   addItem,
   getItems,
   getPendingItems,
