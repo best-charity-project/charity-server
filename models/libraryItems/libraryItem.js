@@ -24,7 +24,10 @@ const LibraryItemSchema = new Schema({
   },
 });
 
-LibraryItemSchema.index({ title: 'text', description: 'text' });
+LibraryItemSchema.index({ title: 'text', description: 'text' }).func();
+let func = function() {
+  console.log('dd');
+};
 
 const LibraryItem = mongoose.model('libraryItem', LibraryItemSchema);
 
