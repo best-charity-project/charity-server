@@ -22,6 +22,10 @@ const LibraryItemSchema = new Schema({
     type: String,
     required: true,
   },
+  approved: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 LibraryItemSchema.index({ title: 'text', description: 'text' });
