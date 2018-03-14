@@ -1,6 +1,4 @@
 const express = require('express');
-
-const router = express.Router();
 const { addItem, getItems } = require('../models/libraryItems/libraryItemAPI');
 
 const libraryRoutes = router => {
