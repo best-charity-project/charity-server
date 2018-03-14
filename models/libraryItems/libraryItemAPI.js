@@ -47,10 +47,14 @@ const acceptPendingItem = id =>
     item.save();
   });
 
+const deleteLibraryItem = id =>
+  libraryItem.findById(id).then(item => item.remove());
+
 module.exports = {
   fullTextSearch,
   addItem,
   getItems,
   getPendingItems,
   acceptPendingItem,
+  deleteLibraryItem,
 };

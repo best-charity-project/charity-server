@@ -7,6 +7,7 @@ const {
   fullTextSearch,
   getPendingItems,
   acceptPendingItem,
+  deleteLibraryItem,
 } = require('../models/libraryItems/libraryItemAPI');
 
 const libraryRoutes = router => {
@@ -42,13 +43,22 @@ const libraryRoutes = router => {
         res.status(400).json(err.message);
       });
   });
-  router.route('/library/:_id').put((req, res) => {
-    acceptPendingItem(req.params._id).then(() => {
-      res.json({
-        message: 'Pending item was accepted by admin!',
+  router
+    .route('/library/:_id')
+    .put((req, res) => {
+      acceptPendingItem(req.params._id).then(() => {
+        res.json({
+          message: 'Pending item was accepted by admin!',
+        });
+      });
+    })
+    .delete((req, res) => {
+      deleteLibraryItem(req.params._id).then(() => {
+        res.json({
+          message: 'Library item was deleted by admin!',
+        });
       });
     });
-  });
   return router;
 };
 
