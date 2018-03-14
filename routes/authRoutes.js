@@ -1,41 +1,47 @@
 const express = require('express');
 
 const router = express.Router();
+const passport = require('passport');
 const { register, authenticate } = require('../models/users/userAPI');
 
 const authRoutes = router => {
-  router.route('/signup').post((req, res) => {
-    register(req.body)
-      .then(userId => {
-        res.json({
+  router.route('/signup').post((req, res, next) => {
+    return passport.authenticate('local-signup', (err, token, userInfo) => {
+      if (err) {
+        return res.json({ error: err.message });
+      }
+      if (userInfo) {
+        return res.json({
           authenticated: true,
           message: 'Your account was created successfully!',
-          userId,
+          token,
+          userInfo,
         });
-      })
-      .catch(err => {
-        if (err) {
-          res.json({ error: err.message });
-        }
-      });
+      }
+    })(req, res, next);
   });
-
-  router.route('/login').post((req, res) => {
-    authenticate(req.body.email, req.body.password)
-      .then(userId => {
-        res.json({
-          authenticated: true,
-          userId,
-        });
-      })
-      .catch(err => {
-        if (err) {
-          res.status(401).json({
-            authenticated: false,
-            error: err.message,
-          });
-        }
+  router
+    .route('/auth-info')
+    .get(passport.authenticate('jwt-auth', { session: false }), (req, res) => {
+      res.json({
+        authenticated: true,
+        userInfo: req.user,
       });
+    });
+  router.route('/login').post((req, res, next) => {
+    return passport.authenticate('local-login', (err, token, userInfo) => {
+      if (err) {
+        return res.status(401).json({
+          authenticated: false,
+          error: err.message,
+        });
+      }
+      return res.json({
+        authenticated: true,
+        token,
+        userInfo,
+      });
+    })(req, res, next);
   });
   return router;
 };
