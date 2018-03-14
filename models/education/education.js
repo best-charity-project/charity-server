@@ -25,9 +25,6 @@ const EducationSchema = new Schema({
     type: String,
     required: true,
   },
-  cityDistrict: {
-    type: String,
-  },
   educationalInstitiution: {
     type: String,
     required: true,
