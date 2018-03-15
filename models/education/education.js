@@ -25,7 +25,7 @@ const EducationSchema = new Schema({
     type: String,
     required: true,
   },
-  educationalInstitiution: {
+  educationalInstitution: {
     type: String,
     required: true,
   },
@@ -33,7 +33,7 @@ const EducationSchema = new Schema({
     type: Number,
     required: true,
   },
-  programm: {
+  program: {
     type: String,
   },
 });
