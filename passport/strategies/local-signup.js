@@ -1,5 +1,6 @@
 const passport = require('passport');
 const userAPI = require('../../models/users/userAPI');
+const isValidEmail = require('./isValidEmail');
 const LocalStrategy = require('passport-local').Strategy;
 const generateToken = require('./generateToken');
 
@@ -19,6 +20,9 @@ module.exports = new LocalStrategy(
       city: req.body.city.trim(),
       reasonForRegistration: req.body.reasonForRegistration.trim(),
     };
+    if (!isValidEmail(userData.email)) {
+      return done({ message: 'Invalid email address' }, null);
+    }
     userAPI
       .register(userData)
       .then(userInfo => {
