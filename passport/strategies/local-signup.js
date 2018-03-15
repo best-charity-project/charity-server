@@ -1,4 +1,3 @@
-const passport = require('passport');
 const userAPI = require('../../models/users/userAPI');
 const isValidEmail = require('./isValidEmail');
 const LocalStrategy = require('passport-local').Strategy;

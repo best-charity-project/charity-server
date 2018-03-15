@@ -1,5 +1,3 @@
-const passport = require('passport');
-const userAPI = require('../../models/users/userAPI');
 const jwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const { jwtSecret } = require('../../configs/config');
