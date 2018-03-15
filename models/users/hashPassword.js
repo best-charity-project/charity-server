@@ -26,7 +26,6 @@ function hashPassword(password, salt) {
         if (err) {
           return reject(err);
         }
-
         salt = salt.toString('hex');
         crypto.pbkdf2(
           password,
