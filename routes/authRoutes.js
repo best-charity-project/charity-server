@@ -1,6 +1,4 @@
-const express = require('express');
 const passport = require('passport');
-const { register, authenticate } = require('../models/users/userAPI');
 
 const authRoutes = router => {
   router.route('/signup').post((req, res, next) => {
