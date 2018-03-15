@@ -7,7 +7,6 @@ const { jwtSecret } = require('../../configs/config');
 const opts = {};
 opts.secretOrKey = jwtSecret;
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.ignoreExpiration = true;
 
 module.exports = new jwtStrategy(opts, (jwt_payload, done) => {
   const user = jwt_payload.sub;
