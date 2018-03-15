@@ -18,6 +18,7 @@ const authenticate = (email, password) => {
           if (isMatch) {
             return {
               userId: user._id,
+              name: user.name,
               admin: user.admin,
             };
           } else {
@@ -41,6 +42,7 @@ const register = data => {
         .then(user => {
           return {
             userId: user._id,
+            name: user.name,
             admin: user.admin,
           };
         })
