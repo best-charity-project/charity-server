@@ -6,6 +6,6 @@ const locationsSchema = new Schema({
   name: { type: String, required: true },
 });
 
-const Locations = mongoose.model('regions', locationsSchema);
+const Locations = mongoose.model('locations', locationsSchema);
 
 module.exports = Locations;
