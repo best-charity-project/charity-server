@@ -1,5 +1,6 @@
 const libraryItem = require('./libraryItem');
-const isValidQuery = require('./isValidLibraryQuery');
+const isValidQuery = require('../utils/isValidLibraryQuery');
+const isValidObjectId = require('../utils/isValidObjectId');
 
 const addItem = item => {
   const itemToAdd = new libraryItem(item);
@@ -50,6 +51,20 @@ const acceptPendingItem = id =>
 const deleteLibraryItem = id =>
   libraryItem.findById(id).then(item => item.remove());
 
+const getItemById = id => {
+  if (isValidObjectId(id)) {
+    return libraryItem.findById(id);
+  } else {
+    return Promise.reject(new Error('Invalid news id'));
+  }
+};
+
+const updateLibraryItem = (id, updatedData) =>
+  getItemById(id).then(item => {
+    item.set(updatedData);
+    item.save();
+  });
+
 module.exports = {
   fullTextSearch,
   addItem,
@@ -57,4 +72,6 @@ module.exports = {
   getPendingItems,
   acceptPendingItem,
   deleteLibraryItem,
+  getItemById,
+  updateLibraryItem,
 };
