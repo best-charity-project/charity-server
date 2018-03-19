@@ -63,13 +63,6 @@ const libraryRoutes = router => {
             message: 'Pending item was accepted by admin!',
           });
         })
-        .catch(err => {
-          if (err) {
-            res.status(501).json({
-              message: 'Error during document acception',
-            });
-          }
-        });
     })
     .delete((req, res) => {
       deleteLibraryItem(req.params._id).then(() => {
