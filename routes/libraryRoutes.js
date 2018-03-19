@@ -48,21 +48,16 @@ const libraryRoutes = router => {
   router
     .route('/library/:_id')
     .get((req, res) => {
-      getItemById(req.params._id)
-        .then(item => {
-          res.json(item);
-        })
-        .catch(err => {
-          res.status(400).json(err.message);
-        });
+      getItemById(req.params._id).then(item => {
+        res.json(item);
+      });
     })
     .put((req, res) => {
-      acceptPendingItem(req.params._id)
-        .then(() => {
-          res.json({
-            message: 'Pending item was accepted by admin!',
-          });
-        })
+      acceptPendingItem(req.params._id).then(() => {
+        res.json({
+          message: 'Pending item was accepted by admin!',
+        });
+      });
     })
     .delete((req, res) => {
       deleteLibraryItem(req.params._id).then(() => {
