@@ -8,8 +8,6 @@ const {
   getPendingItems,
   acceptPendingItem,
   deleteLibraryItem,
-  getItemById,
-  updateLibraryItem,
 } = require('../models/libraryItems/libraryItemAPI');
 
 const libraryRoutes = router => {
@@ -47,11 +45,6 @@ const libraryRoutes = router => {
   });
   router
     .route('/library/:_id')
-    .get((req, res) => {
-      getItemById(req.params._id).then(item => {
-        res.json(item);
-      });
-    })
     .put((req, res) => {
       acceptPendingItem(req.params._id).then(() => {
         res.json({
@@ -66,13 +59,6 @@ const libraryRoutes = router => {
         });
       });
     });
-  router.route('/library/edit/:_id').put((req, res) => {
-    updateLibraryItem(req.params._id, req.body).then(() => {
-      res.json({
-        message: 'Library item was updated successfully!',
-      });
-    });
-  });
   return router;
 };
 
