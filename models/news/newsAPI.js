@@ -1,5 +1,5 @@
 const News = require('./news');
-const isValidObjectId = require('../isValidObjectId');
+const isValidObjectId = require('../utils/isValidObjectId');
 
 const addOneNews = news => {
   const newsToAdd = new News(news);

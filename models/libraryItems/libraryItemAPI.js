@@ -1,6 +1,6 @@
 const libraryItem = require('./libraryItem');
-const isValidQuery = require('./isValidLibraryQuery');
-const isValidObjectId = require('../isValidObjectId');
+const isValidQuery = require('../utils/isValidLibraryQuery');
+const isValidObjectId = require('../utils/isValidObjectId');
 
 const addItem = item => {
   const itemToAdd = new libraryItem(item);
