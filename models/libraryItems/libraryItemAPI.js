@@ -45,7 +45,7 @@ const getPendingItems = () => libraryItem.find({ approved: false });
 const acceptPendingItem = id =>
   libraryItem.findById(id).then(item => {
     item.set({ approved: true });
-    return item.save();
+    item.save();
   });
 
 const deleteLibraryItem = id =>
@@ -62,7 +62,7 @@ const getItemById = id => {
 const updateLibraryItem = (id, updatedData) =>
   getItemById(id).then(item => {
     item.set(updatedData);
-    return item.save();
+    item.save();
   });
 
 module.exports = {
