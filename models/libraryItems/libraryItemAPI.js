@@ -45,7 +45,7 @@ const getPendingItems = () => libraryItem.find({ approved: false });
 const acceptPendingItem = id =>
   libraryItem.findById(id).then(item => {
     item.set({ approved: true });
-    item.save();
+    return item.save();
   });
 
 const deleteLibraryItem = id =>
