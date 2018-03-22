@@ -9,7 +9,7 @@ const authRoutes = router => {
       if (userInfo) {
         return res.json({
           authenticated: true,
-          message: 'Your account was created successfully!',
+          message: 'Ваш аккаунт был успешно создан!',
           token,
           userInfo,
         });

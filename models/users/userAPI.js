@@ -9,13 +9,13 @@ const authenticate = (email, password) => {
     .exec()
     .then(user => {
       if (!user) {
-        throw Error('User not found');
+        throw Error('Пользователь не существует');
       }
       return passwordHelper
         .verify(password, user.password, user.passwordSalt)
         .then(isMatch => {
           if (!isMatch) {
-            throw Error('Wrong password');
+            throw Error('Неверный пароль');
           }
           return {
             userId: user._id,
@@ -45,7 +45,7 @@ const register = data => {
         })
         .catch(err => {
           if (11000 === err.code || 11001 === err.code) {
-            throw new Error('Your email is already taken');
+            throw new Error('Ваш email уже занят');
           }
         });
     })
