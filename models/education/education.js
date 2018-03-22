@@ -18,7 +18,7 @@ const EducationSchema = new Schema({
     required: true,
   },
   regionDistrict: {
-    type: String,
+    type: Array,
     required: true,
   },
   city: {
