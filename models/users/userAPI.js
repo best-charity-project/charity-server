@@ -45,7 +45,10 @@ const register = data => {
         })
         .catch(err => {
           if (11000 === err.code || 11001 === err.code) {
-            throw new Error('Ваш email уже занят');
+            throw Error('Ваш email уже занят');
+          }
+          if (err.name === 'ValidationError') {
+            throw Error('Проверьте правильность заполненных полей формы');
           }
         });
     })
