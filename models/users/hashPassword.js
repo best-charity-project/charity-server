@@ -7,7 +7,7 @@ const DIGEST = 'sha256';
 
 function hashPassword(password, salt) {
   return new Promise((resolve, reject) => {
-    if (arguments.length === 2) {
+    if (salt) {
       crypto.pbkdf2(
         password,
         salt,
@@ -52,11 +52,7 @@ function verify(password, hash, salt) {
   return new Promise((resolve, reject) => {
     hashPassword(password, salt)
       .then(hashedPassword => {
-        if (hash === hashedPassword) {
-          resolve(true);
-        } else {
-          resolve(false);
-        }
+        resolve(hash === hashedPassword);
       })
       .catch(err => {
         reject(err);
