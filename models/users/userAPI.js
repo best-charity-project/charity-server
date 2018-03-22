@@ -10,21 +10,18 @@ const authenticate = (email, password) => {
     .then(user => {
       if (!user) {
         throw Error('User not found');
-        return null;
       }
       return passwordHelper
         .verify(password, user.password, user.passwordSalt)
         .then(isMatch => {
-          if (isMatch) {
-            return {
-              userId: user._id,
-              name: user.name,
-              admin: user.admin,
-            };
-          } else {
+          if (!isMatch) {
             throw Error('Wrong password');
-            return null;
           }
+          return {
+            userId: user._id,
+            name: user.name,
+            admin: user.admin,
+          };
         });
     });
 };
@@ -47,15 +44,13 @@ const register = data => {
           };
         })
         .catch(err => {
-          if (err && (11000 === err.code || 11001 === err.code)) {
+          if (11000 === err.code || 11001 === err.code) {
             throw new Error('Your email is already taken');
           }
         });
     })
     .catch(err => {
-      if (err) {
-        throw err;
-      }
+      throw err;
     });
 };
 
