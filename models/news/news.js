@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const newsSchema = new Schema({
   title: { type: String, required: true },
-  shortDescription: { type: String, required: true },
-  url: { type: String, required: true },
+  newsText: { type: String, required: true },
+  url: { type: String },
   date: { type: Date, default: Date.now },
   tag: String,
 });
