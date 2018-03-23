@@ -1,6 +1,6 @@
 const {
   getLocations,
-} = require('../models/education/locations/locationsAPi');
+} = require('../models/education/locations/locationsAPI');
 
 const locationsRoutes = router => {
   router
