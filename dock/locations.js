@@ -2,8 +2,8 @@
 // you should run the command promt in directory where you have installed the MongoDB
 // and copy that file to it
 // after that you should run the next command
-// it will create a new collection with list of districts
 // mongo -u <userName> -p <password> --host <host> --port <port> --authenticationDatabase <DBname> locations.js
+// it will create a new collection with list of districts
 
 db = db.getSiblingDB('charity_project');
 
