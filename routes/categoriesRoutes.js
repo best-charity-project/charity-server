@@ -2,6 +2,7 @@ const {
   addCategory,
   getCategories,
 } = require('../models/categories/categoriesAPI');
+
 const categoriesRoutes = router => {
   router
     .route('/categories')
