@@ -1,9 +1,9 @@
 /*eslint-disable */
-// you should run the command promt in directory where you have installed the MongoDB
+// you should run the command prompt in directory where you have installed the MongoDB
 // and copy this file to that directory
 // after that you should run the next command
 // mongo -u <userName> -p <password> --host <host> --port <port> --authenticationDatabase <DBname> locations.js
-// it will create a new collection with list of districts
+// it will create a new collection with the list of districts
 
 db = db.getSiblingDB('charity_project');
 
