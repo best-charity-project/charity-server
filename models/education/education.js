@@ -18,17 +18,14 @@ const EducationSchema = new Schema({
     required: true,
   },
   regionDistrict: {
-    type: String,
+    type: Array,
     required: true,
   },
   city: {
     type: String,
     required: true,
   },
-  cityDistrict: {
-    type: String,
-  },
-  educationalInstitiution: {
+  educationalInstitution: {
     type: String,
     required: true,
   },
@@ -36,7 +33,7 @@ const EducationSchema = new Schema({
     type: Number,
     required: true,
   },
-  programm: {
+  program: {
     type: String,
   },
 });
