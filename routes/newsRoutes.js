@@ -15,11 +15,17 @@ const newsRoutes = router => {
       });
     })
     .post((req, res) => {
-      addOneNews(req.body).then(() => {
-        res.json({
-          message: 'News was created successfully!',
+      addOneNews(req.body)
+        .then(() => {
+          res.json({
+            message: 'Новость была успешно добавлена.',
+          });
+        })
+        .catch(err => {
+          res.status(500).json({
+            error: 'Ошибка сервера. Повторите попытку позже.',
+          });
         });
-      });
     });
   router
     .route('/news/:_id')

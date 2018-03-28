@@ -25,11 +25,17 @@ const libraryRoutes = router => {
         });
     })
     .post((req, res) => {
-      addItem(req.body).then(() => {
-        res.json({
-          message: 'Document was created successfully!',
+      addItem(req.body)
+        .then(() => {
+          res.json({
+            message: 'Информация была добавлена в библиотеку.',
+          });
+        })
+        .catch(err => {
+          res.status(500).json({
+            error: 'Ошибка сервера. Повторите попытку позже.',
+          });
         });
-      });
     });
   router.route('/library/search').get((req, res) => {
     fullTextSearch(req.query).then(items => {
