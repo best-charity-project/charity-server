@@ -17,7 +17,7 @@ const EducationSchema = new Schema({
     type: String,
     required: true,
   },
-  regionDistrict: {
+  regionDistricts: {
     type: Array,
     required: true,
   },
@@ -35,6 +35,10 @@ const EducationSchema = new Schema({
   },
   program: {
     type: String,
+  },
+  userId: {
+    type: String,
+    required: true,
   },
 });
 
