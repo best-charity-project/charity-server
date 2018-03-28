@@ -1,5 +1,6 @@
 const {
   addEducation,
+  getEducation,
 } = require('../models/education/educationAPI');
 
 const educationRoutes = router => {
@@ -11,7 +12,12 @@ const educationRoutes = router => {
           message: 'education route was created successfully!',
         });
       });
-    });
+    })
+    .get((req, res) => {
+      getEducation().then(education => {
+        res.json(education);
+      });
+    })
   return router;
 };
 
