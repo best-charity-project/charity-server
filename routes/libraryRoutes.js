@@ -32,8 +32,8 @@ const libraryRoutes = router => {
           });
         })
         .catch(err => {
-          res.status(500).json({
-            error: 'Ошибка сервера. Повторите попытку позже',
+          res.status(400).json({
+            error: 'Запрос не может быть выполнен. Повторите попытку позже',
           });
         });
     });
@@ -67,8 +67,8 @@ const libraryRoutes = router => {
           });
         })
         .catch(err => {
-          res.status(500).json({
-            error: 'Ошибка сервера. Повторите попытку позже',
+          res.status(400).json({
+            error: 'Запрос не может быть выполнен. Повторите попытку позже',
           });
         });
     })
@@ -80,8 +80,8 @@ const libraryRoutes = router => {
           });
         })
         .catch(err => {
-          res.status(500).json({
-            error: 'Ошибка сервера. Повторите попытку позже',
+          res.status(400).json({
+            error: 'Запрос не может быть выполнен. Повторите попытку позже',
           });
         });
     });
@@ -93,8 +93,8 @@ const libraryRoutes = router => {
         });
       })
       .catch(err => {
-        res.status(500).json({
-          error: 'Ошибка сервера. Повторите попытку позже',
+        res.status(400).json({
+          error: 'Запрос не может быть выполнен. Повторите попытку позже',
         });
       });
   });
