@@ -11,8 +11,8 @@ const locationsRoutes = require('./locations/locationsRoutes');
 router.use('/news', newsRoutes);
 router.use('/categories', categoriesRoutes);
 router.use('/library', libraryRoutes);
-router.use('/locations', libraryRoutes);
-router.use('/education', libraryRoutes);
+router.use('/locations', locationsRoutes);
+router.use('/education', educationRoutes);
 router = authRoutes(router);
 
 module.exports = router;
