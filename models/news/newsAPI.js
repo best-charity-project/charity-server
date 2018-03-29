@@ -16,12 +16,12 @@ const getNewsById = id => {
   }
 };
 
-const updateNews = (id, updatedNews) => {
-  return getNewsById(id).then(news => {
+const updateNews = (id, updatedNews) =>
+  getNewsById(id).then(news => {
     news.set(updatedNews);
     return news.save();
   });
-};
+
 const deleteNews = id => News.findById(id).then(news => news.remove());
 
 module.exports = { addOneNews, getNews, getNewsById, updateNews, deleteNews };

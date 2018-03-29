@@ -59,12 +59,11 @@ const getItemById = id => {
   }
 };
 
-const updateLibraryItem = (id, updatedData) => {
-  return getItemById(id).then(item => {
+const updateLibraryItem = (id, updatedData) =>
+  getItemById(id).then(item => {
     item.set(updatedData);
     return item.save();
   });
-};
 
 module.exports = {
   fullTextSearch,
