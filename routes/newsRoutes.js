@@ -18,12 +18,12 @@ const newsRoutes = router => {
       addOneNews(req.body)
         .then(() => {
           res.json({
-            message: 'Новость была успешно добавлена.',
+            message: 'Новость была успешно добавлена',
           });
         })
         .catch(err => {
           res.status(500).json({
-            error: 'Ошибка сервера. Повторите попытку позже.',
+            error: 'Ошибка сервера. Повторите попытку позже',
           });
         });
     });
@@ -39,18 +39,30 @@ const newsRoutes = router => {
         });
     })
     .put((req, res) => {
-      updateNews(req.params._id, req.body).then(() => {
-        res.json({
-          message: 'News was updated successfully!',
+      updateNews(req.params._id, req.body)
+        .then(news => {
+          res.json({
+            message: 'Новость была отредактирована',
+          });
+        })
+        .catch(err => {
+          res.status(500).json({
+            error: 'Ошибка сервера. Повторите попытку позже',
+          });
         });
-      });
     })
     .delete((req, res) => {
-      deleteNews(req.params._id).then(() => {
-        res.json({
-          message: 'News was deleted!',
+      deleteNews(req.params._id)
+        .then(() => {
+          res.json({
+            message: 'Новость была удалена',
+          });
+        })
+        .catch(err => {
+          res.status(500).json({
+            error: 'Ошибка сервера. Повторите попытку позже',
+          });
         });
-      });
     });
   return router;
 };
