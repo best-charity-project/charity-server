@@ -17,7 +17,7 @@ const EducationSchema = new Schema({
     type: String,
     required: true,
   },
-  regionDistrict: {
+  regionDistricts: {
     type: Array,
     required: true,
   },
@@ -29,12 +29,20 @@ const EducationSchema = new Schema({
     type: String,
     required: true,
   },
-  year: {
+  firstYear: {
+    type: Number,
+    required: true,
+  },
+  lastYear: {
     type: Number,
     required: true,
   },
   program: {
     type: String,
+  },
+  userId: {
+    type: String,
+    required: true,
   },
 });
 

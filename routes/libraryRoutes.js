@@ -1,4 +1,6 @@
 const express = require('express');
+const passport = require('passport');
+const isAdmin = require('../middlewares/isAdmin');
 
 const router = express.Router();
 const {
@@ -24,7 +26,7 @@ const libraryRoutes = router => {
           res.status(400).json(err.message);
         });
     })
-    .post((req, res) => {
+    .post(passport.authenticate('jwt-auth', { session: false }), (req, res) => {
       addItem(req.body)
         .then(() => {
           res.json({
@@ -58,46 +60,60 @@ const libraryRoutes = router => {
         res.json(item);
       });
     })
-    .put((req, res) => {
-      acceptPendingItem(req.params._id)
-        .then(() => {
-          res.json({
-            message:
-              'Заявка на добавление документа была одобрена администратором',
+    .put(
+      passport.authenticate('jwt-auth', { session: false }),
+      isAdmin,
+      (req, res) => {
+        acceptPendingItem(req.params._id)
+          .then(() => {
+            res.json({
+              message:
+                'Заявка на добавление документа была одобрена администратором',
+            });
+          })
+          .catch(err => {
+            res.status(400).json({
+              error: 'Запрос не может быть выполнен. Повторите попытку позже',
+            });
           });
-        })
-        .catch(err => {
-          res.status(400).json({
-            error: 'Запрос не может быть выполнен. Повторите попытку позже',
+      },
+    )
+    .delete(
+      passport.authenticate('jwt-auth', { session: false }),
+      isAdmin,
+      (req, res) => {
+        deleteLibraryItem(req.params._id)
+          .then(() => {
+            res.json({
+              message: 'Документ был удален',
+            });
+          })
+          .catch(err => {
+            res.status(400).json({
+              error: 'Запрос не может быть выполнен. Повторите попытку позже',
+            });
           });
-        });
-    })
-    .delete((req, res) => {
-      deleteLibraryItem(req.params._id)
-        .then(() => {
-          res.json({
-            message: 'Документ был удален',
+      },
+    );
+  router
+    .route('/library/edit/:_id')
+    .put(
+      passport.authenticate('jwt-auth', { session: false }),
+      isAdmin,
+      (req, res) => {
+        updateLibraryItem(req.params._id, req.body)
+          .then(() => {
+            res.json({
+              message: 'Документ был отредактирован',
+            });
+          })
+          .catch(err => {
+            res.status(400).json({
+              error: 'Запрос не может быть выполнен. Повторите попытку позже',
+            });
           });
-        })
-        .catch(err => {
-          res.status(400).json({
-            error: 'Запрос не может быть выполнен. Повторите попытку позже',
-          });
-        });
-    });
-  router.route('/library/edit/:_id').put((req, res) => {
-    updateLibraryItem(req.params._id, req.body)
-      .then(() => {
-        res.json({
-          message: 'Документ был отредактирован',
-        });
-      })
-      .catch(err => {
-        res.status(400).json({
-          error: 'Запрос не может быть выполнен. Повторите попытку позже',
-        });
-      });
-  });
+      },
+    );
   return router;
 };
 
