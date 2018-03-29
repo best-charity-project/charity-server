@@ -29,8 +29,8 @@ const EducationSchema = new Schema({
     type: String,
     required: true,
   },
-  year: {
-    type: Number,
+  arrayOfYears: {
+    type: Array,
     required: true,
   },
   program: {
