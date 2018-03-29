@@ -1,3 +1,6 @@
+const passport = require('passport');
+const isAdmin = require('../middlewares/isAdmin');
+
 const {
   getNews,
   addOneNews,
@@ -14,13 +17,17 @@ const newsRoutes = router => {
         res.json(news);
       });
     })
-    .post((req, res) => {
-      addOneNews(req.body).then(() => {
-        res.json({
-          message: 'News was created successfully!',
+    .post(
+      passport.authenticate('jwt-auth', { session: false }),
+      isAdmin,
+      (req, res) => {
+        addOneNews(req.body).then(() => {
+          res.json({
+            message: 'News was created successfully!',
+          });
         });
-      });
-    });
+      },
+    );
   router
     .route('/news/:_id')
     .get((req, res) => {
@@ -32,20 +39,28 @@ const newsRoutes = router => {
           res.status(400).json(err.message);
         });
     })
-    .put((req, res) => {
-      updateNews(req.params._id, req.body).then(() => {
-        res.json({
-          message: 'News was updated successfully!',
+    .put(
+      passport.authenticate('jwt-auth', { session: false }),
+      isAdmin,
+      (req, res) => {
+        updateNews(req.params._id, req.body).then(() => {
+          res.json({
+            message: 'News was updated successfully!',
+          });
         });
-      });
-    })
-    .delete((req, res) => {
-      deleteNews(req.params._id).then(() => {
-        res.json({
-          message: 'News was deleted!',
+      },
+    )
+    .delete(
+      passport.authenticate('jwt-auth', { session: false }),
+      isAdmin,
+      (req, res) => {
+        deleteNews(req.params._id).then(() => {
+          res.json({
+            message: 'News was deleted!',
+          });
         });
-      });
-    });
+      },
+    );
   return router;
 };
 
