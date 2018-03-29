@@ -1,23 +1,16 @@
-const {
-  addEducation,
-  getEducation,
-} = require('../models/education/educationAPI');
+const { addEducation } = require('../models/education/educationAPI');
+const passport = require('passport');
 
 const educationRoutes = router => {
   router
     .route('/education')
-    .post((req, res) => {
+    .post(passport.authenticate('jwt-auth', { session: false }), (req, res) => {
       addEducation(req.body).then(() => {
         res.json({
           message: 'education route was created successfully!',
         });
       });
-    })
-    .get((req, res) => {
-      getEducation().then(education => {
-        res.json(education);
-      });
-    })
+    });
   return router;
 };
 

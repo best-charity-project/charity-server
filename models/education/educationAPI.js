@@ -5,6 +5,4 @@ const addEducation = education => {
   return educationToAdd.save();
 };
 
-const getEducation = () => Education.find({});
-
-module.exports = { addEducation, getEducation };
+module.exports = { addEducation };
