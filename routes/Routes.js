@@ -1,11 +1,11 @@
 const express = require('express');
 let router = express.Router();
-const newsRoutes = require('./newsRoutes');
-const libraryRoutes = require('./libraryRoutes');
-const categoriesRoutes = require('./categoriesRoutes');
-const authRoutes = require('./authRoutes');
-const educationRoutes = require('./educationRoutes');
-const locationsRoutes = require('./locationsRoutes');
+const newsRoutes = require('./news/newsRoutes');
+const libraryRoutes = require('./library/libraryRoutes');
+const categoriesRoutes = require('./categories/categoriesRoutes');
+const authRoutes = require('./auth/authRoutes');
+const educationRoutes = require('./education/educationRoutes');
+const locationsRoutes = require('./locations/locationsRoutes');
 
 router = newsRoutes(router);
 router = categoriesRoutes(router);
