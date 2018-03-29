@@ -59,25 +59,44 @@ const libraryRoutes = router => {
       });
     })
     .put((req, res) => {
-      acceptPendingItem(req.params._id).then(() => {
-        res.json({
-          message: 'Pending item was accepted by admin!',
+      acceptPendingItem(req.params._id)
+        .then(() => {
+          res.json({
+            message:
+              'Заявка на добавление документа была одобрена администратором',
+          });
+        })
+        .catch(err => {
+          res.status(500).json({
+            error: 'Ошибка сервера. Повторите попытку позже',
+          });
         });
-      });
     })
     .delete((req, res) => {
-      deleteLibraryItem(req.params._id).then(() => {
-        res.json({
-          message: 'Library item was deleted by admin!',
+      deleteLibraryItem(req.params._id)
+        .then(() => {
+          res.json({
+            message: 'Документ был удален',
+          });
+        })
+        .catch(err => {
+          res.status(500).json({
+            error: 'Ошибка сервера. Повторите попытку позже',
+          });
         });
-      });
     });
   router.route('/library/edit/:_id').put((req, res) => {
-    updateLibraryItem(req.params._id, req.body).then(() => {
-      res.json({
-        message: 'Library item was updated successfully!',
+    updateLibraryItem(req.params._id, req.body)
+      .then(() => {
+        res.json({
+          message: 'Документ был отредактирован',
+        });
+      })
+      .catch(err => {
+        res.status(500).json({
+          error: 'Ошибка сервера. Повторите попытку позже',
+        });
       });
-    });
   });
   return router;
 };
