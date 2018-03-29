@@ -1,8 +1,8 @@
+const express = require('express');
+let router = express.Router();
+
 const getLocations = require('./getLocations');
 
-const locationsRoutes = router => {
-  router = getLocations(router);
-  return router;
-};
+router = getLocations(router);
 
-module.exports = locationsRoutes;
+module.exports = router;

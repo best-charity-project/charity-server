@@ -1,7 +1,7 @@
 const { getNewsById } = require('../../models/news/newsAPI');
 
 module.exports = router => {
-  router.route('/news/:_id').get((req, res) => {
+  router.route(':_id').get((req, res) => {
     getNewsById(req.params._id)
       .then(news => {
         res.json(news);

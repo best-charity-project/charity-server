@@ -1,7 +1,7 @@
 const { getPendingItems } = require('../../models/libraryItems/libraryItemAPI');
 
 module.exports = router => {
-  router.route('/library/pending').get((req, res) => {
+  router.route('/pending').get((req, res) => {
     getPendingItems(req.query)
       .then(items => {
         res.json(items);

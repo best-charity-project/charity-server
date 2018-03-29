@@ -1,8 +1,8 @@
+const express = require('express');
+let router = express.Router();
+
 const addEducation = require('./addEducation');
 
-const educationRoutes = router => {
-  router = addEducation(router);
-  return router;
-};
+router = addEducation(router);
 
-module.exports = educationRoutes;
+module.exports = router;

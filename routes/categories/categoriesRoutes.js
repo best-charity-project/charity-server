@@ -1,10 +1,10 @@
+const express = require('express');
+let router = express.Router();
+
 const getCategories = require('./getCategories');
 const addCategory = require('./addCategory');
 
-const categoriesRoutes = router => {
-  router = getCategories(router);
-  router = addCategory(router);
-  return router;
-};
+router = getCategories(router);
+router = addCategory(router);
 
-module.exports = categoriesRoutes;
+module.exports = router;

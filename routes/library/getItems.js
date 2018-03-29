@@ -1,7 +1,7 @@
 const { getItems } = require('../../models/libraryItems/libraryItemAPI');
 
 module.exports = router => {
-  router.route('/library').get((req, res) => {
+  router.route('/').get((req, res) => {
     getItems(req.query)
       .then(items => {
         res.json(items);
