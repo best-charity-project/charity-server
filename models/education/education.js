@@ -29,7 +29,11 @@ const EducationSchema = new Schema({
     type: String,
     required: true,
   },
-  year: {
+  firstYear: {
+    type: Number,
+    required: true,
+  },
+  lastYear: {
     type: Number,
     required: true,
   },
