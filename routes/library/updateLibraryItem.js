@@ -11,11 +11,17 @@ module.exports = router => {
       passport.authenticate('jwt-auth', { session: false }),
       isAdmin,
       (req, res) => {
-        updateLibraryItem(req.params._id, req.body).then(() => {
-          res.json({
-            message: 'Library item was updated successfully!',
+        updateLibraryItem(req.params._id, req.body)
+          .then(() => {
+            res.json({
+              message: 'Документ был отредактирован',
+            });
+          })
+          .catch(err => {
+            res.status(400).json({
+              message: 'Запрос не может быть выполнен. Повторите попытку позже',
+            });
           });
-        });
       },
     );
   return router;

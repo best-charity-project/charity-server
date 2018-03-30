@@ -11,11 +11,18 @@ module.exports = router => {
       passport.authenticate('jwt-auth', { session: false }),
       isAdmin,
       (req, res) => {
-        acceptPendingItem(req.params._id).then(() => {
-          res.json({
-            message: 'Pending item was accepted by admin!',
+        acceptPendingItem(req.params._id)
+          .then(() => {
+            res.json({
+              message:
+                'Заявка на добавление документа была одобрена администратором',
+            });
+          })
+          .catch(err => {
+            res.status(400).json({
+              message: 'Запрос не может быть выполнен. Повторите попытку позже',
+            });
           });
-        });
       },
     );
   return router;

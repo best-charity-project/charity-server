@@ -11,11 +11,17 @@ module.exports = router => {
       passport.authenticate('jwt-auth', { session: false }),
       isAdmin,
       (req, res) => {
-        deleteLibraryItem(req.params._id).then(() => {
-          res.json({
-            message: 'Library item was deleted by admin!',
+        deleteLibraryItem(req.params._id)
+          .then(() => {
+            res.json({
+              message: 'Документ был удален',
+            });
+          })
+          .catch(err => {
+            res.status(400).json({
+              message: 'Запрос не может быть выполнен. Повторите попытку позже',
+            });
           });
-        });
       },
     );
   return router;

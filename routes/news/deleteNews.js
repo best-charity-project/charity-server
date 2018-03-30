@@ -9,11 +9,17 @@ module.exports = router => {
       passport.authenticate('jwt-auth', { session: false }),
       isAdmin,
       (req, res) => {
-        deleteNews(req.params._id).then(() => {
-          res.json({
-            message: 'News was deleted!',
+        deleteNews(req.params._id)
+          .then(() => {
+            res.json({
+              message: 'Новость была удалена',
+            });
+          })
+          .catch(err => {
+            res.status(400).json({
+              message: 'Запрос не может быть выполнен. Повторите попытку позже',
+            });
           });
-        });
       },
     );
   return router;

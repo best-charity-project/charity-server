@@ -77,7 +77,7 @@ const getItemById = id => {
 const updateLibraryItem = (id, updatedData) =>
   getItemById(id).then(item => {
     item.set(updatedData);
-    item.save();
+    return item.save();
   });
 
 module.exports = {
