@@ -1,6 +1,7 @@
 const libraryItem = require('./libraryItem');
 const isValidQuery = require('../utils/isValidLibraryQuery');
 const isValidObjectId = require('../utils/isValidObjectId');
+const isValidAction = require('../utils/isValidAction');
 
 const addItem = item => {
   const itemToAdd = new libraryItem(item);
@@ -15,6 +16,20 @@ const getItems = searchQuery => {
       type,
       approved: true,
     });
+  }
+  return Promise.reject(new Error('Invalid queries'));
+};
+
+const getItemsAmount = searchQuery => {
+  const { categoryTag, type } = searchQuery;
+  if (categoryTag && isValidQuery(categoryTag) && type && isValidQuery(type)) {
+    return libraryItem
+      .count({
+        categoryTag,
+        type,
+        approved: true,
+      })
+      .exec();
   }
   return Promise.reject(new Error('Invalid queries'));
 };
@@ -74,4 +89,5 @@ module.exports = {
   deleteLibraryItem,
   getItemById,
   updateLibraryItem,
+  getItemsAmount,
 };
