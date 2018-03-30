@@ -27,7 +27,7 @@ const newsRoutes = router => {
           });
         });
       },
-    );
+  );
   router
     .route('/news/:_id')
     .get((req, res) => {
@@ -49,7 +49,7 @@ const newsRoutes = router => {
           });
         });
       },
-    )
+  )
     .delete(
       passport.authenticate('jwt-auth', { session: false }),
       isAdmin,
@@ -60,7 +60,7 @@ const newsRoutes = router => {
           });
         });
       },
-    );
+  );
   return router;
 };
 
