@@ -20,6 +20,7 @@ const authenticate = (email, password) => {
           return {
             userId: user._id,
             name: user.name,
+            email: user.email,
             admin: user.admin,
           };
         });
@@ -58,4 +59,26 @@ const register = data => {
     });
 };
 
-module.exports = { register, authenticate };
+const changePassword = (email, oldPassword, newPassword) => {
+  return User.findOne({ email })
+    .select('+password +passwordSalt')
+    .exec()
+    .then(user => {
+      return passwordHelper
+        .verify(oldPassword, user.password, user.passwordSalt)
+        .then(isMatch => {
+          if (!isMatch) {
+            throw Error('Неверный пароль');
+          }
+          return passwordHelper
+            .hashPassword(newPassword)
+            .then(({ hash, salt }) => {
+              user.password = hash;
+              user.passwordSalt = salt;
+              return user.save();
+            });
+        });
+    });
+};
+
+module.exports = { register, authenticate, changePassword };
