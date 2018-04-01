@@ -11,8 +11,8 @@ const transport = nodemailer.createTransport({
 });
 
 module.exports = {
-  sendEmail(to, reason) {
-    const mailOptions = getMailOptions(to, reason);
+  sendEmail(to, reason, data) {
+    const mailOptions = getMailOptions(to, reason, data);
     return new Promise((resolve, reject) => {
       transport.sendMail(mailOptions, (err, info) => {
         if (err) {
