@@ -1,30 +1,36 @@
 const User = require('./user');
 const passwordHelper = require('./hashPassword');
+const randomstring = require('randomstring');
 
 const getUserByEmail = email => User.findOne({ email });
 
-const authenticate = (email, password) => {
-  return User.findOne({ email })
+const getUser = email =>
+  User.findOne({ email })
     .select('+password +passwordSalt')
     .exec()
     .then(user => {
       if (!user) {
         throw Error('Пользователь не существует');
       }
-      return passwordHelper
-        .verify(password, user.password, user.passwordSalt)
-        .then(isMatch => {
-          if (!isMatch) {
-            throw Error('Неверный пароль');
-          }
-          return {
-            userId: user._id,
-            name: user.name,
-            email: user.email,
-            admin: user.admin,
-          };
-        });
+      return user;
     });
+
+const authenticate = (email, password) => {
+  return getUser(email).then(user => {
+    return passwordHelper
+      .verify(password, user.password, user.passwordSalt)
+      .then(isMatch => {
+        if (!isMatch) {
+          throw Error('Неверный пароль');
+        }
+        return {
+          userId: user._id,
+          name: user.name,
+          email: user.email,
+          admin: user.admin,
+        };
+      });
+  });
 };
 
 const register = data => {
@@ -60,25 +66,40 @@ const register = data => {
 };
 
 const changePassword = (email, oldPassword, newPassword) => {
-  return User.findOne({ email })
-    .select('+password +passwordSalt')
-    .exec()
-    .then(user => {
-      return passwordHelper
-        .verify(oldPassword, user.password, user.passwordSalt)
-        .then(isMatch => {
-          if (!isMatch) {
-            throw Error('Неверный пароль');
-          }
-          return passwordHelper
-            .hashPassword(newPassword)
-            .then(({ hash, salt }) => {
-              user.password = hash;
-              user.passwordSalt = salt;
-              return user.save();
-            });
-        });
-    });
+  return getUser(email).then(user => {
+    return passwordHelper
+      .verify(oldPassword, user.password, user.passwordSalt)
+      .then(isMatch => {
+        if (!isMatch) {
+          throw Error('Неверный пароль');
+        }
+        return passwordHelper
+          .hashPassword(newPassword)
+          .then(({ hash, salt }) => {
+            user.password = hash;
+            user.passwordSalt = salt;
+            return user.save();
+          });
+      });
+  });
 };
 
-module.exports = { register, authenticate, changePassword };
+const restorePassword = email => {
+  const newPassword = randomstring.generate({ length: 12 });
+
+  return getUser(email).then(user => {
+    return passwordHelper.hashPassword(newPassword).then(({ hash, salt }) => {
+      user.password = hash;
+      user.passwordSalt = salt;
+      return user.save().then(() => newPassword);
+    });
+  });
+};
+
+module.exports = {
+  getUser,
+  register,
+  authenticate,
+  changePassword,
+  restorePassword,
+};
