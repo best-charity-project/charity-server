@@ -9,7 +9,7 @@ module.exports = router => {
       (req, res) => {
         deleteEducation(req.params.id).then(() => {
           res.json({
-            message: 'Карта маршрута была удалена',
+            message: 'Карта образовательного маршрута была удалена',
           });
         });
       },

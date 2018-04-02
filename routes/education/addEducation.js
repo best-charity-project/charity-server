@@ -9,7 +9,7 @@ module.exports = router => {
       (req, res) => {
         addEducation(req.body).then(() => {
           res.json({
-            message: 'education route was created successfully!',
+            message: 'Карта образовательного маршрута была успешно создана',
           });
         });
       });

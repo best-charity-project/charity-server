@@ -9,7 +9,7 @@ module.exports = router => {
       (req, res) => {
         updateEducation(req.params.id, req.body).then(() => {
           res.json({
-            message: 'Карта образовательного маршрута была успешно изменена!',
+            message: 'Карта образовательного маршрута была успешно изменена',
           });
         });
       },
