@@ -17,7 +17,7 @@ const getEducationById = id => {
   if (isValidObjectId(id)) {
     return Education.findById(id);
   }
-  return Promise.reject(new Error('Некоректный ID  карты образовательного маршрута'));
+  return Promise.reject(new Error('Некоректный ID карты образовательного маршрута'));
 };
 
 const updateEducation = (id, updatedEducation) => {
