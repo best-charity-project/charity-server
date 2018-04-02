@@ -16,9 +16,8 @@ const filterRoutes = filterParams => {
       firstYear: { $gte: filterParams.firstYear },
       lastYear: { $lte: filterParams.lastYear },
     });
-  } else {
-    return Promise.reject(new Error('Invalid queries'));
   }
+  return Promise.reject(new Error('Invalid queries'));
 };
 
 module.exports = { addEducation, filterRoutes };
