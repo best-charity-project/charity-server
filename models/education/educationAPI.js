@@ -6,25 +6,26 @@ const addEducation = education => {
   return educationToAdd.save();
 };
 
-const getEducationByUserId = userId => {
-  return Education.find({ userId });
+const getEducation = query => {
+  const { userId } = query;
+  if (isValidObjectId(userId)) {
+    return Education.find(query);
+  }
 };
 
 const getEducationById = id => {
   if (isValidObjectId(id)) {
-    return education.findById(id);
-  } else {
-    return Promise.reject(new Error('Invalid educational route id'));
+    return Education.findById(id);
   }
+  return Promise.reject(new Error('Invalid educational route id'));
 };
 
-const updateEducation = (id, updatedNews) =>
-  getEducationById(id).then(education => {
-    education.set(updatedNews);
+const updateEducation = (id, updatedEducation) => {
+  return getEducationById(id).then(education => {
+    education.set(updatedEducation);
     return education.save();
-    console.log(updatedNews)
   });
+}
+const deleteEducation = id => Education.findById(id).then(education => education.remove());
 
-const deleteEducation = id => Education.findById(id).then(Education => Education.remove());
-
-module.exports = { addEducation, getEducationByUserId, getEducationById, updateEducation, deleteEducation };
+module.exports = { addEducation, getEducation, getEducationById, updateEducation, deleteEducation };

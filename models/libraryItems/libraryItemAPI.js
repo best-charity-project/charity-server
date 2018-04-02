@@ -33,7 +33,7 @@ const fullTextSearch = searchParams => {
           $text: { $search: searchParams.textSearch },
         },
         { score: { $meta: 'textScore' } },
-      )
+    )
       .sort({ score: { $meta: 'textScore' } });
   } else {
     return Promise.reject(new Error('Invalid queries'));
@@ -62,7 +62,7 @@ const getItemById = id => {
 const updateLibraryItem = (id, updatedData) =>
   getItemById(id).then(item => {
     item.set(updatedData);
-    item.save();
+    return item.save();
   });
 
 module.exports = {
