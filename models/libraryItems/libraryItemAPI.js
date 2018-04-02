@@ -9,7 +9,7 @@ const addItem = item => {
 
 const getItems = searchQuery => {
   const { categoryTag, type } = searchQuery;
-  if (categoryTag && isValidQuery(categoryTag) && type && isValidQuery(type)) {
+  if (isValidQuery(categoryTag) && isValidQuery(type)) {
     return libraryItem.find({
       categoryTag,
       type,
@@ -21,7 +21,7 @@ const getItems = searchQuery => {
 
 const getItemsAmount = searchQuery => {
   const { categoryTag, type } = searchQuery;
-  if (categoryTag && isValidQuery(categoryTag) && type && isValidQuery(type)) {
+  if (isValidQuery(categoryTag) && isValidQuery(type)) {
     return libraryItem
       .count({
         categoryTag,
@@ -69,7 +69,7 @@ const getItemById = id => {
   if (isValidObjectId(id)) {
     return libraryItem.findById(id);
   } else {
-    return Promise.reject(new Error('Invalid news id'));
+    return Promise.reject(new Error('Invalid library item id'));
   }
 };
 
