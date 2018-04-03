@@ -1,7 +1,7 @@
 const Education = require('./education');
 const {
   isValidString,
-  isValidNumber,
+  isValidYear,
 } = require('../utils/isValidEducationalRouteQuery');
 const isValidObjectId = require('../utils/isValidObjectId');
 
@@ -24,19 +24,17 @@ const filterRoutes = filterParams => {
     isValidString(filterParams.regionDistricts) &&
     isValidString(filterParams.city) &&
     isValidString(filterParams.educationalInstitution) &&
-    isValidNumber(filterParams.firstYear) &&
-    isValidNumber(filterParams.lastYear);
-  if (
-    filterParams.program &&
-    isValidString(filterParams.program) &&
-    validationCheck
-  ) {
+    isValidYear(filterParams.firstYear) &&
+    isValidYear(filterParams.lastYear);
+
+  if (isValidString(filterParams.program)) {
     query.program = filterParams.program;
-    return Education.find(query);
   }
+
   if (validationCheck) {
     return Education.find(query);
   }
+
   return Promise.reject(new Error('Invalid queries'));
 };
 

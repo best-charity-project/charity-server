@@ -1,5 +1,5 @@
 const isValidString = value => /[А-Яа-яЁё\s\.\-]/.test(value);
 
-const isValidNumber = value => /[0-9]{4}/.test(value);
+const isValidYear = value => /[0-9]{4}/.test(value);
 
-module.exports = { isValidString, isValidNumber };
+module.exports = { isValidString, isValidYear };
