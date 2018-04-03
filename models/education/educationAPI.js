@@ -41,7 +41,7 @@ const filterRoutes = filterParams => {
 const getEducation = query => {
   const { userId } = query;
   if (isValidObjectId(userId)) {
-    return Education.find(query);
+    return Education.find({ userId });
   }
 };
 
