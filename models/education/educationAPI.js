@@ -19,18 +19,22 @@ const filterRoutes = filterParams => {
     firstYear: { $gte: filterParams.firstYear },
     lastYear: { $lte: filterParams.lastYear },
   };
-  const check =
+  const validationCheck =
     isValidString(filterParams.region) &&
     isValidString(filterParams.regionDistricts) &&
     isValidString(filterParams.city) &&
     isValidString(filterParams.educationalInstitution) &&
     isValidNumber(filterParams.firstYear) &&
     isValidNumber(filterParams.lastYear);
-  if (filterParams.program && isValidString(filterParams.program) && check) {
+  if (
+    filterParams.program &&
+    isValidString(filterParams.program) &&
+    validationCheck
+  ) {
     query.program = filterParams.program;
     return Education.find(query);
   }
-  if (check) {
+  if (validationCheck) {
     return Education.find(query);
   }
   return Promise.reject(new Error('Invalid queries'));
