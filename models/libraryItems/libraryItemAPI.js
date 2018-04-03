@@ -9,12 +9,26 @@ const addItem = item => {
 
 const getItems = searchQuery => {
   const { categoryTag, type } = searchQuery;
-  if (categoryTag && isValidQuery(categoryTag) && type && isValidQuery(type)) {
+  if (isValidQuery(categoryTag) && isValidQuery(type)) {
     return libraryItem.find({
       categoryTag,
       type,
       approved: true,
     });
+  }
+  return Promise.reject(new Error('Invalid queries'));
+};
+
+const getItemsAmount = searchQuery => {
+  const { categoryTag, type } = searchQuery;
+  if (isValidQuery(categoryTag) && isValidQuery(type)) {
+    return libraryItem
+      .count({
+        categoryTag,
+        type,
+        approved: true,
+      })
+      .exec();
   }
   return Promise.reject(new Error('Invalid queries'));
 };
@@ -33,7 +47,7 @@ const fullTextSearch = searchParams => {
           $text: { $search: searchParams.textSearch },
         },
         { score: { $meta: 'textScore' } },
-      )
+    )
       .sort({ score: { $meta: 'textScore' } });
   } else {
     return Promise.reject(new Error('Invalid queries'));
@@ -55,7 +69,7 @@ const getItemById = id => {
   if (isValidObjectId(id)) {
     return libraryItem.findById(id);
   } else {
-    return Promise.reject(new Error('Invalid news id'));
+    return Promise.reject(new Error('Invalid library item id'));
   }
 };
 
@@ -74,4 +88,5 @@ module.exports = {
   deleteLibraryItem,
   getItemById,
   updateLibraryItem,
+  getItemsAmount,
 };
