@@ -1,6 +1,5 @@
 const { addItem } = require('../../models/libraryItems/libraryItemAPI');
 const passport = require('passport');
-const isAdmin = require('../../middlewares/isAdmin');
 
 module.exports = router => {
   router

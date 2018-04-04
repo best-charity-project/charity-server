@@ -4,12 +4,14 @@ const passport = require('passport');
 module.exports = router => {
   router
     .route('/')
-    .post(passport.authenticate('jwt-auth', { session: false }), (req, res) => {
-      addEducation(req.body).then(() => {
-        res.json({
-          message: 'education route was created successfully!',
+    .post(
+      passport.authenticate('jwt-auth', { session: false }),
+      (req, res) => {
+        addEducation(req.body).then(() => {
+          res.json({
+            message: 'Карта образовательного маршрута была успешно создана',
+          });
         });
       });
-    });
   return router;
 };
