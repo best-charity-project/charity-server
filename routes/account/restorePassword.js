@@ -1,7 +1,7 @@
 const { restorePassword } = require('../../models/users/userAPI');
 const passport = require('passport');
 const isValidEmail = require('../../passport/strategies/isValidEmail');
-const mailer = require('../../nodemailer/mailer');
+const sendEmail = require('../../nodemailer/sendEmail');
 
 module.exports = router => {
   router.route('/restore-password').post((req, res) => {
@@ -10,8 +10,7 @@ module.exports = router => {
     }
     restorePassword(req.body.email.trim())
       .then(newPassword => {
-        mailer
-          .sendEmail(req.body.email, 'restorePassword', newPassword)
+        sendEmail(req.body.email, 'restorePassword', newPassword)
           .then(() => {
             res.json({
               message: 'Новый пароль был отправлен на Вашу почту',

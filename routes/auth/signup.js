@@ -1,5 +1,5 @@
 const passport = require('passport');
-const mailer = require('../../nodemailer/mailer');
+const sendEmail = require('../../nodemailer/sendEmail');
 
 module.exports = router => {
   router.route('/signup').post((req, res, next) => {
@@ -8,7 +8,7 @@ module.exports = router => {
         return res.json({ error: err.message });
       }
       if (userInfo) {
-        mailer.sendEmail(userInfo.email, 'registration');
+        sendEmail(userInfo.email, 'registration');
         return res.json({
           authenticated: true,
           message: 'Ваш аккаунт был успешно создан!',

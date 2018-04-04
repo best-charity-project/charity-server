@@ -86,7 +86,6 @@ const changePassword = (email, oldPassword, newPassword) => {
 
 const restorePassword = email => {
   const newPassword = randomstring.generate({ length: 12 });
-
   return getUser(email).then(user => {
     return passwordHelper.hashPassword(newPassword).then(({ hash, salt }) => {
       user.password = hash;
