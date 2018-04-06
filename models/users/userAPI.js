@@ -1,6 +1,8 @@
 const User = require('./user');
 const passwordHelper = require('./hashPassword');
 const randomstring = require('randomstring');
+const { passTokenExpires } = require('../../configs/config.json');
+const hasTokenExpired = require('./hasTokenExpired');
 
 const getUserByEmail = email => User.findOne({ email });
 
@@ -65,22 +67,36 @@ const register = data => {
     });
 };
 
-const changePassword = (email, oldPassword, newPassword) => {
-  return getUser(email).then(user => {
-    return passwordHelper
-      .verify(oldPassword, user.password, user.passwordSalt)
-      .then(isMatch => {
-        if (!isMatch) {
-          throw Error('Неверный пароль');
-        }
-        return passwordHelper
-          .hashPassword(newPassword)
-          .then(({ hash, salt }) => {
-            user.password = hash;
-            user.passwordSalt = salt;
-            return user.save();
-          });
+const changePassword = (user, oldPassword, newPassword) => {
+  return passwordHelper
+    .verify(oldPassword, user.password, user.passwordSalt)
+    .then(isMatch => {
+      if (!isMatch) {
+        throw Error('Неверный пароль');
+      }
+      return passwordHelper.hashPassword(newPassword).then(({ hash, salt }) => {
+        user.password = hash;
+        user.passwordSalt = salt;
+        return user.save();
       });
+    });
+};
+
+const changeForgottenPassword = (user, newPassword) => {
+  return passwordHelper.hashPassword(newPassword).then(({ hash, salt }) => {
+    user.password = hash;
+    user.passwordSalt = salt;
+    user.passChangeToken = null;
+    return user.save();
+  });
+};
+
+const getUserByToken = token => {
+  return User.findOne({ 'passChangeToken.token': token }).then(user => {
+    if (!user) {
+      throw Error('Пользователь не существует');
+    }
+    return user;
   });
 };
 
@@ -95,10 +111,34 @@ const restorePassword = email => {
   });
 };
 
+const validateToken = token => {
+  return User.findOne({ 'passChangeToken.token': token })
+    .exec()
+    .then(user => {
+      if (!user || hasTokenExpired(user.passChangeToken)) {
+        throw Error(
+          'Ссылка недействительна, сделайте новый запрос на изменение пароля',
+        );
+      }
+      return true;
+    });
+};
+
+const saveTokenInUser = (email, token) => {
+  getUser(email).then(user => {
+    user.passChangeToken = token;
+    user.save();
+  });
+};
+
 module.exports = {
   getUser,
   register,
   authenticate,
   changePassword,
+  changeForgottenPassword,
   restorePassword,
+  validateToken,
+  saveTokenInUser,
+  getUserByToken,
 };
