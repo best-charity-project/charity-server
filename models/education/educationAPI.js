@@ -14,15 +14,17 @@ const filterRoutes = filterParams => {
   const query = {
     region: filterParams.region,
     regionDistricts: filterParams.regionDistricts,
-    city: filterParams.city,
     educationalInstitution: filterParams.educationalInstitution,
-    firstYear: { $gte: filterParams.firstYear },
-    lastYear: { $lte: filterParams.lastYear },
+    firstYear: { $gte: filterParams.firstYear } && {
+      $lte: filterParams.lastYear,
+    },
+    lastYear: { $lte: filterParams.lastYear } && {
+      $gte: filterParams.firstYear,
+    },
   };
   const validationCheck =
     isValidString(filterParams.region) &&
     isValidString(filterParams.regionDistricts) &&
-    isValidString(filterParams.city) &&
     isValidString(filterParams.educationalInstitution) &&
     isValidYear(filterParams.firstYear) &&
     isValidYear(filterParams.lastYear);
