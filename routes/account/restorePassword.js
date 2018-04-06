@@ -1,27 +1,31 @@
-const { restorePassword } = require('../../models/users/userAPI');
-const passport = require('passport');
+const {
+  restorePassword,
+  saveTokenInUser,
+} = require('../../models/users/userAPI');
 const isValidEmail = require('../../passport/strategies/isValidEmail');
 const sendEmail = require('../../nodemailer/sendEmail');
+const generateToken = require('./generateToken');
+const { devUrlToChangePassword } = require('../../configs/config.json');
 
 module.exports = router => {
   router.route('/restore-password').post((req, res) => {
-    if (!isValidEmail(req.body.email.trim())) {
+    const email = req.body.email.trim();
+    if (!isValidEmail(email)) {
       res.status(400).json({ message: 'Некорректный адрес электронной почты' });
     }
-    restorePassword(req.body.email.trim())
-      .then(newPassword => {
-        sendEmail(req.body.email, 'restorePassword', newPassword)
-          .then(() => {
-            res.json({
-              message: 'Новый пароль был отправлен на Вашу почту',
-            });
-          })
-          .catch(err => {
-            res.status(500).json({ message: 'Ошибка сервера' });
-          });
+    const passChangeToken = generateToken();
+    const url = `${process.env.urlToChangePassword || devUrlToChangePassword}${
+      passChangeToken.token
+    }`;
+    saveTokenInUser(email, passChangeToken);
+    sendEmail(email, 'restorePassword', url)
+      .then(() => {
+        res.json({
+          message: 'Запрос на смену пароля был оправлен на Вашу почту',
+        });
       })
       .catch(err => {
-        res.json({ error: err.message });
+        res.status(500).json({ message: 'Ошибка сервера' });
       });
   });
   return router;
