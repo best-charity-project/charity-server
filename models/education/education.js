@@ -44,6 +44,10 @@ const EducationSchema = new Schema({
     type: String,
     required: true,
   },
+  regionIndex: {
+    type: Number,
+    required: true,
+  },
 });
 
 const Education = mongoose.model('education', EducationSchema);

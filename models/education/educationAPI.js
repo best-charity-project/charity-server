@@ -9,7 +9,7 @@ const addEducation = education => {
 const getEducation = query => {
   const { userId } = query;
   if (isValidObjectId(userId)) {
-    return Education.find(query);
+    return Education.find({ userId });
   }
 };
 
@@ -17,7 +17,9 @@ const getEducationById = id => {
   if (isValidObjectId(id)) {
     return Education.findById(id);
   }
-  return Promise.reject(new Error('Некоректный ID карты образовательного маршрута'));
+  return Promise.reject(
+    new Error('Некоректный ID карты образовательного маршрута'),
+  );
 };
 
 const updateEducation = (id, updatedEducation) => {
@@ -25,7 +27,14 @@ const updateEducation = (id, updatedEducation) => {
     education.set(updatedEducation);
     return education.save();
   });
-}
-const deleteEducation = id => Education.findById(id).then(education => education.remove());
+};
+const deleteEducation = id =>
+  Education.findById(id).then(education => education.remove());
 
-module.exports = { addEducation, getEducation, getEducationById, updateEducation, deleteEducation };
+module.exports = {
+  addEducation,
+  getEducation,
+  getEducationById,
+  updateEducation,
+  deleteEducation,
+};
