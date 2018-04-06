@@ -1,14 +1,14 @@
 const registration = () => {
   return {
     subject: 'Регистрация на сайте On-Info',
-    html: '<p>Спасибо за регистрацию!</p>',
+    text: 'Спасибо за регистрацию!',
   };
 };
 
-const restorePassword = password => {
+const restorePassword = url => {
   return {
     subject: 'On-Info: новый пароль',
-    html: `<p>Ваш новый пароль: ${password}</p>`,
+    text: `Для смены пароля, пожалуйста, перейдите по ссылке: ${url}`,
   };
 };
 
