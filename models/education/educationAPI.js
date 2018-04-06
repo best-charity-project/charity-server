@@ -28,6 +28,7 @@ const updateEducation = (id, updatedEducation) => {
     return education.save();
   });
 };
+
 const deleteEducation = id =>
   Education.findById(id).then(education => education.remove());
 
