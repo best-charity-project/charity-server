@@ -1,29 +1,38 @@
 const User = require('./user');
 const passwordHelper = require('./hashPassword');
+const randomstring = require('randomstring');
+const { passTokenExpires } = require('../../configs/config.json');
+const hasTokenExpired = require('./hasTokenExpired');
 
 const getUserByEmail = email => User.findOne({ email });
 
-const authenticate = (email, password) => {
-  return User.findOne({ email })
+const getUser = email =>
+  User.findOne({ email })
     .select('+password +passwordSalt')
     .exec()
     .then(user => {
       if (!user) {
         throw Error('Пользователь не существует');
       }
-      return passwordHelper
-        .verify(password, user.password, user.passwordSalt)
-        .then(isMatch => {
-          if (!isMatch) {
-            throw Error('Неверный пароль');
-          }
-          return {
-            userId: user._id,
-            name: user.name,
-            admin: user.admin,
-          };
-        });
+      return user;
     });
+
+const authenticate = (email, password) => {
+  return getUser(email).then(user => {
+    return passwordHelper
+      .verify(password, user.password, user.passwordSalt)
+      .then(isMatch => {
+        if (!isMatch) {
+          throw Error('Неверный пароль');
+        }
+        return {
+          userId: user._id,
+          name: user.name,
+          email: user.email,
+          admin: user.admin,
+        };
+      });
+  });
 };
 
 const register = data => {
@@ -40,6 +49,7 @@ const register = data => {
           return {
             userId: user._id,
             name: user.name,
+            email: user.email,
             admin: user.admin,
           };
         })
@@ -57,4 +67,78 @@ const register = data => {
     });
 };
 
-module.exports = { register, authenticate };
+const changePassword = (user, oldPassword, newPassword) => {
+  return passwordHelper
+    .verify(oldPassword, user.password, user.passwordSalt)
+    .then(isMatch => {
+      if (!isMatch) {
+        throw Error('Неверный пароль');
+      }
+      return passwordHelper.hashPassword(newPassword).then(({ hash, salt }) => {
+        user.password = hash;
+        user.passwordSalt = salt;
+        return user.save();
+      });
+    });
+};
+
+const changeForgottenPassword = (user, newPassword) => {
+  return passwordHelper.hashPassword(newPassword).then(({ hash, salt }) => {
+    user.password = hash;
+    user.passwordSalt = salt;
+    user.passChangeToken = null;
+    return user.save();
+  });
+};
+
+const getUserByToken = token => {
+  return User.findOne({ 'passChangeToken.token': token }).then(user => {
+    if (!user) {
+      throw Error('Пользователь не существует');
+    }
+    return user;
+  });
+};
+
+const restorePassword = email => {
+  const newPassword = randomstring.generate({ length: 12 });
+  return getUser(email).then(user => {
+    return passwordHelper.hashPassword(newPassword).then(({ hash, salt }) => {
+      user.password = hash;
+      user.passwordSalt = salt;
+      return user.save().then(() => newPassword);
+    });
+  });
+};
+
+const validateToken = token => {
+  return User.findOne({ 'passChangeToken.token': token })
+    .exec()
+    .then(user => {
+      if (!user || hasTokenExpired(user.passChangeToken)) {
+        throw Error(
+          'Ссылка недействительна, сделайте новый запрос на изменение пароля',
+        );
+      }
+      return true;
+    });
+};
+
+const saveTokenInUser = (email, token) => {
+  getUser(email).then(user => {
+    user.passChangeToken = token;
+    user.save();
+  });
+};
+
+module.exports = {
+  getUser,
+  register,
+  authenticate,
+  changePassword,
+  changeForgottenPassword,
+  restorePassword,
+  validateToken,
+  saveTokenInUser,
+  getUserByToken,
+};
