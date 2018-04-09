@@ -15,10 +15,10 @@ const filterRoutes = filterParams => {
     region: filterParams.region,
     regionDistricts: filterParams.regionDistricts,
     educationalInstitution: filterParams.educationalInstitution,
-    firstYear: { $gte: filterParams.firstYear } && {
+    firstYear: {
       $lte: filterParams.lastYear,
     },
-    lastYear: { $lte: filterParams.lastYear } && {
+    lastYear: {
       $gte: filterParams.firstYear,
     },
   };
