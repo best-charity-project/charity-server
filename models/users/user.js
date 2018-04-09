@@ -44,6 +44,10 @@ const UserSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  passChangeToken: {
+    type: Object,
+    default: null,
+  },
   createdAt: {
     type: Date,
     default: Date.now,
