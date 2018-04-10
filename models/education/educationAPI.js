@@ -22,12 +22,15 @@ const filterRoutes = filterParams => {
       $gte: filterParams.firstYear,
     },
   };
-  const validationCheck =
-    isValidString(filterParams.region) &&
-    isValidString(filterParams.regionDistricts) &&
-    isValidString(filterParams.educationalInstitution) &&
-    isValidYear(filterParams.firstYear) &&
-    isValidYear(filterParams.lastYear);
+  const validationCheck = () => {
+    return (
+      isValidString(filterParams.region) &&
+      isValidString(filterParams.regionDistricts) &&
+      isValidString(filterParams.educationalInstitution) &&
+      isValidYear(filterParams.firstYear) &&
+      isValidYear(filterParams.lastYear)
+    );
+  };
 
   if (isValidString(filterParams.program)) {
     query.program = filterParams.program;
