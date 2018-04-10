@@ -1,0 +1,11 @@
+{
+  "port": "",
+  "user": "",
+  "password": "",
+  "dbName": "",
+  "host": "",
+  "tokenExpires": "",
+  "passTokenExpires": "",
+  "jwtSecret": "",
+  "devUrlToChangePassword": ""
+}
