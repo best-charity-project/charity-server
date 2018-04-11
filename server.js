@@ -6,6 +6,7 @@ const router = require('./routes/Routes');
 const passport = require('passport');
 const connectToDatabase = require('./database/database');
 const configurePassport = require('./passport/configurePassport');
+const { devOrigin } = require('./configs/config.json');
 
 connectToDatabase();
 
@@ -22,7 +23,10 @@ app = configurePassport(app);
 const port = process.env.PORT || 8080;
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Origin',
+    `${devOrigin || process.env.origin}`,
+  );
   res.header(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept, Authorization',
