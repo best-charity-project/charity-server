@@ -1,10 +1,10 @@
 const nodemailer = require('nodemailer');
-const { service, user, pass } = require('../configs/nodemailerConfig.json');
+const { mailService, user, pass } = require('../configs/nodemailerConfig.json');
 
 module.exports = nodemailer.createTransport({
-  service,
+  service: mailService || process.env.mailService,
   auth: {
-    user,
-    pass,
+    user: user || process.env.user,
+    pass: pass || process.env.pass,
   },
 });
