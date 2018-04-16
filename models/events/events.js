@@ -21,6 +21,9 @@ const EventsSchema = new Schema({
   description: {
     type: String,
   },
+  url: {
+    type: String,
+  },
 });
 
 const Events = mongoose.model('event', EventsSchema);
