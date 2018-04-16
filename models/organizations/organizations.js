@@ -2,10 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const OrganizationsSchema = new Schema({
-  title: { type: String, required: true },
+  name: { type: String, required: true },
   shortDescription: { type: String, required: true },
   contacts: { type: String, required: true },
   url: { type: String },
+  approved: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Organization = mongoose.model('organization', OrganizationsSchema);

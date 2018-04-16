@@ -1,10 +1,10 @@
 const {
   addOrganization,
 } = require('../../models/organizations/organizationsAPI');
-// const passport = require('passport');
+const passport = require('passport');
 
 module.exports = router => {
-  router.route('/').post((req, res) => {
+  router.route('/').post(passport.authenticate('jwt-auth', { session: false }), (req, res) => {
     addOrganization(req.body)
       .then(() => {
         res.json({

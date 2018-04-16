@@ -5,6 +5,26 @@ const addOrganization = organization => {
   return organizationToAdd.save();
 };
 
-const getOrganizations = () => Organization.find({});
+const getOrganizations = () =>
+  Organization.find({
+    approved: true,
+  });
 
-module.exports = { addOrganization, getOrganizations };
+const getPendingOrganizations = () => Organization.find({ approved: false });
+
+const acceptPendingOrganization = id =>
+  Organization.findById(id).then(item => {
+    item.set({ approved: true });
+    item.save();
+  });
+
+const deleteOrganization = id =>
+  Organization.findById(id).then(item => item.remove());
+
+module.exports = {
+  addOrganization,
+  getOrganizations,
+  getPendingOrganizations,
+  acceptPendingOrganization,
+  deleteOrganization,
+};
