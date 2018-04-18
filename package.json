@@ -1,11 +1,12 @@
 {
-  "name": "server",
+  "name": "charity-server",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
+    "preinstall": "npm install pm2 -g",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "pm2-runtime configs/ecosystem.config.json"
   },
   "author": "",
   "license": "ISC",
