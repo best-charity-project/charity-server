@@ -1,12 +1,12 @@
 {
-  "port": "",
-  "user": "",
-  "password": "",
-  "dbName": "",
-  "host": "",
-  "tokenExpires": "",
-  "passTokenExpires": "",
-  "jwtSecret": "",
-  "devUrlToChangePassword": "",
-  "devOrigin": ""
+  "port": 19258,
+  "user": "maryakukharchuk",
+  "password": "godeldatebase1",
+  "dbName": "charity_project",
+  "host": "ds119258.mlab.com",
+  "tokenExpires": "1 day",
+  "passTokenExpires": 600000,
+  "jwtSecret": "890261f2234ff62fc0f5b581ad3fb3ab0e40f89e48f52024",
+  "devUrlToChangePassword": "http://localhost:3000/change-password/",
+  "devOrigin": "http://localhost:3000"
 }
