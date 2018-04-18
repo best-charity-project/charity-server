@@ -8,6 +8,7 @@ const authRoutes = require('./auth/authRoutes');
 const educationRoutes = require('./education/educationRoutes');
 const locationsRoutes = require('./locations/locationsRoutes');
 const accountRoutes = require('./account/accountRoutes');
+const organizationRoutes = require('./organizations/organizationRoutes');
 const eventsRoutes = require('./events/eventsRoutes');
 
 router.use('/news', newsRoutes);
@@ -16,6 +17,7 @@ router.use('/library', libraryRoutes);
 router.use('/locations', locationsRoutes);
 router.use('/education', educationRoutes);
 router.use('/account', accountRoutes);
+router.use('/organizations', organizationRoutes);
 router.use('/calendar', eventsRoutes);
 router = authRoutes(router);
 
