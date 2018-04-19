@@ -8,7 +8,6 @@ const addEvents = events => {
 
 const getEvents = query => {
   if (isValidNumber(query.count)) {
-    console.log(query.count);
     return Events.find({ start: { $gte: new Date() } }).sort({ start: 1 }).limit(parseInt(query.count));
   }
   else {
