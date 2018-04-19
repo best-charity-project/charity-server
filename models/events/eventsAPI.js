@@ -1,5 +1,4 @@
 const Events = require('./events');
-const isValidNumber = require('../utils/isValidNumber');
 
 const addEvents = events => {
   const eventsToAdd = new Events(events);
@@ -7,7 +6,7 @@ const addEvents = events => {
 };
 
 const getEvents = query => {
-  if (isValidNumber(query.count)) {
+  if (query.count) {
     return Events.find({ start: { $gte: new Date() } }).sort({ start: 1 }).limit(parseInt(query.count));
   }
   else {
