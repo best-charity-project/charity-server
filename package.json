@@ -1,11 +1,11 @@
 {
-  "name": "server",
+  "name": "charity-server",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "pm2-runtime configs/ecosystem.config.json"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +19,7 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "pm2": "^2.10.2",
     "randomstring": "^1.1.5"
   }
 }
