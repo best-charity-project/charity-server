@@ -7,11 +7,11 @@ const addEvents = events => {
 
 const getEvents = query => {
   if (query.count) {
-    return Events.find({ start: { $gte: new Date() } }).sort({ start: 1 }).limit(parseInt(query.count));
+    return Events.find({ start: { $gte: new Date() } })
+      .sort({ start: 1 })
+      .limit(parseInt(query.count));
   }
-  else {
-    return Events.find();
-  }
+  return Events.find();
 };
 
 module.exports = {
