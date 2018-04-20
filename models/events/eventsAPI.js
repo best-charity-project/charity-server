@@ -5,7 +5,14 @@ const addEvents = events => {
   return eventsToAdd.save();
 };
 
-const getEvents = () => Events.find();
+const getEvents = query => {
+  if (query.count) {
+    return Events.find({ start: { $gte: new Date() } })
+      .sort({ start: 1 })
+      .limit(parseInt(query.count));
+  }
+  return Events.find();
+};
 
 module.exports = {
   addEvents,
