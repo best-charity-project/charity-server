@@ -58,10 +58,10 @@ const updateLibraryItem = (id, updatedData) =>
     return item.save();
   });
 
-const moveItems = (from, to) =>
+const moveItems = (fromCategory, toCategory) =>
   libraryItem.update(
-    { categoryTag: from },
-    { categoryTag: to },
+    { categoryTag: fromCategory },
+    { categoryTag: toCategory },
     { multi: true },
   );
 
