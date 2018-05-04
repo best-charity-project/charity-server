@@ -1,5 +1,4 @@
 const libraryItem = require('./libraryItem');
-const isValidObjectId = require('../utils/isValidObjectId');
 
 const addItem = item => {
   const itemToAdd = new libraryItem(item);
@@ -13,14 +12,13 @@ const getItems = ({ categoryTag, type }) =>
     approved: true,
   });
 
-const getItemsAmount = searchQuery => {
-  return libraryItem
+const getItemsAmount = searchQuery =>
+  libraryItem
     .count({
       ...searchQuery,
       approved: true,
     })
     .exec();
-};
 
 const fullTextSearch = ({ textSearch, types }) =>
   libraryItem
@@ -44,13 +42,7 @@ const acceptPendingItem = id =>
 const deleteLibraryItem = id =>
   libraryItem.findById(id).then(item => item.remove());
 
-const getItemById = id => {
-  if (isValidObjectId(id)) {
-    return libraryItem.findById(id);
-  } else {
-    return Promise.reject(new Error('Invalid library item id'));
-  }
-};
+const getItemById = id => libraryItem.findById(id);
 
 const updateLibraryItem = (id, updatedData) =>
   getItemById(id).then(item => {
