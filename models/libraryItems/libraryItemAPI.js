@@ -1,5 +1,4 @@
 const libraryItem = require('./libraryItem');
-const isValidQuery = require('../utils/isValidLibraryQuery');
 const isValidObjectId = require('../utils/isValidObjectId');
 
 const addItem = item => {
@@ -7,52 +6,32 @@ const addItem = item => {
   return itemToAdd.save();
 };
 
-const getItems = searchQuery => {
-  const { categoryTag, type } = searchQuery;
-  if (isValidQuery(categoryTag) && isValidQuery(type)) {
-    return libraryItem.find({
-      categoryTag,
-      type,
-      approved: true,
-    });
-  }
-  return Promise.reject(new Error('Invalid queries'));
-};
+const getItems = ({ categoryTag, type }) =>
+  libraryItem.find({
+    categoryTag,
+    type,
+    approved: true,
+  });
 
 const getItemsAmount = searchQuery => {
-  const { categoryTag, type } = searchQuery;
-  if (isValidQuery(categoryTag) && isValidQuery(type)) {
-    return libraryItem
-      .count({
-        categoryTag,
-        type,
-        approved: true,
-      })
-      .exec();
-  }
-  return Promise.reject(new Error('Invalid queries'));
+  return libraryItem
+    .count({
+      ...searchQuery,
+      approved: true,
+    })
+    .exec();
 };
 
-const fullTextSearch = searchParams => {
-  const types = JSON.parse(searchParams.types);
-  if (
-    searchParams.types &&
-    searchParams.textSearch &&
-    types.every(isValidQuery)
-  ) {
-    return libraryItem
-      .find(
-        {
-          type: { $in: types },
-          $text: { $search: searchParams.textSearch },
-        },
-        { score: { $meta: 'textScore' } },
+const fullTextSearch = ({ textSearch, types }) =>
+  libraryItem
+    .find(
+      {
+        type: { $in: types },
+        $text: { $search: textSearch },
+      },
+      { score: { $meta: 'textScore' } },
     )
-      .sort({ score: { $meta: 'textScore' } });
-  } else {
-    return Promise.reject(new Error('Invalid queries'));
-  }
-};
+    .sort({ score: { $meta: 'textScore' } });
 
 const getPendingItems = () => libraryItem.find({ approved: false });
 
@@ -79,6 +58,15 @@ const updateLibraryItem = (id, updatedData) =>
     return item.save();
   });
 
+const moveItems = (from, to) =>
+  libraryItem.update(
+    { categoryTag: from },
+    { categoryTag: to },
+    { multi: true },
+  );
+
+const deleteItems = query => libraryItem.remove(query);
+
 module.exports = {
   fullTextSearch,
   addItem,
@@ -89,4 +77,6 @@ module.exports = {
   getItemById,
   updateLibraryItem,
   getItemsAmount,
+  moveItems,
+  deleteItems,
 };
