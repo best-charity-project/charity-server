@@ -1,6 +1,7 @@
 const { deleteCategory } = require('../../models/categories/categoriesAPI');
 const passport = require('passport');
 const isAdmin = require('../../middlewares/isAdmin');
+const isValidObjectId = require('../../models/utils/isValidObjectId');
 
 module.exports = router => {
   router
@@ -9,10 +10,14 @@ module.exports = router => {
       passport.authenticate('jwt-auth', { session: false }),
       isAdmin,
       (req, res) => {
-        deleteCategory(req.params.id)
+        const { id } = req.params;
+        if (!isValidObjectId(id)) {
+          return res.status(400).json({ message: 'Некорректный запрос' });
+        }
+        deleteCategory(id)
           .then(() =>
             res.json({
-              message: 'Категория была удалена',
+              message: 'Категория была успешно удалена',
             }),
           )
           .catch(() => {
