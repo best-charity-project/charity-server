@@ -14,7 +14,7 @@ module.exports = router => {
         deleteLibraryItem(req.params._id)
           .then(() => {
             res.json({
-              message: 'Документ был удален',
+              message: 'Документ был успешно удален',
             });
           })
           .catch(err => {
