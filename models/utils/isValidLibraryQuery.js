@@ -1,3 +1,10 @@
-const isValid = value => value && !/[^A-Za-z]/.test(value);
+const isValidString = require('./isValidString');
 
-module.exports = isValid;
+module.exports = query => {
+  if (Object.keys(query).length !== 0) {
+    return Object.values(query).every(value => {
+      return isValidString(value);
+    });
+  }
+  return false;
+};
