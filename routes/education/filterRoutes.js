@@ -2,7 +2,7 @@ const { filterRoutes } = require('../../models/education/educationAPI');
 const {
   isValidString,
   isValidYear,
-} = require('../../models/utils/isValidEducationalRouteQuery');
+} = require('../../utils/validation/isValidEducationalRouteQuery');
 
 const isValidFilterQuery = query => {
   const {

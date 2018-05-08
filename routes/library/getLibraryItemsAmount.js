@@ -1,5 +1,5 @@
 const { getItemsAmount } = require('../../models/libraryItems/libraryItemAPI');
-const isValidLibraryQuery = require('../../models/utils/isValidLibraryQuery');
+const isValidLibraryQuery = require('../../utils//validation/isValidLibraryQuery');
 
 module.exports = router => {
   router.route('/count').get((req, res) => {
@@ -14,7 +14,7 @@ module.exports = router => {
         message: 'Проверьте правильность введенных данных',
       });
     }
-    getItemsAmount(req.query)
+    getItemsAmount(query)
       .then(amount => {
         res.json(amount);
       })

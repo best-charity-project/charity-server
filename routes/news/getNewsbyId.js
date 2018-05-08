@@ -1,4 +1,5 @@
 const { getNewsById } = require('../../models/news/newsAPI');
+const isValidObjectId = require('../../utils/validation/isValidObjectId');
 
 module.exports = router => {
   router.route('/:id').get((req, res) => {
@@ -6,7 +7,7 @@ module.exports = router => {
     if (!isValidObjectId(id)) {
       return res.status(400).json({ message: 'Некорректный запрос' });
     }
-    getNewsById(req.params.id)
+    getNewsById(id)
       .then(news => {
         res.json(news);
       })

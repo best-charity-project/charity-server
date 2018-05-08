@@ -1,5 +1,5 @@
 const { deleteItems } = require('../../models/libraryItems/libraryItemAPI');
-const isValidLibraryQuery = require('../../models/utils/isValidLibraryQuery');
+const isValidLibraryQuery = require('../../utils/validation/isValidLibraryQuery');
 
 module.exports = router => {
   router.route('/').delete((req, res) => {

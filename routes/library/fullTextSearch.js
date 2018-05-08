@@ -1,5 +1,5 @@
 const { fullTextSearch } = require('../../models/libraryItems/libraryItemAPI');
-const isValidSearchQuery = require('../../models/utils/isValidSearchQuery');
+const isValidSearchQuery = require('../../utils//validation/isValidSearchQuery');
 
 module.exports = router => {
   router.route('/search').get((req, res) => {
@@ -10,9 +10,15 @@ module.exports = router => {
         message: 'Проверьте правильность введенных данных',
       });
     }
-    fullTextSearch({ textSearch, types }).then(items => {
-      res.json(items);
-    });
+    fullTextSearch({ textSearch, types })
+      .then(items => {
+        res.json(items);
+      })
+      .catch(() => {
+        res.status(500).json({
+          message: 'Запрос не может быть выполнен. Повторите попытку позже',
+        });
+      });
   });
   return router;
 };

@@ -1,7 +1,7 @@
 const { moveItems } = require('../../models/libraryItems/libraryItemAPI');
 const passport = require('passport');
 const isAdmin = require('../../middlewares/isAdmin');
-const isValidLibraryQuery = require('../../models/utils/isValidLibraryQuery');
+const isValidLibraryQuery = require('../../utils//validation/isValidLibraryQuery');
 
 module.exports = router => {
   router

@@ -3,6 +3,7 @@ const {
 } = require('../../models/organizations/organizationsAPI');
 const passport = require('passport');
 const isAdmin = require('../../middlewares/isAdmin');
+const isValidObjectId = require('../../utils/validation/isValidObjectId');
 
 module.exports = router => {
   router
@@ -11,7 +12,11 @@ module.exports = router => {
       passport.authenticate('jwt-auth', { session: false }),
       isAdmin,
       (req, res) => {
-        deleteOrganization(req.params.id)
+        const { id } = req.params;
+        if (!isValidObjectId(id)) {
+          return res.status(400).json({ message: 'Некорректный запрос' });
+        }
+        deleteOrganization(id)
           .then(() => {
             res.json({
               message: 'Организация была удалена',

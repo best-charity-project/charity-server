@@ -1,7 +1,7 @@
 const { deleteCategory } = require('../../models/categories/categoriesAPI');
 const passport = require('passport');
 const isAdmin = require('../../middlewares/isAdmin');
-const isValidObjectId = require('../../models/utils/isValidObjectId');
+const isValidObjectId = require('../../utils/validation/isValidObjectId');
 
 module.exports = router => {
   router

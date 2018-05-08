@@ -1,5 +1,5 @@
 const { getEvents } = require('../../models/events/eventsAPI');
-const isValidNumber = require('../../models/utils/isValidNumber');
+const isValidNumber = require('../../utils/validation/isValidNumber');
 
 module.exports = router => {
   router.route('/').get((req, res) => {

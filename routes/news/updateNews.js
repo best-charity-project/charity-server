@@ -1,6 +1,7 @@
 const { updateNews } = require('../../models/news/newsAPI');
 const passport = require('passport');
 const isAdmin = require('../../middlewares/isAdmin');
+const isValidObjectId = require('../../utils/validation/isValidObjectId');
 
 module.exports = router => {
   router
@@ -13,7 +14,7 @@ module.exports = router => {
         if (!isValidObjectId(id)) {
           return res.status(400).json({ message: 'Некорректный запрос' });
         }
-        updateNews(req.params.id, req.body)
+        updateNews(id, req.body)
           .then(news => {
             res.json({
               message: 'Новость была отредактирована',

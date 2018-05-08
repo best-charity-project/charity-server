@@ -1,5 +1,5 @@
 const { getItems } = require('../../models/libraryItems/libraryItemAPI');
-const isValidLibraryQuery = require('../../models/utils/isValidLibraryQuery');
+const isValidLibraryQuery = require('../../utils//validation/isValidLibraryQuery');
 
 module.exports = router => {
   router.route('/').get((req, res) => {
@@ -9,11 +9,11 @@ module.exports = router => {
         message: 'Проверьте правильность введенных данных',
       });
     }
-    getItems(req.query)
+    getItems({ categoryTag, type })
       .then(items => {
         res.json(items);
       })
-      .catch(err => {
+      .catch(() => {
         res.status(500).json({
           message: 'Запрос не может быть выполнен. Повторите попытку позже',
         });

@@ -4,7 +4,7 @@ const {
 
 module.exports = router => {
   router.route('/').get((req, res) => {
-    getOrganizations(req.query)
+    getOrganizations()
       .then(items => {
         res.json(items);
       })

@@ -3,6 +3,7 @@ const {
 } = require('../../models/organizations/organizationsAPI');
 const passport = require('passport');
 const isAdmin = require('../../middlewares/isAdmin');
+const isValidObjectId = require('../../utils/validation/isValidObjectId');
 
 module.exports = router => {
   router
@@ -15,7 +16,7 @@ module.exports = router => {
         if (!isValidObjectId(id)) {
           return res.status(400).json({ message: 'Некорректный запрос' });
         }
-        acceptPendingOrganization(req.params.id)
+        acceptPendingOrganization(id)
           .then(() => {
             res.json({
               message:
