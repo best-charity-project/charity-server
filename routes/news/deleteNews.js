@@ -4,19 +4,19 @@ const isAdmin = require('../../middlewares/isAdmin');
 
 module.exports = router => {
   router
-    .route('/:_id')
+    .route('/:id')
     .delete(
       passport.authenticate('jwt-auth', { session: false }),
       isAdmin,
       (req, res) => {
-        deleteNews(req.params._id)
+        deleteNews(req.params.id)
           .then(() => {
             res.json({
               message: 'Новость была удалена',
             });
           })
-          .catch(err => {
-            res.status(400).json({
+          .catch(() => {
+            res.status(500).json({
               message: 'Запрос не может быть выполнен. Повторите попытку позже',
             });
           });

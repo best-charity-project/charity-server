@@ -16,7 +16,7 @@ module.exports = router => {
             });
           })
           .catch(err => {
-            res.status(400).json({
+            res.status(500).json({
               message: 'Запрос не может быть выполнен. Повторите попытку позже',
             });
           });

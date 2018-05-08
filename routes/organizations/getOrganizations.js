@@ -8,8 +8,10 @@ module.exports = router => {
       .then(items => {
         res.json(items);
       })
-      .catch(err => {
-        res.status(400).json(err.message);
+      .catch(() => {
+        res.status(500).json({
+          message: 'Запрос не может быть выполнен. Повторите попытку позже',
+        });
       });
   });
   return router;

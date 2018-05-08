@@ -1,13 +1,17 @@
 const { getNewsById } = require('../../models/news/newsAPI');
 
 module.exports = router => {
-  router.route('/:_id').get((req, res) => {
-    getNewsById(req.params._id)
+  router.route('/:id').get((req, res) => {
+    const { id } = req.params;
+    if (!isValidObjectId(id)) {
+      return res.status(400).json({ message: 'Некорректный запрос' });
+    }
+    getNewsById(req.params.id)
       .then(news => {
         res.json(news);
       })
-      .catch(err => {
-        res.status(400).json(err.message);
+      .catch(() => {
+        res.status(500).json(err.message);
       });
   });
   return router;
