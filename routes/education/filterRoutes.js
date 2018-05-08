@@ -13,20 +13,14 @@ const isValidFilterQuery = query => {
     lastYear,
   } = query;
 
-  if (
-    !isValidString(region) &&
-    !isValidString(regionDistricts) &&
-    !isValidString(educationalInstitution) &&
-    !isValidYear(firstYear) &&
-    !isValidYear(lastYear)
-  ) {
-    return false;
-  }
-
-  if (query.program && !isValidString(query.program)) {
-    return false;
-  }
-  return true;
+  return !(
+    !isValidString(region) ||
+    !isValidString(regionDistricts) ||
+    !isValidString(educationalInstitution) ||
+    !isValidYear(firstYear) ||
+    !isValidYear(lastYear) ||
+    (query.program && !isValidString(query.program))
+  );
 };
 
 module.exports = router => {
@@ -48,7 +42,7 @@ module.exports = router => {
     };
 
     if (req.query.program) {
-      query.program = program;
+      query.program = req.query.program;
     }
 
     if (!isValidFilterQuery(query)) {
