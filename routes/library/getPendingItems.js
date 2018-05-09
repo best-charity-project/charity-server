@@ -2,12 +2,14 @@ const { getPendingItems } = require('../../models/libraryItems/libraryItemAPI');
 
 module.exports = router => {
   router.route('/pending').get((req, res) => {
-    getPendingItems(req.query)
+    getPendingItems()
       .then(items => {
         res.json(items);
       })
       .catch(err => {
-        res.status(400).json(err.message);
+        res.status(500).json({
+          message: 'Запрос не может быть выполнен. Повторите попытку позже',
+        });
       });
   });
   return router;

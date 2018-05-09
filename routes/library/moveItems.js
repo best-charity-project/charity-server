@@ -1,25 +1,25 @@
-const {
-  deleteOrganization,
-} = require('../../models/organizations/organizationsAPI');
+const { moveItems } = require('../../models/libraryItems/libraryItemAPI');
 const passport = require('passport');
 const isAdmin = require('../../middlewares/isAdmin');
-const isValidObjectId = require('../../utils/validation/isValidObjectId');
+const isValidLibraryQuery = require('../../utils//validation/isValidLibraryQuery');
 
 module.exports = router => {
   router
-    .route('/:id')
-    .delete(
+    .route('/move')
+    .put(
       passport.authenticate('jwt-auth', { session: false }),
       isAdmin,
       (req, res) => {
-        const { id } = req.params;
-        if (!isValidObjectId(id)) {
-          return res.status(400).json({ message: 'Некорректный запрос' });
+        const { from, to } = req.body;
+        if (!isValidLibraryQuery({ from, to })) {
+          return res.status(400).json({
+            message: 'Проверьте правильность введенных данных',
+          });
         }
-        deleteOrganization(id)
+        moveItems(from, to)
           .then(() => {
             res.json({
-              message: 'Организация была удалена',
+              message: 'Документы были успешно перемещены',
             });
           })
           .catch(() => {

@@ -1,18 +1,26 @@
-const { addEvents } = require('../../models/events/eventsAPI');
+const { updateCategory } = require('../../models/categories/categoriesAPI');
 const passport = require('passport');
 const isAdmin = require('../../middlewares/isAdmin');
+const isValidObjectId = require('../../utils/validation/isValidObjectId');
 
 module.exports = router => {
   router
-    .route('/')
-    .post(
+    .route('/edit/:id')
+    .put(
       passport.authenticate('jwt-auth', { session: false }),
       isAdmin,
       (req, res) => {
-        addEvents(req.body)
+        const { title } = req.body;
+        const { id } = req.params;
+        if (!isValidObjectId(id)) {
+          return res.status(400).json({
+            message: 'Некорректный запрос',
+          });
+        }
+        updateCategory(id, { title })
           .then(() => {
             res.json({
-              message: 'Событие было успешно добавлено',
+              message: 'Документ был успешно отредактирован',
             });
           })
           .catch(err => {

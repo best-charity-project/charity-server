@@ -10,4 +10,10 @@ const getCategories = () => Categories.find({});
 const deleteCategory = id =>
   Categories.findById(id).then(item => item.remove());
 
-module.exports = { addCategory, getCategories, deleteCategory };
+const updateCategory = (id, updatedData) =>
+  Categories.findById(id).then(item => {
+    item.set(updatedData);
+    return item.save();
+  });
+
+module.exports = { addCategory, getCategories, deleteCategory, updateCategory };

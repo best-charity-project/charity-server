@@ -3,22 +3,28 @@ const {
 } = require('../../models/libraryItems/libraryItemAPI');
 const passport = require('passport');
 const isAdmin = require('../../middlewares/isAdmin');
+const isValidObjectId = require('../../utils/validation/isValidObjectId');
 
 module.exports = router => {
   router
-    .route('/edit/:_id')
+    .route('/edit/:id')
     .put(
       passport.authenticate('jwt-auth', { session: false }),
       isAdmin,
       (req, res) => {
-        updateLibraryItem(req.params._id, req.body)
+        const { id } = req.params;
+        const data = req.body;
+        if (!isValidObjectId(id)) {
+          return res.status(400).json({ message: 'Некорректный запрос' });
+        }
+        updateLibraryItem(id, data)
           .then(() => {
             res.json({
-              message: 'Документ был отредактирован',
+              message: 'Документ был успешно отредактирован',
             });
           })
           .catch(err => {
-            res.status(400).json({
+            res.status(500).json({
               message: 'Запрос не может быть выполнен. Повторите попытку позже',
             });
           });

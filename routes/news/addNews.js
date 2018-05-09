@@ -15,8 +15,8 @@ module.exports = router => {
               message: 'Новость была успешно добавлена',
             });
           })
-          .catch(err => {
-            res.status(400).json({
+          .catch(() => {
+            res.status(500).json({
               message: 'Запрос не может быть выполнен. Повторите попытку позже',
             });
           });

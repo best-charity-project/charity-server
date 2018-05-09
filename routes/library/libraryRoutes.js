@@ -10,15 +10,19 @@ const deleteLibraryItem = require('./deleteLibraryItem');
 const getItemById = require('./getItemById');
 const updateLibraryItem = require('./updateLibraryItem');
 const getItemsAmount = require('./getLibraryItemsAmount');
+const moveItems = require('./moveItems');
+const deleteItems = require('./deleteItems');
 
 router = addItem(router);
 router = getItems(router);
+router = moveItems(router);
 router = fullTextSearch(router);
 router = getItemsAmount(router);
 router = getPendingItems(router);
-router = acceptPendingItem(router);
-router = deleteLibraryItem(router);
 router = updateLibraryItem(router);
 router = getItemById(router);
+router = acceptPendingItem(router);
+router = deleteItems(router);
+router = deleteLibraryItem(router);
 
 module.exports = router;
