@@ -5,17 +5,22 @@ const passport = require('passport');
 const isAdmin = require('../../middlewares/isAdmin');
 
 module.exports = router => {
-  router.route('/pending').get(
-    passport.authenticate('jwt-auth', { session: false }),
-    isAdmin, 
-    (req, res) => {
-    getPendingOrganizations(req.query)
-      .then(items => {
-        res.json(items);
-      })
-      .catch(err => {
-        res.status(400).json(err.message);
-      });
-  });
+  router
+    .route('/pending')
+    .get(
+      passport.authenticate('jwt-auth', { session: false }),
+      isAdmin,
+      (req, res) => {
+        getPendingOrganizations()
+          .then(items => {
+            res.json(items);
+          })
+          .catch(() => {
+            res.status(500).json({
+              message: 'Запрос не может быть выполнен. Повторите попытку позже',
+            });
+          });
+      },
+    );
   return router;
 };

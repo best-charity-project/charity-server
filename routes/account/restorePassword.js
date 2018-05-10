@@ -2,7 +2,7 @@ const {
   restorePassword,
   saveTokenInUser,
 } = require('../../models/users/userAPI');
-const isValidEmail = require('../../passport/strategies/isValidEmail');
+const isValidEmail = require('../../utils/validation/isValidEmail');
 const sendEmail = require('../../nodemailer/sendEmail');
 const generateToken = require('./generateToken');
 const { devUrlToChangePassword } = require('../../configs/config.json');

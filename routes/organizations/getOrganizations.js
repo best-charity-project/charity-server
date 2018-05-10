@@ -4,12 +4,14 @@ const {
 
 module.exports = router => {
   router.route('/').get((req, res) => {
-    getOrganizations(req.query)
+    getOrganizations()
       .then(items => {
         res.json(items);
       })
-      .catch(err => {
-        res.status(400).json(err.message);
+      .catch(() => {
+        res.status(500).json({
+          message: 'Запрос не может быть выполнен. Повторите попытку позже',
+        });
       });
   });
   return router;

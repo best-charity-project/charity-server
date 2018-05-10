@@ -1,58 +1,35 @@
 const libraryItem = require('./libraryItem');
-const isValidQuery = require('../utils/isValidLibraryQuery');
-const isValidObjectId = require('../utils/isValidObjectId');
 
 const addItem = item => {
   const itemToAdd = new libraryItem(item);
   return itemToAdd.save();
 };
 
-const getItems = searchQuery => {
-  const { categoryTag, type } = searchQuery;
-  if (isValidQuery(categoryTag) && isValidQuery(type)) {
-    return libraryItem.find({
-      categoryTag,
-      type,
+const getItems = ({ categoryTag, type }) =>
+  libraryItem.find({
+    categoryTag,
+    type,
+    approved: true,
+  });
+
+const getItemsAmount = searchQuery =>
+  libraryItem
+    .count({
+      ...searchQuery,
       approved: true,
-    });
-  }
-  return Promise.reject(new Error('Invalid queries'));
-};
+    })
+    .exec();
 
-const getItemsAmount = searchQuery => {
-  const { categoryTag, type } = searchQuery;
-  if (isValidQuery(categoryTag) && isValidQuery(type)) {
-    return libraryItem
-      .count({
-        categoryTag,
-        type,
-        approved: true,
-      })
-      .exec();
-  }
-  return Promise.reject(new Error('Invalid queries'));
-};
-
-const fullTextSearch = searchParams => {
-  const types = JSON.parse(searchParams.types);
-  if (
-    searchParams.types &&
-    searchParams.textSearch &&
-    types.every(isValidQuery)
-  ) {
-    return libraryItem
-      .find(
-        {
-          type: { $in: types },
-          $text: { $search: searchParams.textSearch },
-        },
-        { score: { $meta: 'textScore' } },
+const fullTextSearch = ({ textSearch, types }) =>
+  libraryItem
+    .find(
+      {
+        type: { $in: types },
+        $text: { $search: textSearch },
+      },
+      { score: { $meta: 'textScore' } },
     )
-      .sort({ score: { $meta: 'textScore' } });
-  } else {
-    return Promise.reject(new Error('Invalid queries'));
-  }
-};
+    .sort({ score: { $meta: 'textScore' } });
 
 const getPendingItems = () => libraryItem.find({ approved: false });
 
@@ -65,19 +42,22 @@ const acceptPendingItem = id =>
 const deleteLibraryItem = id =>
   libraryItem.findById(id).then(item => item.remove());
 
-const getItemById = id => {
-  if (isValidObjectId(id)) {
-    return libraryItem.findById(id);
-  } else {
-    return Promise.reject(new Error('Invalid library item id'));
-  }
-};
+const getItemById = id => libraryItem.findById(id);
 
 const updateLibraryItem = (id, updatedData) =>
   getItemById(id).then(item => {
     item.set(updatedData);
     return item.save();
   });
+
+const moveItems = (fromCategory, toCategory) =>
+  libraryItem.update(
+    { categoryTag: fromCategory },
+    { categoryTag: toCategory },
+    { multi: true },
+  );
+
+const deleteItems = query => libraryItem.remove(query);
 
 module.exports = {
   fullTextSearch,
@@ -89,4 +69,6 @@ module.exports = {
   getItemById,
   updateLibraryItem,
   getItemsAmount,
+  moveItems,
+  deleteItems,
 };

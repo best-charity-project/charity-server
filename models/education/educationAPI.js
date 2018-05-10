@@ -1,9 +1,4 @@
 const Education = require('./education');
-const {
-  isValidString,
-  isValidYear,
-} = require('../utils/isValidEducationalRouteQuery');
-const isValidObjectId = require('../utils/isValidObjectId');
 
 const addEducation = education => {
   const educationToAdd = new Education(education);
@@ -22,42 +17,13 @@ const filterRoutes = filterParams => {
       $gte: filterParams.firstYear,
     },
   };
-  const validationCheck = () => {
-    return (
-      isValidString(filterParams.region) &&
-      isValidString(filterParams.regionDistricts) &&
-      isValidString(filterParams.educationalInstitution) &&
-      isValidYear(filterParams.firstYear) &&
-      isValidYear(filterParams.lastYear)
-    );
-  };
 
-  if (isValidString(filterParams.program)) {
-    query.program = filterParams.program;
-  }
-
-  if (validationCheck) {
-    return Education.find(query);
-  }
-
-  return Promise.reject(new Error('Invalid queries'));
+  return Education.find(query);
 };
 
-const getEducation = query => {
-  const { userId } = query;
-  if (isValidObjectId(userId)) {
-    return Education.find({ userId });
-  }
-};
+const getEducation = query => Education.find(query);
 
-const getEducationById = id => {
-  if (isValidObjectId(id)) {
-    return Education.findById(id);
-  }
-  return Promise.reject(
-    new Error('Некоректный ID карты образовательного маршрута'),
-  );
-};
+const getEducationById = id => Education.findById(id);
 
 const updateEducation = (id, updatedEducation) => {
   return getEducationById(id).then(education => {
