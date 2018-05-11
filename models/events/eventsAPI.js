@@ -14,7 +14,10 @@ const getEvents = query => {
   return Events.find();
 };
 
+const getEventById = id => Events.findById(id);
+
 module.exports = {
   addEvents,
   getEvents,
+  getEventById,
 };
