@@ -1,25 +1,18 @@
 {
-  "name": "charity-server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "pm2-runtime configs/ecosystem.config.json"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.18.2",
-    "express": "^4.16.2",
-    "jsonwebtoken": "^8.2.0",
-    "mongodb": "^3.0.2",
-    "mongoose": "^5.0.7",
-    "nodemailer": "^4.6.4",
-    "passport": "^0.4.0",
-    "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0",
-    "pm2": "^2.10.2",
-    "randomstring": "^1.1.5"
-  }
+    "name": "charity-server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "pm2-runtime configs/ecosystem.config.json"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.16.3"
+    },
+    "devDependencies": {
+        "mongoose": "^5.1.1"
+    }
 }

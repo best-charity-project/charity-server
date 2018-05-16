@@ -1,12 +1,15 @@
 {
-  "port": "",
-  "user": "",
-  "password": "",
-  "dbName": "",
-  "host": "",
-  "tokenExpires": "",
-  "passTokenExpires": "",
-  "jwtSecret": "",
-  "devUrlToChangePassword": "",
-  "devOrigin": ""
+    "Database": {
+        "port": "",
+        "user": "",
+        "password": "",
+        "dbName": ""
+    },
+    "Tokens": {
+        "tokenExpires": "",
+        "passTokenExpires": "",
+        "jwtSecret": ""
+    },
+    "devUrlToChangePassword": "",
+    "devOrigin": ""
 }

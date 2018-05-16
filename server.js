@@ -6,7 +6,9 @@ const router = require('./routes/Routes');
 const passport = require('passport');
 const connectToDatabase = require('./database/database');
 const configurePassport = require('./passport/configurePassport');
-const { devOrigin } = require('./configs/config.json');
+const {
+  devOrigin
+} = require('./configs/config.json');
 
 connectToDatabase();
 
@@ -20,7 +22,7 @@ app.use(bodyParser.json());
 
 app = configurePassport(app);
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 3000;
 
 app.use((req, res, next) => {
   res.header(
