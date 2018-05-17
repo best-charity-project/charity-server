@@ -1,8 +1,10 @@
 const express = require('express');
 
 let app = express();
+const winston = require('./configs/winston/winston');
+const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const router = require('./routes/Routes');
+const router = require('./routes');
 const passport = require('passport');
 const connectToDatabase = require('./database/database');
 const configurePassport = require('./passport/configurePassport');
@@ -36,6 +38,10 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   next();
 });
+
+app.use(morgan('combined', {
+  stream: winston.stream
+}));
 
 app.use('/api', router);
 

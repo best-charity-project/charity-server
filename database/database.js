@@ -5,9 +5,9 @@ const {
 
 const connectToDatabase = () => {
     mongoose.connect(
-        `mongodb://${user || process.env.USER}:${password ||
-        process.env.PASSWORD}@${host || process.env.HOST}:${port ||
-        process.env.DB_PORT}/${dbName || process.env.DB_NAME}`,
+        `mongodb://${Database.user || process.env.USER}:${Database.password ||
+        process.env.PASSWORD}@${Database.host || process.env.HOST}:${Database.port ||
+        process.env.DB_PORT}/${Database.dbName || process.env.DB_NAME}`,
     );
 };
 

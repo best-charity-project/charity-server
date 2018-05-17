@@ -1,14 +1,15 @@
 {
     "Database": {
-        "port": "",
-        "user": "",
-        "password": "",
-        "dbName": ""
+        "host": "ds219100.mlab.com",
+        "port": "19100",
+        "user": "vadim",
+        "password": "qwerty",
+        "dbName": "charity-project"
     },
     "Tokens": {
         "tokenExpires": "",
         "passTokenExpires": "",
-        "jwtSecret": ""
+        "jwtSecret": "Lorem"
     },
     "devUrlToChangePassword": "",
     "devOrigin": ""
