@@ -3,6 +3,7 @@ const express = require('express');
 let app = express();
 const winston = require('./configs/winston/winston');
 const morgan = require('morgan');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const router = require('./routes');
 const passport = require('passport');

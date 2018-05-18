@@ -20,21 +20,6 @@ const UserSchema = new Schema({
         trim: true,
         select: false,
     },
-    country: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    city: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    reasonForRegistration: {
-        type: String,
-        required: true,
-        trim: true,
-    },
     passwordSalt: {
         type: String,
         required: true,
@@ -45,13 +30,11 @@ const UserSchema = new Schema({
         default: false,
     },
     passChangeToken: {
-        type: Object,
+        type: String,
         default: null,
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
+    }
+}, {
+    timestamps: true
 });
 
 module.exports = mongoose.model('User', UserSchema);
