@@ -1,9 +1,10 @@
 const express = require('express');
-let router = express.Router();
+const router = express.Router();
+require('../utils/passport');
 
-router.use('/', (req, res, next) => {
-    res.send('Hell...');
-    res.end();
-})
+const auth = require('./auth.route');
+
+router.use('/auth', auth);
+// router.use('/user', user);
 
 module.exports = router;
