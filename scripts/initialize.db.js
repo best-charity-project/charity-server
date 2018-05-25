@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+ const mongoose = require('mongoose');
 const UserModel = require('../schemas/users.schema');
 mongoose.set('debug', true);
 
@@ -13,4 +13,4 @@ function createUser() {
     let newTicket = UserModel.create(user);
 }
 
-createUser();
+createUser(); 
