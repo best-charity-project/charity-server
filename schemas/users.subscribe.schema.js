@@ -1,5 +1,6 @@
 const mongoose = require('../utils/db.utils');
 const config = require('../config');
+
 const userSubscribeSchema = new mongoose.Schema({
     email: {
         type: String,

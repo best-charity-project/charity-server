@@ -3,7 +3,6 @@ const UserModel = require('../schemas/users.schema');
 const UserSubscribeModel = require ('../schemas/users.subscribe.schema');
 
 mongoose.set('debug', true);
-
 mongoose.connect('mongodb://vadim:qwerty@ds219100.mlab.com:19100/charity-project');
 
 function createUser() {
