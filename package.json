@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_PATH=. nodemon app.js",
+    "start": " nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Vadzim Smirnou <v.smirnou@godeltech.com>",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "clarify": "^2.1.0",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
     "jsonwebtoken": "^8.2.1",
     "lodash": "^4.17.5",
