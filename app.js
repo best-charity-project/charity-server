@@ -21,5 +21,5 @@ app.use('/api', api);
 app.use(errorHandler);
 
 app.listen(3001, () => {
-    console.log('Running on 3000');
+    console.log('Running on 3001');
 });
