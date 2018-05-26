@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('./auth.route');
+const subscription = require('./subscription.route');
 require('../utils/passport');
 
-const auth = require('./auth.route');
-
-router.use('/auth', auth);
-// router.use('/user', user);
+router.use('/auth', auth)
+    .use('/subscription', subscription);
 
 module.exports = router;
