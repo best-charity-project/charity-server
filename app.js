@@ -3,9 +3,9 @@ const logger = require('./utils/logger.utils');
 const errorHandler = require('./handlers/error.handlers');
 const passportMW = require('./utils/passport');
 const api = require('./routes');
-
 global.env = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === undefined;
 
+<<<<<<< HEAD
 let app = express();
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -13,12 +13,20 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
     next();
  });
+=======
+const app = express();
+>>>>>>> new-server-version
 app.use(express.json());
 app.use(passportMW.initialize());
-
-app.use('/api', api);
-
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
 app.use(errorHandler);
+app.use('/api', api);
 
 app.listen(3001, () => {
     console.log('Running on 3001');
