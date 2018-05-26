@@ -1,7 +1,8 @@
  const mongoose = require('mongoose');
 const UserModel = require('../schemas/users.schema');
-mongoose.set('debug', true);
+const UserSubscribeModel = require ('../schemas/users.subscribe.schema');
 
+mongoose.set('debug', true);
 mongoose.connect('mongodb://vadim:qwerty@ds219100.mlab.com:19100/charity-project');
 
 function createUser() {
@@ -12,5 +13,13 @@ function createUser() {
     };
     let newTicket = UserModel.create(user);
 }
+// createUser();
 
-createUser(); 
+ createUserSubscribe = () =>{
+     let subscribe = {
+         email: 'itstricky@run.dmc',
+         isSubscribeStatus: true
+     };
+     let newTicket = UserSubscribeModel.create(subscribe);
+}
+// createUserSubscribe();
