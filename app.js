@@ -3,7 +3,6 @@ const logger = require('./utils/logger.utils');
 const errorHandler = require('./handlers/error.handlers');
 const passportMW = require('./utils/passport');
 const api = require('./routes');
-
 global.env = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === undefined;
 
 const app = express();

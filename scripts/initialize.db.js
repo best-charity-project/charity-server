@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+ const mongoose = require('mongoose');
 const UserModel = require('../schemas/users.schema');
 const UserSubscribeModel = require ('../schemas/users.subscribe.schema');
 
