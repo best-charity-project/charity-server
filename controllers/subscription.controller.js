@@ -1,7 +1,6 @@
 const mongoose = require('../utils/db.utils');
 const error = require('../utils/error');
 const SubscribeModel = require('../schemas/users.subscribe.schema');
-const pick = require('lodash/pick');
 
 module.exports = {
     async newSubscription(req, res) {
@@ -10,5 +9,20 @@ module.exports = {
             .then((a) => {
                 res.send(a);
             })
+    },
+    async getSubscribers(req, res) {
+        let subscribersList = await SubscribeModel.find();
+        res.status(200).json({
+            subscribers: subscribersList
+        });
+    },
+    async subscribe(req, res) {
+        let id = req.params.id;
+        let subscriber = await SubscribeModel.findById(id)
+        subscriber.toggleSubscribe()
+        subscriber.save()
+        res.status(200).json({
+            subscriber: subscriber 
+        });
     }
 };

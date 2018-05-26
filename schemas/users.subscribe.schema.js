@@ -16,7 +16,9 @@ const userSubscribeSchema = new mongoose.Schema({
 }, 
 {
     timestamps: true,
-}
-);
+});
 
+userSubscribeSchema.methods.toggleSubscribe = function() {
+    this.isSubscribeStatus = !this.isSubscribeStatus;
+}
 module.exports = mongoose.model('UserSubscribe', userSubscribeSchema);
