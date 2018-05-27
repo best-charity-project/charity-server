@@ -5,7 +5,7 @@ const passportMW = require('./utils/passport');
 const api = require('./routes');
 global.env = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === undefined;
 
-const app = express();
+let app = express();
 app.use(express.json());
 app.use(passportMW.initialize());
 app.use(function (req, res, next) {
