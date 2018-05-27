@@ -5,17 +5,7 @@ const passportMW = require('./utils/passport');
 const api = require('./routes');
 global.env = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === undefined;
 
-<<<<<<< HEAD
 let app = express();
-app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    next();
- });
-=======
-const app = express();
->>>>>>> new-server-version
 app.use(express.json());
 app.use(passportMW.initialize());
 app.use(function (req, res, next) {

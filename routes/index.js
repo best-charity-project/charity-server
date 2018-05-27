@@ -5,7 +5,7 @@ const eventRoute= require('./event.routes');
 const subscription = require('./subscription.route');
 require('../utils/passport');
 router.use('/auth', auth)
-      .use('/admin-panel/events', eventRoute)
+      .use('/events', eventRoute)
       .use('/subscription', subscription);
     
 
