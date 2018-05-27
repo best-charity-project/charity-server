@@ -4,7 +4,6 @@ const EventsModel = require('../schemas/events.schema')
 
 module.exports = {
         async newEvent(req, res) {
-            console.log('post')
             let a = req.body;
             let event = new EventsModel(a);
             EventsModel.create(event).then(function(createEvent){
