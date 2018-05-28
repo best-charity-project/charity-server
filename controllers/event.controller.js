@@ -19,6 +19,11 @@ module.exports = {
             res.status(200).json({
                 events:eventsList
              });    
+         },
+         async getEvent(req, res) {
+            let id = req.params.id;
+            let event = await EventsModel.findById(id);
+            res.send(event)
          }
     }
 
