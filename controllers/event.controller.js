@@ -19,7 +19,19 @@ module.exports = {
             res.status(200).json({
                 events:eventsList
              });    
+         },
+         async getEvent(req, res) {
+            let id = req.params.id;
+            let event = await EventsModel.findById(id);
+            res.send(event)
+         },
+         async UpdateEvent(req, res) {
+            EventsModel.findByIdAndUpdate(req.params.id, req.body, {new: true},(err,event)=>{
+                if (err) return res.status(500).send(err);
+             return res.send(event);
+            })
          }
+
     }
 
 
