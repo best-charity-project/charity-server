@@ -10,4 +10,9 @@ module.exports = {
         },
     },
     root: process.cwd(),
+    nodemailerConf:{
+        "serviceMail": "gmail",
+        "user":"charitywebtest@gmail.com",
+        "password":"charity12345"
+    }
 };
