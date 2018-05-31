@@ -30,9 +30,6 @@ module.exports = {
                 if (err) return res.status(500).send(err);
              return res.send(event);
             })
-            // let id = req.params.id;
-            // let event = await EventsModel.findById(id);
-            // res.send(event)
          }
 
     }
