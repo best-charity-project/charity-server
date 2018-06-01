@@ -9,7 +9,6 @@ module.exports = {
             EventsModel.create(event).then(function(createEvent){
                 res.send(createEvent)
             })
-
         },
         async deleteEvent(req, res) {
             let eventDelete = await EventsModel.findByIdAndRemove(req.body);
