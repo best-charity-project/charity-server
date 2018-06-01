@@ -1,6 +1,6 @@
 const mongoose = require('../utils/db.utils');
 const error = require('../utils/error');
-const SubscribeModel = require('../schemas/subscribtion.schema');
+const SubscribeModel = require('../schemas/subscription.schema');
 
 module.exports = {
     async newSubscription(req, res) {
