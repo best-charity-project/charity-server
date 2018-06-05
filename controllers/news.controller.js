@@ -65,6 +65,12 @@ module.exports = {
     },
     async deleteNews(req, res) {
         let id = req.params.id
+        let previousNews = await NewsModel.findById(id)
+        fs.unlink('.' + previousNews.image, function (err) {
+            if (err) {
+                return console.log(err)
+            }
+        }); 
         NewsModel.findByIdAndRemove(id)
             .then((result) => {
                 res.status(200).json({
