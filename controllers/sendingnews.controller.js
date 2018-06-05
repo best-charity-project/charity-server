@@ -2,7 +2,7 @@ const mongoose = require('../utils/db.utils');
 const error = require('../utils/error');
 const transporter = require('../nodemailer/transporter');
 const EventsModel = require('../schemas/events.schema');
-const SubscribeModel = require('../schemas/subscribtion.schema');
+const SubscribeModel = require('../schemas/subscription.schema');
 const moment = require ('moment');
 const { nodemailerConf }= require('../config');
 

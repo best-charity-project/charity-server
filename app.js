@@ -18,6 +18,7 @@ app.use(function (req, res, next) {
 });
 app.use(errorHandler);
 app.use('/api', api);
+app.use('/images', express.static(__dirname + '/images'));
 
 app.listen(3001, () => {
     console.log('Running on 3001');
