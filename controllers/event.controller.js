@@ -12,7 +12,7 @@ module.exports = {
         },
         async deleteEvent(req, res) {
             let eventDelete = await EventsModel.findByIdAndRemove(req.body);
-            },
+        },
         async getEvents(req, res) {
             let eventsList = await EventsModel.find();
             res.status(200).json({
