@@ -25,7 +25,6 @@ async function sendingMailToSubscribers(item) {
            },
            "isPublic": true
        });
-       console.log(newsList)
        mailOptions = {
            from: nodemailerConf.user,
            to: item.email,
