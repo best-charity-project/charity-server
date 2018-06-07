@@ -11,11 +11,12 @@ module.exports = {
             })
         },
         async deleteEvent(req, res) {
-            let eventDelete = await EventsModel.findByIdAndRemove(req.body);
-            let eventsList = await EventsModel.find();
-            res.status(200).json({
-                events:eventsList
-             });  
+            EventsModel.findByIdAndRemove(req.body)
+            .then((result) => {
+                res.status(200).json({
+                    news: result
+                });
+            });
         },
         async getEvents(req, res) {
             let eventsList = await EventsModel.find();
