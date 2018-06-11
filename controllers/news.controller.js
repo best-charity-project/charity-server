@@ -2,14 +2,11 @@ const mongoose = require('../utils/db.utils');
 const error = require('../utils/error');
 const NewsModel = require('../schemas/news.schema');
 const fs = require('fs');
-const multer = require('multer'); 
-const upload = multer();
 
 module.exports = {
     async createNews(req, res) {
-        /* let news = new NewsModel(req.body); */
-        console.log(req)
-        /* if (req.body.imageData) {
+        let news = new NewsModel(req.body);
+        if (req.body.imageData) {
             let base64Data = req.body.imageData;
             let timeStamp = (new Date()).getTime()
             fs.writeFile('./images/' + timeStamp + '.png', base64Data, 'base64', function(err) {
@@ -19,14 +16,15 @@ module.exports = {
                     res.send(data);
                 });
             });
-            news.image = '/images/' + timeStamp + '.png'
+            news.image = timeStamp + '.png'
         }
         NewsModel.create(news)
         .then((result) => {
+            console.log(result)
             res.status(200).json({
                 news: result
             });
-        }); */
+        });
     },
 
         /* let a = req.body
@@ -69,24 +67,18 @@ module.exports = {
     async changeNews(req, res) {
         let id = req.params.id
         if (req.body.imageData) {
-            let previousNews = await NewsModel.findById(id)
-            fs.unlink('.' + previousNews.image, function (err) {
-                if (err) {
-                    return console.log(err)
-                }
-            });
-            let a = req.body
+            let base64Data = req.body.imageData;
             let timeStamp = (new Date()).getTime()
-            let data = a.imageData.replace(/^data:image\/\w+;base64,/, "");
-            let buf = new Buffer(data, 'base64');
-            fs.writeFile('./images/' + timeStamp + '.png', buf, function(err) {
-                if(err) {
-                    return console.log(err)
-                }
+            fs.writeFile('./images/' + timeStamp + '.png', base64Data, 'base64', function(err) {
+                if (err) console.log(err);
+                fs.readFile('./images/' + timeStamp + '.png', function(err, data) {
+                    if (err) throw err;
+                    res.send(data);
+                });
             });
-            a.image = '/images/' + timeStamp + '.png'
+            news.image = '/images/' + timeStamp + '.png'
         }
-        NewsModel.findByIdAndUpdate(id, a)
+        NewsModel.findByIdAndUpdate(id, req.body)
             .then(() => NewsModel.findById(id))
             .then((result) => {
                 res.status(200).json({
