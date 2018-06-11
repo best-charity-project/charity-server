@@ -4,7 +4,7 @@ const config = require('../config');
 
 
 const Events = new mongoose.Schema({
-    title: {
+    name: {
         type: String,
         required: true,
         trim: true,

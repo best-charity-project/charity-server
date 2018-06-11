@@ -3,17 +3,11 @@ const logger = require('./utils/logger.utils');
 const errorHandler = require('./handlers/error.handlers');
 const passportMW = require('./utils/passport');
 const api = require('./routes');
-const bodyParser = require('body-parser')
 
 global.env = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === undefined;
 
 let app = express();
 app.use(express.json());
-app.use(express.urlencoded({
-    type: 'application/x-www-form-urlencoded',
-    extended: true
-}))
-
 app.use(passportMW.initialize());
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
