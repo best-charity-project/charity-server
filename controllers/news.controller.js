@@ -7,9 +7,10 @@ module.exports = {
     async createNews(req, res) {
         let news = new NewsModel(req.body);
         if (req.body.imageData) {
-            let base64Data = req.body.imageData;
+            let data = req.body.imageData.replace(/^data:image\/\w+;base64,/, "");
+            let buf = new Buffer(data, 'base64');
             let timeStamp = (new Date()).getTime()
-            fs.writeFile('./images/' + timeStamp + '.png', base64Data, 'base64', function(err) {
+            fs.writeFile('./images/' + timeStamp + '.png', buf, /* 'base64',  */function(err) {
                 if (err) console.log(err);
                 fs.readFile('./images/' + timeStamp + '.png', function(err, data) {
                     if (err) throw err;
@@ -18,7 +19,7 @@ module.exports = {
             });
             news.image = timeStamp + '.png'
         }
-        NewsModel.create(news)
+        await NewsModel.create(news)
         .then((result) => {
             console.log(result)
             res.status(200).json({
@@ -26,29 +27,6 @@ module.exports = {
             });
         });
     },
-
-        /* let a = req.body
-        let news = new NewsModel(a);
-        let data = a.imageData.replace(/^data:image\/\w+;base64,/, "");
-        let buf = new Buffer(data, 'base64');
-        let timeStamp = (new Date()).getTime()
-        fs.writeFile('./images/' + timeStamp + '.png', buf, function(err) {
-            if (err) console.log(err);
-            fs.readFile('./images/' + timeStamp + '.png', function(err, data) {
-                if (err) throw err;
-                console.log('reading file...', data.toString('base64')); 
-                res.send(data);
-            });
-        });
-        a.image = '/images/' + timeStamp + '.png'
-        
-
-       NewsModel.create(news)
-        .then((result) => {
-            res.status(200).json({
-                news: result
-            });
-        });  */
         
     async getNews(req, res) {
         let admin = req.query.isAdmin
@@ -67,18 +45,19 @@ module.exports = {
     async changeNews(req, res) {
         let id = req.params.id
         if (req.body.imageData) {
-            let base64Data = req.body.imageData;
+            let data = req.body.imageData.replace(/^data:image\/\w+;base64,/, "");
+            let buf = new Buffer(data, 'base64');
             let timeStamp = (new Date()).getTime()
-            fs.writeFile('./images/' + timeStamp + '.png', base64Data, 'base64', function(err) {
+            fs.writeFile('./images/' + timeStamp + '.png', buf, /* 'base64',  */function(err) {
                 if (err) console.log(err);
                 fs.readFile('./images/' + timeStamp + '.png', function(err, data) {
                     if (err) throw err;
                     res.send(data);
                 });
             });
-            news.image = '/images/' + timeStamp + '.png'
+            news.image = timeStamp + '.png'
         }
-        NewsModel.findByIdAndUpdate(id, req.body)
+        await NewsModel.findByIdAndUpdate(id, req.body)
             .then(() => NewsModel.findById(id))
             .then((result) => {
                 res.status(200).json({
