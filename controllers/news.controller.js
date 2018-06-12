@@ -10,18 +10,13 @@ module.exports = {
             let data = req.body.imageData.replace(/^data:image\/\w+;base64,/, "");
             let buf = new Buffer(data, 'base64');
             let timeStamp = (new Date()).getTime()
-            fs.writeFile('./images/' + timeStamp + '.png', buf, /* 'base64',  */function(err) {
+            fs.writeFile('./images/' + timeStamp + '.png', buf, function(err) {
                 if (err) console.log(err);
-                fs.readFile('./images/' + timeStamp + '.png', function(err, data) {
-                    if (err) throw err;
-                    res.send(data);
-                });
             });
             news.image = timeStamp + '.png'
         }
         await NewsModel.create(news)
         .then((result) => {
-            console.log(result)
             res.status(200).json({
                 news: result
             });
@@ -48,12 +43,8 @@ module.exports = {
             let data = req.body.imageData.replace(/^data:image\/\w+;base64,/, "");
             let buf = new Buffer(data, 'base64');
             let timeStamp = (new Date()).getTime()
-            fs.writeFile('./images/' + timeStamp + '.png', buf, /* 'base64',  */function(err) {
+            fs.writeFile('./images/' + timeStamp + '.png', buf, function(err) {
                 if (err) console.log(err);
-                fs.readFile('./images/' + timeStamp + '.png', function(err, data) {
-                    if (err) throw err;
-                    res.send(data);
-                });
             });
             news.image = timeStamp + '.png'
         }
