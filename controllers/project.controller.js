@@ -6,18 +6,22 @@ const fs = require('fs');
 module.exports = {
     async newProject(req, res) {
         let a = req.body;
-        let timeStamp = (new Date()).getTime();
-        let data = a.imageData.replace(/^data:image\/\w+;base64,/, "");
-        let buf = new Buffer(data, 'base64');
-        fs.writeFile('./images/' + timeStamp + '.png', buf, err => {
-            if(err) throw err;
-        });
-        a.image = '/images/' + timeStamp + '.png';
-        let project = new ProjectsModel(a);
-        ProjectsModel.create(project)
-                     .then(function(createProject){
-                        res.send(createProject)
-                     })
+        let projects = new ProjectsModel(a);
+        if(req.body.imageData){
+            let data = a.imageData.replace(/^data:image\/\w+;base64,/, "");
+            let buf = new Buffer(data, 'base64');
+            let timeStamp = (new Date()).getTime();
+            fs.writeFile(`./images/${timeStamp}.png`, buf, err => {
+                if(err)  console.log(err);
+            });
+            projects.image = `${timeStamp}.png`;
+        }
+        await ProjectsModel.create(projects)
+            .then( result => {
+                res.status(200).json({
+                    projects:result
+                });
+            });
     },
     async deleteProject(req, res) {
             let id = req.params.id
@@ -35,8 +39,8 @@ module.exports = {
      },
      async getProjectById(req, res) {
         let id = req.params.id;
-        let project = await ProjectsModel.findById(id);
-        res.send(project)
+        let projects = await ProjectsModel.findById(id);
+        res.send(projects)
      },
      async UpdateProject(req, res) {
         let id = req.params.id;
@@ -54,9 +58,9 @@ module.exports = {
             });
             a.image = '/images/' + timeStamp + '.png';
         }
-        ProjectsModel.findByIdAndUpdate(id, a, {new: true},(err,project)=>{
+        ProjectsModel.findByIdAndUpdate(id, a, {new: true},(err,projects)=>{
             if (err) return res.status(500).send(err);
-         return res.send(project);
+         return res.send(projects);
         })
      }
 
