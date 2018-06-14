@@ -11,7 +11,12 @@ module.exports = {
             })
         },
         async deleteEvent(req, res) {
-            let eventDelete = await EventsModel.findByIdAndRemove(req.body);
+            let event = await EventsModel.findByIdAndRemove(req.body)
+            .then((result) => {
+                res.status(200).json({
+                    news: result
+                });
+            });
         },
         async getEvents(req, res) {
             let eventsList = await EventsModel.find();
@@ -25,7 +30,7 @@ module.exports = {
             res.send(event)
          },
          async UpdateEvent(req, res) {
-            EventsModel.findByIdAndUpdate(req.params.id, req.body, {new: true},(err,event)=>{
+            let event = await EventsModel.findByIdAndUpdate(req.params.id, req.body, {new: true},(err,event)=>{
                 if (err) return res.status(500).send(err);
              return res.send(event);
             })
