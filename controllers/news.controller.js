@@ -39,8 +39,15 @@ module.exports = {
     },
     async changeNews(req, res) {
         let id = req.params.id
-        if (req.body.imageData) {
-            let data = req.body.imageData.replace(/^data:image\/\w+;base64,/, "");
+        let news = req.body
+        if (news.imageData) {
+            let previousNews = await NewsModel.findById(id)
+            fs.unlink('./images/' + previousNews.image, function (err) {
+                if (err) {
+                    return console.log(err)
+                }
+            }); 
+            let data = news.imageData.replace(/^data:image\/\w+;base64,/, "");
             let buf = new Buffer(data, 'base64');
             let timeStamp = (new Date()).getTime()
             fs.writeFile('./images/' + timeStamp + '.png', buf, function(err) {
@@ -48,7 +55,7 @@ module.exports = {
             });
             news.image = timeStamp + '.png'
         }
-        await NewsModel.findByIdAndUpdate(id, req.body)
+        await NewsModel.findByIdAndUpdate(id, news)
             .then(() => NewsModel.findById(id))
             .then((result) => {
                 res.status(200).json({
@@ -59,7 +66,7 @@ module.exports = {
     async deleteNews(req, res) {
         let id = req.params.id
         let previousNews = await NewsModel.findById(id)
-        fs.unlink('.' + previousNews.image, function (err) {
+        fs.unlink('./images/' + previousNews.image, function (err) {
             if (err) {
                 return console.log(err)
             }

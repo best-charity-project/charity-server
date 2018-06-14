@@ -4,6 +4,6 @@ const router = express.Router();
 const multer = require('multer'); 
 const upload = multer();
 
-router.post('/', upload.array(), image.createImage);
+router.post('/', upload.single('image'), image.createImage);
 
 module.exports = router;
