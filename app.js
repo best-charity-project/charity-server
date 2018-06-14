@@ -8,6 +8,10 @@ global.env = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 
 
 let app = express();
 app.use(express.json());
+app.use(express.urlencoded({
+    extended: true
+}))
+
 app.use(passportMW.initialize());
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
