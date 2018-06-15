@@ -5,24 +5,24 @@ const fs = require('fs');
 
 module.exports = {
     async createNews(req, res) {
-        let a = req.body
-        let timeStamp = (new Date()).getTime()
-        let data = a.imageData.replace(/^data:image\/\w+;base64,/, "");
-        let buf = new Buffer(data, 'base64');
-        fs.writeFile('./images/' + timeStamp + '.png', buf, function(err) {
-            if(err) {
-                return console.log(err)
-            }
-        });
-        a.image = '/images/' + timeStamp + '.png'
-        let news = new NewsModel(a);
-        NewsModel.create(news)
-            .then((result) => {
-                res.status(200).json({
-                    news: result
-                });
+        let news = new NewsModel(req.body);
+        if (req.body.imageData) {
+            let data = req.body.imageData.replace(/^data:image\/\w+;base64,/, "");
+            let buf = new Buffer(data, 'base64');
+            let timeStamp = (new Date()).getTime()
+            fs.writeFile('./images/' + timeStamp + '.png', buf, function(err) {
+                if (err) console.log(err);
             });
+            news.image = timeStamp + '.png'
+        }
+        await NewsModel.create(news)
+        .then((result) => {
+            res.status(200).json({
+                news: result
+            });
+        });
     },
+        
     async getNews(req, res) {
         let admin = req.query.isAdmin
         let newsList = (admin) ? await NewsModel.find() : await NewsModel.find({isPublic: true})
@@ -39,23 +39,23 @@ module.exports = {
     },
     async changeNews(req, res) {
         let id = req.params.id
-        let previousNews = await NewsModel.findById(id)
-        fs.unlink('.' + previousNews.image, function (err) {
-            if (err) {
-                return console.log(err)
-            }
-        });
-        let a = req.body
-        let timeStamp = (new Date()).getTime()
-        let data = a.imageData.replace(/^data:image\/\w+;base64,/, "");
-        let buf = new Buffer(data, 'base64');
-        fs.writeFile('./images/' + timeStamp + '.png', buf, function(err) {
-            if(err) {
-                return console.log(err)
-            }
-        });
-        a.image = '/images/' + timeStamp + '.png'
-        NewsModel.findByIdAndUpdate(id, a)
+        let news = req.body
+        if (news.imageData) {
+            let previousNews = await NewsModel.findById(id)
+            fs.unlink('./images/' + previousNews.image, function (err) {
+                if (err) {
+                    return console.log(err)
+                }
+            }); 
+            let data = news.imageData.replace(/^data:image\/\w+;base64,/, "");
+            let buf = new Buffer(data, 'base64');
+            let timeStamp = (new Date()).getTime()
+            fs.writeFile('./images/' + timeStamp + '.png', buf, function(err) {
+                if (err) console.log(err);
+            });
+            news.image = timeStamp + '.png'
+        }
+        await NewsModel.findByIdAndUpdate(id, news)
             .then(() => NewsModel.findById(id))
             .then((result) => {
                 res.status(200).json({
@@ -66,7 +66,7 @@ module.exports = {
     async deleteNews(req, res) {
         let id = req.params.id
         let previousNews = await NewsModel.findById(id)
-        fs.unlink('.' + previousNews.image, function (err) {
+        fs.unlink('./images/' + previousNews.image, function (err) {
             if (err) {
                 return console.log(err)
             }

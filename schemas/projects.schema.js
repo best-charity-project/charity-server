@@ -13,9 +13,18 @@ const Projects = new mongoose.Schema({
         type: String,
         required: true,
     },
-    text:{
-      type:String,
-      require:true  
+    shortText: {
+        type: String,
+        trim: true,
+    },
+    fullText: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    isPublic: {
+        type: Boolean,
+        default: false,
     },
     image:{
         type: String

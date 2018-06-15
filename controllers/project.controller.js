@@ -26,13 +26,19 @@ module.exports = {
     async deleteProject(req, res) {
             let id = req.params.id
             let previousProject = await ProjectsModel.findById(id)
-            fs.unlink('.' + previousProject.image, err => {
+            fs.unlink(`./images/${previousProject.image}`, err => {
                 if(err) throw err;
             }); 
-            ProjectsModel.findByIdAndRemove(req.body);
+            ProjectsModel.findByIdAndRemove(id)
+                .then((result)=>{
+                    res.status(200).json({
+                        projects:result
+                    });
+                });
         },
     async getProjects(req, res) {
-        let projectsList = await ProjectsModel.find();
+        let admin = req.query.isAdmin
+        let projectsList = (admin) ? await ProjectsModel.find():await ProjectsModel.find({isPublic:true});
         res.status(200).json({
             projects:projectsList
          });    
@@ -44,24 +50,27 @@ module.exports = {
      },
      async UpdateProject(req, res) {
         let id = req.params.id;
-        let a = req.body;
-        if(req.body.imageData){
+        let projects = req.body;
+        if(projects.imageData){
             let previousProject = await ProjectsModel.findById(id)
-            fs.unlink('.' + previousProject.image, err => {
+            fs.unlink(`./images/${previousProject.image}`, err => {
                 if(err) throw err;
             });
-            let timeStamp = (new Date()).getTime()
             let data = a.imageData.replace(/^data:image\/\w+;base64,/, "");
             let buf = new Buffer(data, 'base64');
-            fs.writeFile('./images/' + timeStamp + '.png', buf, err => {
+            let timeStamp = (new Date()).getTime()
+            fs.writeFile(`./images/${timeStamp}.png`, buf, err => {
                 if(err) throw err;
             });
-            a.image = '/images/' + timeStamp + '.png';
+            projects.image = `${timeStamp}.png`;
         }
-        ProjectsModel.findByIdAndUpdate(id, a, {new: true},(err,projects)=>{
-            if (err) return res.status(500).send(err);
-         return res.send(projects);
-        })
+        await ProjectsModel.findByIdAndUpdate(id,projects)
+            .then(()=>ProjectsModel.findById(id))
+            .then((result)=>{
+                res.status(200).json({
+                    projects:result
+                })
+            })
      }
 
 }
