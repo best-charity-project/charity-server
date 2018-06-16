@@ -62,7 +62,7 @@ function getSubscribers () {
      SubscribeModel.find({"isSubscribeStatus":"true"}, (err,tmp)=>{
         tmp.forEach(item =>{
             sendingMailToSubscribers(item);
-        })          
+        })   
     });
 };
 module.exports = getSubscribers;
