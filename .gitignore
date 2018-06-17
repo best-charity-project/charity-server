@@ -8,7 +8,11 @@
 
 # testing
 /coverage
+#idea
+/.idea/
 
+#images
+/images/
 # production
 /build
 
