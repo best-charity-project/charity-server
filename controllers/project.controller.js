@@ -56,7 +56,7 @@ module.exports = {
             fs.unlink(`./images/${previousProject.image}`, err => {
                 if(err) throw err;
             });
-            let data = a.imageData.replace(/^data:image\/\w+;base64,/, "");
+            let data = projects.imageData.replace(/^data:image\/\w+;base64,/, "");
             let buf = new Buffer(data, 'base64');
             let timeStamp = (new Date()).getTime()
             fs.writeFile(`./images/${timeStamp}.png`, buf, err => {
