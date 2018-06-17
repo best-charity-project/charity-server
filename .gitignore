@@ -9,10 +9,10 @@
 # testing
 /coverage
 #idea
-/.idea
+/.idea/
 
 #images
-/images
+/images/
 # production
 /build
 
