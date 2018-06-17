@@ -7,10 +7,12 @@ const newsRoute = require('./news.route');
 const imageRoute = require('./uploadImages.route')
 
 const sendRoute = require ('./newsending.route');
+const projectRoute = require ('./project.route');
 require('../utils/passport');
 
 router.use('/auth', auth)
       .use('/events', eventRoute)
+      .use('/projects',projectRoute)
       .use('/subscription', subscription)
       .use('/news', newsRoute)
       .use('/send-news-to-subscribers',sendRoute)
