@@ -10,6 +10,7 @@ router.post('/', upload.array(), news.createNews);
 router.get('/', news.getNews);
 router.get('/:id', news.getNewsById);
 router.put('/:id', upload.array(), news.changeNews);
-router.delete('/:id', news.deleteNews);
+router.delete('/', news.deleteNews);
+router.delete('/:id', news.deleteNewsById);
 
 module.exports = router;

@@ -63,19 +63,39 @@ module.exports = {
                 });
             });
     },
-    async deleteNews(req, res) {
+    async deleteNewsById(req, res) {
         let id = req.params.id
         let previousNews = await NewsModel.findById(id)
-        fs.unlink('./images/' + previousNews.image, function (err) {
-            if (err) {
-                return console.log(err)
-            }
-        }); 
+        if (previousNews.image) {
+            fs.unlink('./images/' + previousNews.image, function (err) {
+                if (err) {
+                    return console.log(err)
+                }
+            }); 
+        }
         NewsModel.findByIdAndRemove(id)
             .then((result) => {
                 res.status(200).json({
                     news: result
                 });
             });
+    },
+    async deleteNews(req, res) {
+        let deletedIds = []
+        for (let i = 0; i < req.body.checkedIds.length; i++) {
+            let previousNews = await NewsModel.findById(req.body.checkedIds[i])
+            if (previousNews.image) {
+                fs.unlink('./images/' + previousNews.image, function(err) {
+                    if(err) {
+                        return console.log(err)
+                    }
+                }); 
+            }
+            let deletedItem = await NewsModel.findByIdAndRemove(req.body.checkedIds[i])
+            deletedIds.push(deletedItem._id)
+        }
+        res.status(200).json({
+            news: deletedIds
+        });
     }
 }
