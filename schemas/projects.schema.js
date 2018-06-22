@@ -9,11 +9,28 @@ const Projects = new mongoose.Schema({
         required: true,
         trim: true,
     },
-    date:{
+    organization:{
         type: String,
+        trim: true
+    },
+    head:{
+        type: String,
+        trim: true,
+    },
+    contacts:{
+        type: String,
+        trim: true,
         required: true,
     },
-    shortText: {
+    address:{
+        type: String,
+        trim: true,
+    },
+    site:{
+        type: String,
+        trim: true,
+    },
+    video:{
         type: String,
         trim: true,
     },
@@ -25,6 +42,11 @@ const Projects = new mongoose.Schema({
     isPublic: {
         type: Boolean,
         default: false,
+    },
+    source: {
+        type: String,
+        required: true,
+        trim: true,
     },
     image:{
         type: String
