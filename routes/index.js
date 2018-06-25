@@ -8,6 +8,7 @@ const imageRoute = require('./uploadImages.route')
 
 const sendRoute = require ('./newsending.route');
 const projectRoute = require ('./project.route');
+const filterRoute = require ('./filter.route');
 require('../utils/passport');
 
 router.use('/auth', auth)
@@ -16,6 +17,7 @@ router.use('/auth', auth)
       .use('/subscription', subscription)
       .use('/news', newsRoute)
       .use('/send-news-to-subscribers',sendRoute)
-      .use('/uploadImages', imageRoute);
+      .use('/uploadImages', imageRoute)
+      .use('/filters', filterRoute);
     
 module.exports = router;
