@@ -4,11 +4,11 @@ const config = require('../config');
 
 
 const Filters = new mongoose.Schema({
-    title: {
+    title : {
         type: String,
     },
-    filters:{
-        type:Object
+    type : {
+        type:String
     }
 }, {
     timestamps: true,
