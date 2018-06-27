@@ -7,7 +7,7 @@ module.exports = {
     async newProject(req, res) {
         let a = req.body;
         let projects = new ProjectsModel(a);
-        if(req.body.imageData){
+        if(a.imageData){
             let data = a.imageData.replace(/^data:image\/\w+;base64,/, "");
             let buf = new Buffer(data, 'base64');
             let timeStamp = (new Date()).getTime();
@@ -23,31 +23,51 @@ module.exports = {
                 });
             });
     },
-    async deleteProject(req, res) {
-            let id = req.params.id
-            let previousProject = await ProjectsModel.findById(id)
-            fs.unlink(`./images/${previousProject.image}`, err => {
+    async deleteProjectById(req, res) {
+        let id = req.params.id
+        let previousProject = await ProjectsModel.findById(id)
+        if (previousProject.image) {
+        fs.unlink(`./images/${previousProject.image}`, err => {
                 if(err) throw err;
             }); 
-            ProjectsModel.findByIdAndRemove(id)
-                .then((result)=>{
-                    res.status(200).json({
-                        projects:result
-                    });
+        }
+        ProjectsModel.findByIdAndRemove(id)
+            .then((result)=>{
+                res.status(200).json({
+                    projects:result
                 });
-        },
+            });
+    },
+    async deleteProjects(req,res){
+        let deletedIds = []
+        for (let i = 0; i < req.body.checkedIds.length; i++) {
+            let previousProjects = await ProjectsModel.findById(req.body.checkedIds[i])
+            if (previousProjects.image) {
+                fs.unlink(`./images/${previousProjects.image}`, function(err) {
+                    if(err) {
+                        return console.log(err)
+                    }
+                }); 
+            }
+            let deletedItem = await ProjectsModel.findByIdAndRemove(req.body.checkedIds[i])
+            deletedIds.push(deletedItem._id)
+        }
+        res.status(200).json({
+            projects: deletedIds
+        });
+    },
     async getProjects(req, res) {
         let admin = req.query.isAdmin
         let projectsList = (admin) ? await ProjectsModel.find():await ProjectsModel.find({isPublic:true});
         res.status(200).json({
             projects:projectsList
          });    
-     },
+    },
      async getProjectById(req, res) {
         let id = req.params.id;
         let projects = await ProjectsModel.findById(id);
         res.send(projects)
-     },
+    },
      async UpdateProject(req, res) {
         let id = req.params.id;
         let projects = req.body;
@@ -71,6 +91,6 @@ module.exports = {
                     projects:result
                 })
             })
-     }
+    }
 
 }
