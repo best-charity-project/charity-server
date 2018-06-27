@@ -18,7 +18,7 @@ module.exports = {
          },
          async deleteFilterById(req, res) {
             let id = req.params.id;
-            FilterModel.findByIdAndRemove(id)
+            await FilterModel.findByIdAndRemove(id)
                 .then((result) => {
                     res.status(200).json({
                         filter : result
