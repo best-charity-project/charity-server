@@ -30,10 +30,16 @@ const Projects = new mongoose.Schema({
         type: String,
         trim: true,
     },
-    video:{
-        type: String,
-        trim: true,
-    },
+    media:[{
+        img:{
+            type:String,
+            trim:true
+        },
+        video:{
+            type: String,
+            trim: true,
+        },
+    }],
     fullText: {
         type: String,
         required: true,
