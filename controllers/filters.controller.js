@@ -1,6 +1,6 @@
 const mongoose = require('../utils/db.utils');
-const error = require('../utils/error')
-const FilterModel = require('../schemas/filters.schema')
+const error = require('../utils/error');
+const FilterModel = require('../schemas/filters.schema');
 
 module.exports = {
         async newFilter(req, res) {
