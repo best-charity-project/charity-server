@@ -4,10 +4,12 @@ const auth = require('./auth.route');
 const eventRoute= require('./event.routes');
 const subscription = require('./subscription.route');
 const newsRoute = require('./news.route');
-const imageRoute = require('./uploadImages.route')
+const imageRoute = require('./uploadImages.route');
+const galleryImageRoute = require('./uploadGalleryImage.route');
 
 const sendRoute = require ('./newsending.route');
 const projectRoute = require ('./project.route');
+const filterRoute = require ('./filter.route');
 require('../utils/passport');
 
 router.use('/auth', auth)
@@ -16,6 +18,8 @@ router.use('/auth', auth)
       .use('/subscription', subscription)
       .use('/news', newsRoute)
       .use('/send-news-to-subscribers',sendRoute)
-      .use('/uploadImages', imageRoute);
+      .use('/uploadImages', imageRoute)
+      .use('/uploadGalleryImage', galleryImageRoute)
+      .use('/filters', filterRoute);
     
 module.exports = router;

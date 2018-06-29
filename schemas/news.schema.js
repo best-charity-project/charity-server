@@ -19,7 +19,7 @@ const newsSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
-    source: {
+    filter: {
         type: String,
         required: true,
         trim: true,
