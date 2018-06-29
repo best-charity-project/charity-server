@@ -16,6 +16,8 @@ module.exports = {
             });
             projects.image = `${timeStamp}.png`;
         }
+        projects.mediaImageArray= req.body.mediaImageArray.split(",")
+        projects.mediaVideoArray= req.body.mediaVideoArray.split(",")
         await ProjectsModel.create(projects)
             .then( result => {
                 res.status(200).json({
@@ -84,6 +86,8 @@ module.exports = {
             });
             projects.image = `${timeStamp}.png`;
         }
+        projects.mediaImageArray= req.body.mediaImageArray.split(",")
+        projects.mediaVideoArray= req.body.mediaVideoArray.split(",")
         await ProjectsModel.findByIdAndUpdate(id,projects)
             .then(()=>ProjectsModel.findById(id))
             .then((result)=>{

@@ -2,7 +2,6 @@ const mongoose = require('../utils/db.utils');
 const crypto = require('crypto');
 const config = require('../config');
 
-
 const Projects = new mongoose.Schema({
     name: {
         type: String,
@@ -30,24 +29,12 @@ const Projects = new mongoose.Schema({
         type: String,
         trim: true,
     },
-    media:[
-        [
-            {
-                img:{
-                    type:String,
-                    trim:true
-                }
-            },
-        ],
-        [
-            {
-                video:{
-                    type: String,
-                    trim: true,
-                }
-            }
-        ]
-    ],
+    mediaImageArray:[{
+        type: String
+    }],
+    mediaVideoArray:[{
+        type: String
+    }],
     fullText: {
         type: String,
         required: true,
@@ -57,7 +44,7 @@ const Projects = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    source: {
+    filter: {
         type: String,
         required: true,
         trim: true,
