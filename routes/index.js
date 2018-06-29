@@ -4,7 +4,8 @@ const auth = require('./auth.route');
 const eventRoute= require('./event.routes');
 const subscription = require('./subscription.route');
 const newsRoute = require('./news.route');
-const imageRoute = require('./uploadImages.route')
+const imageRoute = require('./uploadImages.route');
+const galleryImageRoute = require('./uploadGalleryImage.route');
 
 const sendRoute = require ('./newsending.route');
 const projectRoute = require ('./project.route');
@@ -18,6 +19,7 @@ router.use('/auth', auth)
       .use('/news', newsRoute)
       .use('/send-news-to-subscribers',sendRoute)
       .use('/uploadImages', imageRoute)
+      .use('/uploadGalleryImage', galleryImageRoute)
       .use('/filters', filterRoute);
     
 module.exports = router;
