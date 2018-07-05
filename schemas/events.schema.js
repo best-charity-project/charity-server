@@ -9,6 +9,10 @@ const Events = new mongoose.Schema({
         required: true,
         trim: true,
     },
+    place : {
+        type:String,
+        required: true
+    },
     dateStart:{
         type: String,
         required: true,
@@ -16,6 +20,30 @@ const Events = new mongoose.Schema({
     dateEnd:{
         type: String,
         required: true,
+    },
+    participation:{
+        type:String
+    },
+    linkParticipation:{
+        type:String
+    },
+    organizers: {
+        type:String
+    },
+    speakersArray:{
+        type:Array
+    },
+    organization:{
+        type:String
+    },
+    contactPerson:{
+        type:String
+    },
+    contactPhone :{
+        type:String
+    },
+    website:{
+
     },
     text:{
       type:String,
