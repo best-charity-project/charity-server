@@ -2,7 +2,6 @@ const mongoose = require('../utils/db.utils');
 const crypto = require('crypto');
 const config = require('../config');
 
-
 const Events = new mongoose.Schema({
     title: {
         type: String,
@@ -19,7 +18,6 @@ const Events = new mongoose.Schema({
     },
     dateEnd:{
         type: String,
-        required: true,
     },
     participation:{
         type:String
@@ -44,6 +42,11 @@ const Events = new mongoose.Schema({
     },
     website:{
 
+    },
+    filter: {
+        type: String,
+        required: true,
+        trim: true,
     },
     text:{
       type:String,
