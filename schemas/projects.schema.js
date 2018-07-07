@@ -5,22 +5,20 @@ const config = require('../config');
 const Projects = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
         trim: true,
     },
     organization:{
         type: String,
         trim: true
     },
-    head:{
+    headArray:[{
         type: String,
         trim: true,
-    },
-    contacts:{
+    }],
+    contactsArray:[{
         type: String,
         trim: true,
-        required: true,
-    },
+    }],
     address:{
         type: String,
         trim: true,
@@ -37,7 +35,6 @@ const Projects = new mongoose.Schema({
     }],
     fullText: {
         type: String,
-        required: true,
         trim: true,
     },
     isPublic: {
@@ -46,7 +43,6 @@ const Projects = new mongoose.Schema({
     },
     filter: {
         type: String,
-        required: true,
         trim: true,
     },
     image:{

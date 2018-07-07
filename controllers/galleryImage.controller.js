@@ -9,12 +9,15 @@ module.exports = {
             let data = req.body.imageData.replace(/^data:image\/\w+;base64,/, "");
             let buf = new Buffer(data, 'base64');
             fs.writeFile('./images/' + timeStamp + '.png', buf, function(err) {
-                if (err) console.log(err);
+                if (err) {
+                    console.log(err)
+                }else {
+                    res.status(200).json({
+                        link: 'http://localhost:3001/images/' + timeStamp + '.png'
+                    })
+                }
             });
         }
-        res.status(200).json(
-            {link: 'http://localhost:3001/images/' + timeStamp + '.png'}
-        )
     },
 
     async deleteGalleryImage(req, res) {
