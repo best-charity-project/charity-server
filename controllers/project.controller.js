@@ -26,7 +26,7 @@ module.exports = {
         mediaImageArray.length === 0 ? projects.mediaImageArray = mediaImageArray : projects.mediaImageArray = mediaImageArray.join('').split(",")
         mediaVideoArray.length === 0 ? projects.mediaVideoArray = mediaVideoArray : projects.mediaVideoArray = mediaVideoArray.join('').split(",")
         await ProjectsModel.create(projects)
-            .then( result => {
+            .then( result => { 
                 res.status(200).json({
                     projects:result
                 });
@@ -93,15 +93,23 @@ module.exports = {
             });
             projects.image = `${timeStamp}.png`;
         }
-        let headArray = Array.from(req.body.headArray)
-        let contactsArray = Array.from(req.body.contactsArray)
-        let mediaImageArray = Array.from(req.body.mediaImageArray)
-        let mediaVideoArray = Array.from(req.body.mediaVideoArray)
+        if(projects.headArray){
+            let headArray = Array.from(req.body.headArray)
+            headArray.length       === 0 ? projects.headArray       = headArray       : projects.headArray       = headArray.join('').split(",")
+        }
+        if(projects.contactsArray){
+            let contactsArray = Array.from(req.body.contactsArray)
+            contactsArray.length   === 0 ? projects.contactsArray   = contactsArray   : projects.contactsArray   = contactsArray.join('').split(",")
+        }
+        if(projects.mediaImageArray){
+            let mediaImageArray = Array.from(req.body.mediaImageArray)
+            mediaImageArray.length === 0 ? projects.mediaImageArray = mediaImageArray : projects.mediaImageArray = mediaImageArray.join('').split(",")
+        }
+        if(projects.mediaVideoArray){
+            let mediaVideoArray = Array.from(req.body.mediaVideoArray)
+            mediaVideoArray.length === 0 ? projects.mediaVideoArray = mediaVideoArray : projects.mediaVideoArray = mediaVideoArray.join('').split(",")
+        }
 
-        headArray.length       === 0 ? projects.headArray       = headArray       : projects.headArray       = headArray.join('').split(",")
-        contactsArray.length   === 0 ? projects.contactsArray   = contactsArray   : projects.contactsArray   = contactsArray.join('').split(",")
-        mediaImageArray.length === 0 ? projects.mediaImageArray = mediaImageArray : projects.mediaImageArray = mediaImageArray.join('').split(",")
-        mediaVideoArray.length === 0 ? projects.mediaVideoArray = mediaVideoArray : projects.mediaVideoArray = mediaVideoArray.join('').split(",")
         await ProjectsModel.findByIdAndUpdate(id,projects)
             .then(()=>ProjectsModel.findById(id))
             .then((result)=>{

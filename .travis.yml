@@ -1,7 +1,9 @@
+sudo: false
 language: node_js
 node_js:
   - "8"
-
+branches:
+  only: - feautre/add_travis.yml
 install: npm install
 git:
   depth: 3
