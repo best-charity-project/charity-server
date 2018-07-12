@@ -1,7 +1,2 @@
-language: node_js
-node_js:
-  - "8"
-
-install: npm install
-git:
-  depth: 3
+sudo: false language: node_js
+node_js: - 8 branches: only: - feature/add_on_travis
