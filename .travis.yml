@@ -3,10 +3,4 @@ node_js:
   - "8"
 script:
   - npm start
-deploy:
-  provider:
-    heroku app:
-        "charity-test-app"
-    api_key: 
-      secure: 
-        "29b410f8-257b-41ba-b46d-c8c972183d8a"
+deploy: provider: heroku app: "charity-test-app" api_key: secure: "994b6285-c32d-4763-89e0-4e7a4114b318"
