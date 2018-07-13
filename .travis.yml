@@ -1,3 +1,10 @@
 language: node_js
 node_js: 
-  - 8 
+  - "8"
+deploy:
+  provider:
+    heroku app:
+        "charity-test-app"
+      api_key: 
+        secure: 
+         "29b410f8-257b-41ba-b46d-c8c972183d8a"
