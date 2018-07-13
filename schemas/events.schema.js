@@ -9,14 +9,13 @@ const Events = new mongoose.Schema({
         trim: true,
     },
     place : {
-        type:String,
-        required: true
+        type:String
     },
     dateStart:{
         type: String,
         required: true,
     },
-    dateEnd:{
+    timeEnd:{
         type: String,
     },
     participation:{
@@ -44,9 +43,7 @@ const Events = new mongoose.Schema({
 
     },
     filter: {
-        type: String,
-        required: true,
-        trim: true,
+        type: String
     },
     text:{
       type:String,
