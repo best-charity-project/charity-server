@@ -19,15 +19,18 @@ module.exports = {
     },
 
     async deleteGalleryImage(req, res) {
-        let nameImage = req.body[0].slice(req.body[0].lastIndexOf('/'))
-        await fs.unlink('./images' + nameImage, function (err) {
-            if (err) {
-                return console.log(err)
-            } else {
-                res.status(200).json(
-                    {}
-                )
-            }
-        }); 
+        let nameImage;
+        for(let i = 0; i < req.body.length; i++) {
+            nameImage = req.body[i][0].slice(req.body[i][0].lastIndexOf('/'))
+            console.log(nameImage)
+            await fs.unlink('./images' + nameImage, function (err) {
+                if (err) {
+                    console.log(err)
+                }
+            }); 
+        }
+        res.status(200).json(
+            {}
+        )
     },
 }
