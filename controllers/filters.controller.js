@@ -11,7 +11,8 @@ module.exports = {
 
         },
         async getFilters(req, res) {
-            filterList = await FilterModel.find();
+           let type = req.query.type;
+           let filterList = (type) ? await FilterModel.find({type : type}) : await FilterModel.find();
             res.status(200).json({
                 filterList : filterList
              });

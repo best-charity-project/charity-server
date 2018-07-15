@@ -10,7 +10,8 @@ router.post('/',upload.array(), controller.newProject);
 router.put('/:id',upload.array(), controller.UpdateProject);
 router.get('/', controller.getProjects);
 router.get('/:id', controller.getProjectById);
-router.delete('/:id', controller.deleteProject);
+router.delete('/', controller.deleteProjects);
+router.delete('/:id', controller.deleteProjectById);
 
 
 module.exports = router;

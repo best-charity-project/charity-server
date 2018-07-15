@@ -2,29 +2,48 @@ const mongoose = require('../utils/db.utils');
 const crypto = require('crypto');
 const config = require('../config');
 
-
 const Projects = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
         trim: true,
     },
-    date:{
+    organization:{
         type: String,
-        required: true,
+        trim: true
     },
-    shortText: {
+    headArray:[{
+        type: String,
+        trim: true,
+    }],
+    contactsArray:[{
+        type: String,
+        trim: true,
+    }],
+    address:{
         type: String,
         trim: true,
     },
+    site:{
+        type: String,
+        trim: true,
+    },
+    mediaImageArray:[{
+        type: String
+    }],
+    mediaVideoArray:[{
+        type: String
+    }],
     fullText: {
         type: String,
-        required: true,
         trim: true,
     },
     isPublic: {
         type: Boolean,
         default: false,
+    },
+    filter: {
+        type: String,
+        trim: true,
     },
     image:{
         type: String
