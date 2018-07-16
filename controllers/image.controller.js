@@ -7,11 +7,13 @@ module.exports = {
         let data = req.file;
         let buf = new Buffer(data.buffer, 'hex');
         let timeStamp = (new Date()).getTime()
-        fs.writeFile('./images/' + timeStamp + '.png', buf, function(err) {
-            if (err) console.log(err);
+        await fs.writeFile('./images/' + timeStamp + '.png', buf, function(err) {
+            if (err) {console.log(err);
+            } else {
+                res.status(200).json(
+                    {link: 'http://localhost:3001/images/' + timeStamp + '.png'}
+                )
+            }
         })
-        res.status(200).json(
-            {link: 'http://localhost:3001/images/' + timeStamp + '.png'}
-        )
     },
 }
