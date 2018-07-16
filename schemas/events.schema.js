@@ -40,7 +40,7 @@ const Events = new mongoose.Schema({
         type:String
     },
     website:{
-
+        type:String
     },
     filter: {
         type: String
