@@ -11,12 +11,12 @@ module.exports = {
 
         },
         async getFilters(req, res) {
-           let type = req.query.type;
-           let filterList = (type) ? await FilterModel.find({type : type}) : await FilterModel.find();
-            res.status(200).json({
-                filterList : filterList
-             });
-         },
+            let type = req.query.type;
+            let filterList = (type) ? await FilterModel.find({type : type}) : await FilterModel.find();
+             res.status(200).json({
+                 filterList : filterList
+              });
+          },
          async deleteFilterById(req, res) {
             let id = req.params.id;
             await FilterModel.findByIdAndRemove(id)

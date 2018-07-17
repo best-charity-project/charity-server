@@ -2,3 +2,8 @@ language: node_js
 node_js: 
   - "8"
 install: npm install
+deploy:
+  provider: heroku 
+  app: "charity-server-test" 
+  api_key:
+    secure: "994b6285-c32d-4763-89e0-4e7a4114b318"
