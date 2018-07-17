@@ -4,7 +4,10 @@ const errorHandler = require('./handlers/error.handlers');
 const passportMW = require('./utils/passport');
 const api = require('./routes');
 
-global.env = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === undefined;
+global.env = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production';
+
+console.log(process.env.NODE_ENV,1111111111)
+console.log(global.env,222)
 
 let app = express();
 app.use(express.json());
