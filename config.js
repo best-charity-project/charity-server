@@ -1,7 +1,7 @@
 module.exports = {
     secret: 'mysecret',
     mongoose: {
-         uri: process.env.MONGO_URI || process.env.NODE_ENV == 'production' ? 'mongodb://charity:charity_godel717@ds241121.mlab.com:41121/charity-database':'mongodb://vadim:qwerty@ds219100.mlab.com:19100/charity-project',
+         uri: process.env.NODE_ENV == 'production' ? 'mongodb://charity:charity_godel717@ds241121.mlab.com:41121/charity-database':'mongodb://vadim:qwerty@ds219100.mlab.com:19100/charity-project',
     },
     crypto: {
         hash: {
