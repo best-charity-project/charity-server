@@ -2,7 +2,6 @@ language: node_js
 node_js: 
   - "8"
 install: npm install
-script: NODE_ENV=production npm start
 deploy:
   provider: heroku 
   app: "charity-server-test" 
