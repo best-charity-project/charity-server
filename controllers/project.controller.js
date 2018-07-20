@@ -16,6 +16,7 @@ module.exports = {
             });
             projects.image = `${timeStamp}.png`;
         }
+        
         let headArray = Array.from(req.body.headArray)
         let contactsArray =Array.from(req.body.contactsArray)
         let mediaImageArray=Array.from(req.body.mediaImageArray)
