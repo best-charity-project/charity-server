@@ -3,7 +3,7 @@ const logger = require('./utils/logger.utils');
 const errorHandler = require('./handlers/error.handlers');
 const passportMW = require('./utils/passport');
 const api = require('./routes');
-const cors = require('cors')
+// const cors = require('cors')
 
 const PORT = process.env.PORT || 3001;
 
@@ -30,6 +30,6 @@ app.use(errorHandler);
 app.use('/api', api);
 app.use('/images', express.static(__dirname + '/images'));
 
-app.listen(3001, () => {
+app.listen(PORT, () => {
     console.log(`Running on ${PORT}`);
 });
