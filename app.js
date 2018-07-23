@@ -8,7 +8,7 @@ const api = require('./routes');
 
 global.env = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production';
 
-app.set('port', (process.env.PORT || 3001));
+
 // const PORT = process.env.PORT || 3001;
 console.log(process.env.PORT)
 
@@ -21,6 +21,7 @@ app.use(express.urlencoded({
     extended: true
 }))
 
+app.set('port', (process.env.PORT || 3001));
 
 app.use(passportMW.initialize());
 app.use(function (req, res, next) {
