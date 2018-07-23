@@ -8,7 +8,8 @@ const api = require('./routes');
 
 global.env = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production';
 
-const PORT = process.env.PORT || 3001;
+app.set('port', (process.env.PORT || 3001));
+// const PORT = process.env.PORT || 3001;
 console.log(process.env.PORT)
 
 let app = express();
@@ -33,6 +34,6 @@ app.use(errorHandler);
 app.use('/api', api);
 app.use('/images', express.static(__dirname + '/images'));
 
-app.listen(PORT, () => {
-    console.log(`Running on ${PORT}`);
+app.listen(/* PORT */ app.get('port'), () => {
+    console.log(`Running on ${app.get('port')}`);
 });
