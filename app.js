@@ -12,7 +12,7 @@ app.use(express.urlencoded({
     extended: true
 }))
 
-// app.use(cors());
+app.use(cors());
 app.use(passportMW.initialize());
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
