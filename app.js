@@ -5,6 +5,8 @@ const passportMW = require('./utils/passport');
 const api = require('./routes');
 const cors = require('cors')
 
+const PORT = process.env.PORT || 3001;
+
 global.env = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production';
 let app = express();
 
@@ -18,16 +20,16 @@ app.use(express.urlencoded({
 
 app.use(passportMW.initialize());
 app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', 'https://charity-test-app.herokuapp.com/');
-    // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type' );
-    // res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Credentials', true);
     next();
 });
 app.use(errorHandler);
 app.use('/api', api);
 app.use('/images', express.static(__dirname + '/images'));
 
-app.listen(3001, () => {
-    console.log('Running on 3001');
+app.listen(PORT, () => {
+    console.log(`Running on ${PORT}`);
 });
