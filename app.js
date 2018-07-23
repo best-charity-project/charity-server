@@ -8,9 +8,7 @@ const api = require('./routes');
 
 global.env = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production';
 
-
-// const PORT = process.env.PORT || 3001;
-console.log(process.env.PORT)
+const PORT = process.env.PORT || 3001;
 
 let app = express();
 
@@ -20,8 +18,6 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }))
-
-app.set('port', (process.env.PORT || 3001));
 
 app.use(passportMW.initialize());
 app.use(function (req, res, next) {
@@ -35,6 +31,6 @@ app.use(errorHandler);
 app.use('/api', api);
 app.use('/images', express.static(__dirname + '/images'));
 
-app.listen(/* PORT */ app.get('port'), () => {
-    console.log(`Running on ${app.get('port')}`);
+app.listen(PORT, () => {
+    console.log(`Running on ${PORT}`);
 });
