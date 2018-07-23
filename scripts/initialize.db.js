@@ -10,8 +10,8 @@ mongoose.connect('mongodb://charity:charity_godel717@ds241121.mlab.com:41121/cha
 function createUser() {
     let user = {
         name: 'Lorem',
-        email: "foo@bar.com",
-        password: 'Test1234'
+        email: "kir@bar.com",
+        password: '1234'
     };
     let newTicket = UserModel.create(user);
 }
