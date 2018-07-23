@@ -5,9 +5,11 @@ const passportMW = require('./utils/passport');
 const api = require('./routes');
 // const cors = require('cors')
 
-const PORT = process.env.PORT || 3001;
 
 global.env = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production';
+
+const PORT = process.env.PORT || 3001;
+console.log(process.env.PORT)
 let app = express();
 
 // app.use(cors());
