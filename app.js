@@ -30,6 +30,6 @@ app.use(errorHandler);
 app.use('/api', api);
 app.use('/images', express.static(__dirname + '/images'));
 
-app.listen(PORT, () => {
+app.listen(3001, () => {
     console.log(`Running on ${PORT}`);
 });
