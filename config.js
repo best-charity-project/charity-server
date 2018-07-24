@@ -6,7 +6,7 @@ module.exports = {
     crypto: {
         hash: {
             length: 128,
-            iterations: process.env.NODE_ENV == 'production' ? 12000 : 1,
+            iterations: /* process.env.NODE_ENV == 'production' ? 12000 : */ 1,
         },
     },
     root: process.cwd(),
