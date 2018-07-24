@@ -16,7 +16,7 @@ passport.use(
                 if (err) {
                     return done(err);
                 }
-                console.log(user,1111111111111)
+                console.log(user,1111100000000)
                 if (!user || !user.checkPassword(password)) {
                     return done(null, false, 'No such user or password is incorrect.');
                 }
