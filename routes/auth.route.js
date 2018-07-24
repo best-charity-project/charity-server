@@ -9,6 +9,7 @@ router.post('/', function (req, res, next) {
         session: false
     }, (err, user, info) => {
         console.log(user)
+        console.log(info)
         if (err || !user) {
             return res.status(400).json({
                 message: info ? info.message : 'Login failed',
