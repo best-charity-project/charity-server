@@ -9,6 +9,7 @@ passport.use(
             passReqToCallback: true,
         },
         function (req, email, password, done) {
+            console.log(email,222222222)
             UserModel.findOne({
                 email
             }, function (err, user) {

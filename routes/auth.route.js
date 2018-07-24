@@ -8,7 +8,7 @@ router.post('/', function (req, res, next) {
     passport.authenticate('local', {
         session: false
     }, (err, user, info) => {
-        console.log(user)
+        console.log(11111111111111,user)
         console.log(info)
         if (err || !user) {
             return res.status(400).json({
