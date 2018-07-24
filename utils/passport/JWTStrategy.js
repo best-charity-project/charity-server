@@ -10,6 +10,7 @@ passport.use(
             secretOrKey: 'secret',
         },
         function (jwtPayload, done) {
+            console.log(jwtPayload);
             User.findById(jwtPayload.id, function (err, user) {
                 if (err) {
                     return done(err, false);
