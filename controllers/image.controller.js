@@ -1,6 +1,8 @@
 const mongoose = require('../utils/db.utils');
 const error = require('../utils/error');
 const fs = require('fs');
+const api = require('../api')
+const server = api.server
 
 module.exports = {
     async createImage(req, res) {
@@ -11,7 +13,7 @@ module.exports = {
             if (err) {console.log(err);
             } else {
                 res.status(200).json(
-                    {link: 'http://localhost:3001/images/' + timeStamp + '.png'}
+                    {link: `${server}/images/${timeStamp}.png`}
                 )
             }
         })

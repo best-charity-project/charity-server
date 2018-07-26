@@ -6,7 +6,6 @@ const fs = require('fs');
 module.exports = {
     async newProject(req, res) {
         let a = req.body;
-        let projects = new ProjectsModel(a);
         if(a.imageData){
             let data = a.imageData.replace(/^data:image\/\w+;base64,/, "");
             let buf = new Buffer(data, 'base64');
@@ -14,29 +13,20 @@ module.exports = {
             fs.writeFile(`./images/${timeStamp}.png`, buf, err => {
                 if(err)  console.log(err);
             });
-            projects.image = `${timeStamp}.png`;
+            a.image = `${timeStamp}.png`;
         }
-        let headArray = Array.from(req.body.headArray)
-        let contactsArray =Array.from(req.body.contactsArray)
-        let mediaImageArray=Array.from(req.body.mediaImageArray)
-        let mediaVideoArray = Array.from(req.body.mediaVideoArray)
 
-        headArray.length === 0 ?                                                        // FIND BETTER WAY TO GET ARRAY FROM STRING WHICH GOES FROM FRONT-SIDE !!!!!!!!!!!!!!   
-            projects.headArray = headArray 
-        : projects.headArray = headArray.join('').split(",")
+        a.headArray ? a.headArray = JSON.parse(a.headArray)
+            : a.headArray = []
+        a.contactsArray ? a.contactsArray = JSON.parse(a.contactsArray)
+            : a.contactsArray = []
+        a.mediaImageArray ? a.mediaImageArray = JSON.parse(a.mediaImageArray)
+            : a.mediaImageArray = []
+        a.mediaVideoArray ? a.mediaVideoArray = JSON.parse(a.mediaVideoArray)
+            : a.mediaVideoArray = []
 
-        contactsArray.length === 0 ?
-            projects.contactsArray = contactsArray 
-        : projects.contactsArray = contactsArray.join('').split(",")
-
-        mediaImageArray.length === 0 ? 
-            projects.mediaImageArray = mediaImageArray 
-        : projects.mediaImageArray = mediaImageArray.join('').split(",")
-
-        mediaVideoArray.length === 0 ? 
-            projects.mediaVideoArray = mediaVideoArray 
-        : projects.mediaVideoArray = mediaVideoArray.join('').split(",")
-
+        let projects = new ProjectsModel(a);
+        
         await ProjectsModel.create(projects)
             .then( result => { 
                 res.status(200).json({
@@ -105,30 +95,15 @@ module.exports = {
             });
             projects.image = `${timeStamp}.png`;
         }
-        if(projects.headArray){                                                 // FIND BETTER WAY TO GET ARRAY FROM STRING WHICH GOES FROM FRONT-SIDE !!!!!!!!!!!!!!   
-            let headArray = Array.from(req.body.headArray)
-            headArray.length === 0 ? 
-                projects.headArray = headArray
-            : projects.headArray = headArray.join('').split(",")
-        }
-        if(projects.contactsArray){
-            let contactsArray = Array.from(req.body.contactsArray)
-            contactsArray.length === 0 ? 
-                projects.contactsArray = contactsArray
-            : projects.contactsArray = contactsArray.join('').split(",")
-        }
-        if(projects.mediaImageArray){
-            let mediaImageArray = Array.from(req.body.mediaImageArray)
-            mediaImageArray.length === 0 ? 
-                projects.mediaImageArray = mediaImageArray 
-            : projects.mediaImageArray = mediaImageArray.join('').split(",")
-        }
-        if(projects.mediaVideoArray){
-            let mediaVideoArray = Array.from(req.body.mediaVideoArray)
-            mediaVideoArray.length === 0 ?
-                projects.mediaVideoArray = mediaVideoArray 
-            : projects.mediaVideoArray = mediaVideoArray.join('').split(",")
-        }
+
+        projects.headArray ? projects.headArray = JSON.parse(projects.headArray)
+            : projects.headArray = []
+        projects.contactsArray ? projects.contactsArray = JSON.parse(projects.contactsArray)
+            : projects.contactsArray = []
+        projects.mediaImageArray ? projects.mediaImageArray = JSON.parse(projects.mediaImageArray)
+            : projects.mediaImageArray = []
+        projects.mediaVideoArray ? projects.mediaVideoArray = JSON.parse(projects.mediaVideoArray)
+            : projects.mediaVideoArray = []
 
         await ProjectsModel.findByIdAndUpdate(id,projects)
             .then(()=>ProjectsModel.findById(id))
