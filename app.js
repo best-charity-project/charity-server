@@ -5,8 +5,6 @@ const passportMW = require('./utils/passport');
 const api = require('./routes');
 
 
-global.env = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production';
-
 const PORT = process.env.PORT || 3001;
 
 let app = express();
