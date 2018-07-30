@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const UserModel = require('../schemas/users.schema');
 const UserSubscribeModel = require ('../schemas/subscription.schema');
 const NewsModel = require ('../schemas/news.schema');
+const ForumUsersModel = require ('../schemas/forumUsers.schema');
 
 mongoose.set('debug', true);
 mongoose.connect('mongodb://vadim:qwerty@ds219100.mlab.com:19100/charity-project');
