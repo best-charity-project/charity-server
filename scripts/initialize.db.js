@@ -5,7 +5,8 @@ const NewsModel = require ('../schemas/news.schema');
 const ForumUsersModel = require ('../schemas/forumUsers.schema');
 
 mongoose.set('debug', true);
-mongoose.connect('mongodb://vadim:qwerty@ds219100.mlab.com:19100/charity-project');
+// mongoose.connect('mongodb://vadim:qwerty@ds219100.mlab.com:19100/charity-project');
+mongoose.connect('mongodb://charity:charity_godel717@ds241121.mlab.com:41121/charity-database')
 
 function createUser() {
     let user = {
@@ -15,7 +16,7 @@ function createUser() {
     };
     let newTicket = UserModel.create(user);
 }
-// createUser();
+createUser();
 
 createUserSubscribe = () =>{
      let subscribe = {

@@ -1,6 +1,8 @@
 const mongoose = require('../utils/db.utils');
 const error = require('../utils/error');
 const fs = require('fs');
+const api = require('../api')
+const server = api.server
 
 module.exports = {
     async createGalleryImage(req, res) {
@@ -12,7 +14,7 @@ module.exports = {
                 if (err) {console.log(err);
             } else {
                 res.status(200).json(
-                    {link: 'http://localhost:3001/images/' + timeStamp + '.png'}
+                    {link: `${ server }/images/${timeStamp}.png`}
                 )
             }})
         }
@@ -21,8 +23,11 @@ module.exports = {
     async deleteGalleryImage(req, res) {
         let nameImage;
         for(let i = 0; i < req.body.length; i++) {
-            nameImage = req.body[i][0].slice(req.body[i][0].lastIndexOf('/'))
-            console.log(nameImage)
+            if(typeof req.body[i]==='object'){
+                nameImage = req.body[i].name.slice(req.body[i].name.lastIndexOf('/'))
+            }else{
+                nameImage = req.body[i][0].slice(req.body[i][0].lastIndexOf('/'))
+            }
             await fs.unlink('./images' + nameImage, function (err) {
                 if (err) {
                     console.log(err)

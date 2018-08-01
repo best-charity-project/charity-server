@@ -2,6 +2,11 @@ const mongoose = require('../utils/db.utils');
 const crypto = require('crypto');
 const config = require('../config');
 
+const HeadSchema = new mongoose.Schema({name:String})
+const ContactSchema = new mongoose.Schema({name:String})
+const MediaImageSchema = new mongoose.Schema({name:String})
+const MediaVideoSchema = new mongoose.Schema({name:String})
+
 const Projects = new mongoose.Schema({
     name: {
         type: String,
@@ -11,14 +16,8 @@ const Projects = new mongoose.Schema({
         type: String,
         trim: true
     },
-    headArray:[{
-        type: String,
-        trim: true,
-    }],
-    contactsArray:[{
-        type: String,
-        trim: true,
-    }],
+    headArray:[HeadSchema],
+    contactsArray:[ContactSchema],
     address:{
         type: String,
         trim: true,
@@ -27,12 +26,8 @@ const Projects = new mongoose.Schema({
         type: String,
         trim: true,
     },
-    mediaImageArray:[{
-        type: String
-    }],
-    mediaVideoArray:[{
-        type: String
-    }],
+    mediaImageArray:[MediaImageSchema],
+    mediaVideoArray:[MediaVideoSchema],
     fullText: {
         type: String,
         trim: true,
