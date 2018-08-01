@@ -7,9 +7,4 @@ const forumGroupsSchema = mongoose.Schema({
     },
 });
 
-// forumGroupsSchema
-//     .pre('remove', function(next) {
-//         this.model('forumTopics').remove({group_id: this._id}, next);
-// });
-
 module.exports = mongoose.model('forumGroups', forumGroupsSchema);
