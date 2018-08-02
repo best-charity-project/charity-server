@@ -48,6 +48,9 @@ const Events = new mongoose.Schema({
     text:{
       type:String,
       require:true  
+    },
+    idVK: {
+        type:String
     }
 }, {
     timestamps: true,

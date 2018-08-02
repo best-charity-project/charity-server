@@ -21,13 +21,15 @@ const newsSchema = new mongoose.Schema({
     },
     filter: {
         type: String,
-        required: true,
         trim: true,
     },
     isPublic: {
         type: Boolean,
         default: false,
     },
+    idVK: {
+        type:String
+    }
 }, 
 {
     timestamps: true,
