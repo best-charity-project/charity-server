@@ -20,6 +20,9 @@ const forumPostsSchema = mongoose.Schema({
 	dislike: {
 		type: Number,
 	},
+	reason: {
+		type: String,
+	}
 },
 {
     timestamps: true,
