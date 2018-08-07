@@ -13,7 +13,8 @@ module.exports = {
     },
         
     async getPosts(req, res) {
-        let forumPostsList = await ForumPostsModel.find()
+        let forumPostsList = await ForumPostsModel.find({topic_id: req.query.query})
+        .populate('topic_id').exec()
         res.status(200).json({
             forumPosts: forumPostsList
         });
@@ -21,6 +22,7 @@ module.exports = {
     async getPostById(req, res) {
         let id = req.params.id
         let forumPost = await ForumPostsModel.findById(id)
+        .populate('group_id').exec()
         res.status(200).json({
             forumPost: forumPost 
         });
