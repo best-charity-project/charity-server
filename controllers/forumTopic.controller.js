@@ -1,5 +1,5 @@
 const ForumTopicsModel = require('../schemas/forumTopics.schema');
-const ForumGroupsModel = require('../schemas/forumGroups.schema');
+const ForumPostsModel = require('../schemas/forumPosts.schema');
 
 module.exports = {
     async createTopic(req, res) {
@@ -48,6 +48,7 @@ module.exports = {
 
     async deleteTopicById(req, res) {
         let id = req.params.id
+        ForumPostsModel.remove({topic_id: id}, () => {})
         ForumTopicsModel.findByIdAndRemove(id)
             .then((result) => {
                 res.status(200).json({
@@ -59,6 +60,7 @@ module.exports = {
     async deleteTopics(req, res) {
         let deletedIds = []
         for (let i = 0; i < req.body.checkedTopicsIds.length; i++) {
+            ForumPostsModel.remove({topic_id: req.body.checkedTopicsIds[i]}, () => {})
             let deletedItem = await ForumTopicsModel.findByIdAndRemove(req.body.checkedTopicsIds[i])
             deletedIds.push(deletedItem._id)
         }
