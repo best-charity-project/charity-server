@@ -20,13 +20,20 @@ module.exports = {
     });
   },
   async updateMarker(req, res) {
-    console.log(req.params.id);
-    // let marker = await MarkersModel.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, event) => {
-    //   if (err) return res.status(500).send(err);
-    //   return res.send(event);
-    // });
+    let marker = await MarkersModel.findByIdAndUpdate(
+      req.params.id,
+      { $set: { isPublic: !req.body.isPublic } },
+      { new: true },
+      (err, marker) => {
+        if (err) return res.send(500, err);
+        return res.send(marker);
+      }
+    );
   },
   async deleteMarker(req, res) {
-    console.log(req.params.id);
+    await MarkersModel.findByIdAndRemove(req.params.id, (err, marker) => {
+      if (err) return res.send(500, err);
+      return res.send(marker);
+    });
   },
 };
