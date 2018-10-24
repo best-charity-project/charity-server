@@ -29,10 +29,13 @@ router.post('/', function (req, res, next) {
     })(req, res);
 });
 
-router.get('/:id', function (req, res, next) {
-    let id = req.params.id;
-    let projects = UserModel.findById(id);
-    res.send(projects)
+router.post('/p', function (req, res, next) {
+    let a = req.body;
+    let user = new UserModel(a);
+    UserModel.create(user)
+        .then(resp => {
+            res.send(resp);
+        });
 });
 
 module.exports = router;
