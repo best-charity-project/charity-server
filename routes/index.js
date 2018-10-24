@@ -16,6 +16,7 @@ const forumUserRoute = require('./forumUser.route');
 const forumInfoRoute = require('./forumInfo.route');
 const forumSearchRoute = require('./forumSearch.route');
 const eduWayRouter = require('./eduway.route');
+const eduListRoute = require('./edulist.route');
 
 require('../utils/passport');
 
@@ -35,6 +36,7 @@ router
   .use('/forumUser', forumUserRoute)
   .use('/forumInfo', forumInfoRoute)
   .use('/forumSearch', forumSearchRoute)
-  .use('/eduway', eduWayRouter);
+  .use('/eduway', eduWayRouter)
+  .use('/edulist', eduListRoute);
 
 module.exports = router;
