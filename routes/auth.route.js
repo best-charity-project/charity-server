@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const UserModel = require('../schemas/users.schema');
 
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
@@ -26,6 +27,12 @@ router.post('/', function (req, res, next) {
             });
         });
     })(req, res);
+});
+
+router.get('/:id', function (req, res, next) {
+    let id = req.params.id;
+    let projects = UserModel.findById(id);
+    res.send(projects)
 });
 
 module.exports = router;

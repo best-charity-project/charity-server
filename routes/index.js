@@ -22,6 +22,7 @@ require('../utils/passport');
 
 router
   .use('/auth', auth)
+  .use('/user-auth', auth)
   .use('/events', eventRoute)
   .use('/projects', projectRoute)
   .use('/subscription', subscription)
