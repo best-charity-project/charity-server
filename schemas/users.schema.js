@@ -2,34 +2,62 @@ const mongoose = require('../utils/db.utils');
 const crypto = require('crypto');
 const config = require('../config');
 const userSchema = new mongoose.Schema({
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true,
-        lowercase: true,
-    },
-    name: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    passwordSalt: {
-        type: String,
-        required: true,
-    },
-    passwordHash: {
-        type: String,
-        required: true,
-    },
-    admin: {
-        type: Boolean,
-        default: false,
-    },
-    passChangeToken: {
-        type: String,
-        default: null,
-    }
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+    lowercase: true,
+  },
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  passwordSalt: {
+    type: String,
+    required: true,
+  },
+  passwordHash: {
+    type: String,
+    required: true,
+  },
+  admin: {
+    type: Boolean,
+    default: false,
+  },
+  passChangeToken: {
+    type: String,
+    default: null,
+  },
+  isPublic: {
+    type: Boolean,
+    default: false,
+  },
+  diagnosis: {
+    type: String,
+    required: true,
+  },
+  contactPerson: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  contacts: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  location: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  years: {
+    type: String,
+    required: true,
+    trim: true
+  }
 }, {
     timestamps: true,
 });

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const UserModel = require('../schemas/users.schema');
 
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
@@ -26,6 +27,15 @@ router.post('/', function (req, res, next) {
             });
         });
     })(req, res);
+});
+
+router.post('/p', function (req, res, next) {
+    let a = req.body;
+    let user = new UserModel(a);
+    UserModel.create(user)
+        .then(resp => {
+            res.send(resp);
+        });
 });
 
 module.exports = router;
