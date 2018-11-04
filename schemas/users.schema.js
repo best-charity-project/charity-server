@@ -9,11 +9,6 @@ const userSchema = new mongoose.Schema({
     trim: true,
     lowercase: true,
   },
-  name: {
-    type: String,
-    required: true,
-    trim: true,
-  },
   passwordSalt: {
     type: String,
     required: true,
@@ -29,34 +24,6 @@ const userSchema = new mongoose.Schema({
   passChangeToken: {
     type: String,
     default: null,
-  },
-  isPublic: {
-    type: Boolean,
-    default: false,
-  },
-  diagnosis: {
-    type: String,
-    required: true,
-  },
-  contactPerson: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  contacts: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  location: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  years: {
-    type: String,
-    required: true,
-    trim: true
   }
 }, {
     timestamps: true,

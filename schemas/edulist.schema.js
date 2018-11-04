@@ -10,11 +10,6 @@ const Edulist = new mongoose.Schema(
       type: String,
       required: true,
     },
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-    },
     contactPerson: {
       type: String,
       required: true,
