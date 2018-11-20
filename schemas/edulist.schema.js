@@ -16,14 +16,33 @@ const Edulist = new mongoose.Schema(
       trim: true
     },
     contacts: {
-      type: String,
-      required: true,
-      trim: true
+      email: {
+        type: String,
+        required: true,
+        trim: true
+      },
+      phone: {
+        type: String,
+        required: true,
+        trim: true
+      }
     },
     location: {
-      type: String,
-      required: true,
-      trim: true,
+      region: {
+        type: String,
+        required: true,
+        trim: true
+      },
+      district: {
+        type: String,
+        required: true,
+        trim: true
+      },
+      city: {
+        type: String,
+        required: true,
+        trim: true
+      }
     },
     years: {
       type: String,
