@@ -44,9 +44,13 @@ const Edulist = new mongoose.Schema(
         trim: true
       }
     },
-    years: {
+    yearStart: {
       type: String,
       required: true,
+      trim: true
+    },
+    yearEnd: {
+      type: String,
       trim: true
     }
   },
