@@ -1,22 +1,22 @@
-const path = require('path');
-const moment = require('moment');
-const fs = require('fs')
+const winston = require('winston');
 
-let logger = (data) => {
-    let fileName = 'api.' + moment().format('MM-DD-YYYY') + '.log';
-    let logFilePath = path.join(process.env.NODE_PATH, 'logs', fileName);
-
-    if (fs.existsSync(logFilePath)) {
-        fs.appendFile(logFilePath, '\n' + data, function (err) {
-            if (err) throw err;
-        });
-    } else {
-        fs.writeFile(logFilePath, data, {
-            flag: 'wx'
-        }, function (err) {
-            if (err) throw err;
-        });
-    }
+const logger = winston.createLogger({
+    level: 'info',
+    format: winston.format.json(),
+    defaultMeta: {
+        service: 'user-service'
+    },
+    transports: [
+        new winston.transports.File({
+            filename: 'logs/error.log',
+            level: 'error'
+        }),
+    ]
+});
+if (process.env.NODE_ENV !== 'production') {
+    logger.add(new winston.transports.Console({
+        format: winston.format.simple()
+    }));
 }
 
 

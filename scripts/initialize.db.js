@@ -12,7 +12,8 @@ function createUser() {
     let user = {
         name: 'Lorem',
         email: "foo@bar.com",
-        password: 'Test1234'
+        password: 'Test1234',
+        isAdmin: true
     };
     let newTicket = UserModel.create(user);
 }

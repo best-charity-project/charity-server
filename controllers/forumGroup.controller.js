@@ -1,14 +1,12 @@
-const mongoose = require('../utils/db.utils');
-const error = require('../utils/error');
 const ForumGroupsModel = require('../schemas/forumGroups.schema');
 const ForumTopicsModel = require('../schemas/forumTopics.schema');
 
 module.exports = {
-    async createGroup(req, res) {
+    async createGroup(req, res, next) {
         let forumGroup = new ForumGroupsModel(req.body);
 
-        await ForumGroupsModel.create(forumGroup)
-        .then((result) => {
+        await ForumGroupsModel.create(forumGroup, (err, result) => {
+            next(err);
             res.status(200).json({
                 forumGroup: result
             });
@@ -16,7 +14,7 @@ module.exports = {
     },
         
     async getGroups(req, res) {
-        let forumGroupsList = await ForumGroupsModel.find()
+        let forumGroupsList = await ForumGroupsModel.find();
         res.status(200).json({
             forumGroups: forumGroupsList
         });
