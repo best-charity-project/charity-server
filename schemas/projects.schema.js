@@ -1,6 +1,4 @@
 const mongoose = require('../utils/db.utils');
-const crypto = require('crypto');
-const config = require('../config');
 
 const HeadSchema = new mongoose.Schema({name:String})
 const ContactSchema = new mongoose.Schema({name:String})
