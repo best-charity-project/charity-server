@@ -1,5 +1,4 @@
 const mongoose = require('../utils/db.utils');
-const config = require('../config');
 
 const newsSchema = new mongoose.Schema({
     title: {
