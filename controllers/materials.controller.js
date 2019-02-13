@@ -78,7 +78,7 @@ module.exports = {
     const model = req.body;
 
     try {
-      if (req.body.source) {
+      if (req.body.source && fileId) {
         await googleDrive.removeFile(fileId);
         await googleDrive.emptyTrash();
         model.fileId = "";
