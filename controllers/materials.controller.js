@@ -20,11 +20,6 @@ module.exports = {
         material
       });
     } catch (error) {
-      if (file) {
-        fs.unlink(file.path, (err) => {
-          if (err) throw err;
-        });
-      }
       next(error)
     }
   },

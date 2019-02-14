@@ -28,7 +28,7 @@ module.exports = {
   },
   async getEvent(req, res, next) {
     let id = req.params.id;
-    await EventsModel.findById(id, (err, eventsList) => {
+    await EventsModel.findById(id, (err, event) => {
       if (err) return next(err);
       res.send(event);
     });
