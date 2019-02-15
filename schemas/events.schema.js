@@ -8,49 +8,49 @@ const Events = new mongoose.Schema({
         required: true,
         trim: true,
     },
-    place : {
-        type:String
+    place: {
+        type: String
     },
-    dateStart:{
+    dateStart: {
         type: String,
         required: true,
     },
-    timeEnd:{
+    timeEnd: {
         type: String,
     },
-    participation:{
-        type:String
+    participation: {
+        type: String
     },
-    linkParticipation:{
-        type:String
+    linkParticipation: {
+        type: String
     },
     organizers: {
-        type:String
+        type: String
     },
-    speakersArray:{
-        type:Array
+    speakersArray: {
+        type: Array
     },
-    organization:{
-        type:String
+    organization: {
+        type: String
     },
-    contactPerson:{
-        type:String
+    contactPerson: {
+        type: String
     },
-    contactPhone :{
-        type:String
+    contactPhone: {
+        type: String
     },
-    website:{
-        type:String
+    website: {
+        type: String
     },
     filter: {
         type: String
     },
-    text:{
-      type:String,
-      require:true  
+    text: {
+        type: String,
+        required: true
     },
     idVK: {
-        type:String
+        type: String
     }
 }, {
     timestamps: true,
