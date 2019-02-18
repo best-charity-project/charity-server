@@ -9,7 +9,7 @@ module.exports = {
             let buf = new Buffer(data, 'base64');
             let timeStamp = (new Date()).getTime()
             fs.writeFile('./images/' + timeStamp + '.png', buf, function (err) {
-                if (err) console.log(err);
+                if (err) return next(err);
             });
             news.image = timeStamp + '.png'
         }
@@ -51,16 +51,14 @@ module.exports = {
             let news = req.body
             if (news.imageData) {
                 let previousNews = await NewsModel.findById(id)
-                fs.unlink('./images/' + previousNews.image, function (err) {
-                    if (err) {
-                        return console.log(err)
-                    }
+                fs.unlink('./images/' + previousNews.image, err => {
+                    if (err) console.error(err)
                 });
                 let data = news.imageData.replace(/^data:image\/\w+;base64,/, "");
                 let buf = new Buffer(data, 'base64');
                 let timeStamp = (new Date()).getTime()
                 fs.writeFile('./images/' + timeStamp + '.png', buf, function (err) {
-                    if (err) console.log(err);
+                    if (err) throw err;
                 });
                 news.image = timeStamp + '.png'
             }
@@ -81,7 +79,9 @@ module.exports = {
             let id = req.params.id
             let previousNews = await NewsModel.findById(id)
             if (previousNews.image) {
-                fs.unlink('./images/' + previousNews.image, () => {});
+                fs.unlink('./images/' + previousNews.image, err => {
+                    if (err) console.error(err)
+                });
             }
             NewsModel.findByIdAndRemove(id)
                 .then((result) => {
@@ -99,7 +99,9 @@ module.exports = {
             for (let i = 0; i < req.body.checkedIds.length; i++) {
                 let previousNews = await NewsModel.findById(req.body.checkedIds[i])
                 if (previousNews.image) {
-                    fs.unlink('./images/' + previousNews.image, () => {});
+                    fs.unlink('./images/' + previousNews.image, err => {
+                        if (err) console.error(err)
+                    });
                 }
                 let deletedItem = await NewsModel.findByIdAndRemove(req.body.checkedIds[i])
                 deletedIds.push(deletedItem._id)
