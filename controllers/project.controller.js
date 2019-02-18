@@ -11,7 +11,7 @@ module.exports = {
             let buf = new Buffer(data, 'base64');
             let timeStamp = (new Date()).getTime();
             fs.writeFile(`./images/${timeStamp}.png`, buf, err => {
-                if (err) console.log(err);
+                if (err) return next(err);
             });
             a.image = `${timeStamp}.png`;
         }
@@ -39,7 +39,7 @@ module.exports = {
         let previousProject = await ProjectsModel.findById(id)
         if (previousProject.image) {
             fs.unlink(`./images/${previousProject.image}`, err => {
-                if (err) throw err;
+                if (err) next(err);
             });
         }
         await ProjectsModel.findByIdAndRemove(id, (err, result) => {
@@ -58,7 +58,7 @@ module.exports = {
                 if (previousProjects.image) {
                     fs.unlink(`./images/${previousProjects.image}`, function (err) {
                         if (err) {
-                            return console.log(err)
+                            return next(err)
                         }
                     });
                 }
@@ -86,24 +86,24 @@ module.exports = {
         }
 
     },
-    async getProjectById(req, res) {
+    async getProjectById(req, res, next) {
         let id = req.params.id;
         let projects = await ProjectsModel.findById(id);
         res.send(projects)
     },
-    async UpdateProject(req, res) {
+    async UpdateProject(req, res, next) {
         let id = req.params.id;
         let projects = req.body;
         if (projects.imageData) {
             let previousProject = await ProjectsModel.findById(id)
             fs.unlink(`./images/${previousProject.image}`, err => {
-                if (err) throw err;
+                if (err) return next(err);
             });
             let data = projects.imageData.replace(/^data:image\/\w+;base64,/, "");
             let buf = new Buffer(data, 'base64');
             let timeStamp = (new Date()).getTime()
             fs.writeFile(`./images/${timeStamp}.png`, buf, err => {
-                if (err) throw err;
+                if (err) return next(err);
             });
             projects.image = `${timeStamp}.png`;
         }
@@ -124,6 +124,17 @@ module.exports = {
                     projects: result
                 })
             })
-    }
+            .catch(err => next(err))
+    },
 
+    async publishProject(req, res, next) {
+        await ProjectsModel.findByIdAndUpdate(req.params.id, {isPublic: req.body.isPublic})
+            .then(() => ProjectsModel.findById(req.params.id))
+            .then((result) => {
+                res.status(200).json({
+                    projects: result
+                })
+            })
+            .catch(err => next(err))
+    }
 }
