@@ -19,7 +19,7 @@ module.exports = {
       });
     });
   },
-  async createMarker(req, res) {
+  async createMarker(req, res, next) {
     let marker = req.body;
     await MarkersModel.create(marker, (err, resp) => {
       if (err) return next(err);

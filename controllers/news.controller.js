@@ -81,7 +81,7 @@ module.exports = {
             let id = req.params.id
             let previousNews = await NewsModel.findById(id)
             if (previousNews.image) {
-                fs.unlink('./images/' + previousNews.image);
+                fs.unlink('./images/' + previousNews.image, () => {});
             }
             NewsModel.findByIdAndRemove(id)
                 .then((result) => {
@@ -99,7 +99,7 @@ module.exports = {
             for (let i = 0; i < req.body.checkedIds.length; i++) {
                 let previousNews = await NewsModel.findById(req.body.checkedIds[i])
                 if (previousNews.image) {
-                    fs.unlink('./images/' + previousNews.image);
+                    fs.unlink('./images/' + previousNews.image, () => {});
                 }
                 let deletedItem = await NewsModel.findByIdAndRemove(req.body.checkedIds[i])
                 deletedIds.push(deletedItem._id)
