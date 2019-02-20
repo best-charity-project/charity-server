@@ -18,12 +18,45 @@ const Markers = new mongoose.Schema(
     },
     description: {
       type: String,
-      require: true,
       trim: true,
+    },
+    size: {
+      type: Number
+    },
+    shift: {
+      type: Number
+    },
+    expertise: {
+      type: Boolean,
+      default: false
+    },
+    transportation: {
+      type: Boolean,
+      default: false
+    },
+    parking: {
+      type: Boolean,
+      default: false
+    },
+    entrance: {
+      type: Boolean,
+      default: false
+    },
+    wc: {
+      type: Boolean,
+      default: false
+    },
+    elevator: {
+      type: Boolean,
+      default: false
+    },
+    relaxRoom: {
+      type: Boolean,
+      default: false
     },
     isPublic: {
       type: Boolean,
-      default: false,
+      default: false
     },
   },
   {

@@ -10,6 +10,10 @@ const Edulist = new mongoose.Schema(
       type: String,
       required: true,
     },
+    step: {
+      type: String,
+      required: true,
+    },
     contactPerson: {
       type: String,
       required: true,
@@ -23,7 +27,6 @@ const Edulist = new mongoose.Schema(
       },
       phone: {
         type: String,
-        required: true,
         trim: true
       }
     },
@@ -41,6 +44,10 @@ const Edulist = new mongoose.Schema(
       city: {
         type: String,
         required: true,
+        trim: true
+      },
+      subdistrict: {
+        type: String,
         trim: true
       }
     },
