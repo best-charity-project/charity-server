@@ -13,7 +13,7 @@
     "clarify": "^2.1.0",
     "dotenv": "^6.2.0",
     "express": "^4.16.3",
-    "googleapis": "^27.0.0",
+    "googleapis": "^39.1.0",
     "jsonwebtoken": "^8.2.1",
     "lodash": "^4.17.5",
     "moment": "^2.22.0",
